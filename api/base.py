@@ -41,7 +41,7 @@ class WebRequest(SpuRequestHandler):
 
 
 def check_login(func):
-    @UOM_WRAPS(func):
+    @UOM_WRAPS(func)
     def f(self, *args, **kwargs):
         user_name = self._get_user_name()
         if not user_name:

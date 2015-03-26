@@ -9,6 +9,7 @@ import sys
 from config import *
 from sputnik.SpuLogging import SpuLogging
 from sputnik.SpuError import SpuErrorCodeGen, SpuError
+from sputnik.SpuUOM import setdoc
 
 __code_gen = None
 
@@ -26,12 +27,12 @@ class Error(object):
     doc_info = ""
 
     @classmethod
-    @def load_code_tuple(cls, c='<br>'):
-        for dict in cls.__dict__:
-            v = cls.__dict__.get(dict)
+    def load_code_tuple(cls, c='<br>'):
+        for e in cls.__dict__:
+            v = cls.__dict__.get(e)
             if type(v) == tuple and type(v[0]) == int and type(v[1]) == str:
                 cls.code_dict[v[0]] = v
-                cls.doc_info += "Msg:%s%s%s Code:%s%s Info:%s%s" %( dict, c, v[0], c, v[1], v[2])
+                cls.doc_info += "Msg:%s%s Code:%s%s Info:%s%s" %(e, c, v[0], c, v[1], c*2)
 
 
 Error.success = (code(), "成功")

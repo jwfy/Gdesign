@@ -21,19 +21,12 @@ import sys
 sys.path.insert(0, 'api')
 
 def init():
-    # set count server
-    from sputnik.SpuCountServer import SpuCountServer
-    SpuCountServer.init_countserver(COUNT_SERVER_CONFIG)
-    # Set Session Engine
-    from pandabase.web_session import PandaWebSessionEngine
-    set_auto_session_engine(PandaWebSessionEngine)
 
     SpuUOM.import_module('user')
     SpuUOM.load()
     
     mongodb = SpuMongodb(mongo_dbcnf)
     mongodb.connection()
-    
     SpuContext.init_context(None, mongodb)
 
     mysql_db = SpuDBCreateDB(mysql_dbcnf)
@@ -41,6 +34,7 @@ def init():
     mysql_dbc.set_charset('utf8mb4')
     mysql_dbc.connection() 
     SpuContext.init_context(mysql_dbc, None)
+    
     SpuDBManager.add_spudb(mysql_dbc) 
     SpuDOFactory.init_factory(True)  
 

@@ -12,17 +12,17 @@ debug = True
 app_port = 8910
 
 mysql_db_port = 6033
-mysql_db_host = '127.0.0.1:6033'
-mysql_db_database = 'test'
+mysql_db_host = '127.0.0.1'
+mysql_db_database = 'blog'
 mysql_db_user = 'root'
 mysql_db_password = 'jwfych'
 
 mongo_db_port = 27017
 mongo_db_host = '127.0.0.1'
-mongo_db_database = 'movie'
+mongo_db_database = 'dm'
 mongo_db_user = ''
 mongo_db_password = ''
 
 LOCAL_ADDRESS = '127.0.0.1'
 SPUMASTER_ADDRESS = ''
-ERROR_LOG_PATH = '../log/dm.log'
+ERROR_LOG_PATH = 'log/dm.log'

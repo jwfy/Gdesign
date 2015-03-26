@@ -18,7 +18,8 @@ class user(WebRequest):
         登录首页
         """
         # TODO 登录首页
-        pass
+        self._set_user_name("jwfy")
+        return self._write("hello world! python+tornado+sputnik+mysql+mongodb+redis+pypi")
 
     def deal_login(self, 
         username={'atype':str, 'adef':''},
@@ -30,12 +31,14 @@ class user(WebRequest):
         """
         # TODO 处理登录
         pass
-
+    
+    @check_login
     def logout(self):
         """
         退出登录
         """
-        pass
+        ip = self._remote_ip()
+        return self._write("检查session中 %s" %(ip))
 
     def register(self,):
         pass

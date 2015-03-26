@@ -16,7 +16,7 @@ usage()
     echo "                            dev default 2"
 }
 
-echo "Leo Admin Service Boot Script Version($VERSION)"
+echo "DMovie Service Boot Script Version($VERSION)"
 
 if (($# == 0))
 then
@@ -53,10 +53,10 @@ case $1 in
 esac
 
 case $2 in
-    localdev)
-	CONFIG_FILE='local_dev_conf/'$3'_adminlocaldev.py'
+    local)
+	CONFIG_FILE=$2'_conf.py'
     LOG_PATH='../log'
-	DEBUG_SERVICE_PORT=14410
+	DEBUG_SERVICE_PORT=8910
 	COMMAND=5
 	;;
     dev)
@@ -110,14 +110,14 @@ fi
 
 if [[ $COMMAND -eq 3 ]]
 then
-    python lms.py --server_port=$DEBUG_SERVICE_PORT --app_port=$DEBUG_SERVICE_PORT --debug=True $CONFIG
+    python dm.py --server_port=$DEBUG_SERVICE_PORT --app_port=$DEBUG_SERVICE_PORT --debug=True $CONFIG
     echo $DEBUG_SERVICE_PORT
     exit 0
 fi
 
 if [[ $COMMAND -eq 5 ]]
 then
-    python lms.py --app_port=$DEBUG_SERVICE_PORT --debug=True $CONFIG
+    python dm.py --app_port=$DEBUG_SERVICE_PORT --debug=True $CONFIG
     exit 0
 fi
 
@@ -127,11 +127,11 @@ for i in `seq 1 $PROCESS_NUM`
 do
     PORT=$((APP_PORT_BASE+i))
     echo "Start Process $i At Port $PORT"
-    nohup python lms.py --app_port=$PORT --log_file_prefix=$LOG_PATH/lms.log.$PORT.$TIME $CONFIG > /dev/null &
+    nohup python dm.py --app_port=$PORT --log_file_prefix=$LOG_PATH/lms.log.$PORT.$TIME $CONFIG > /dev/null &
 done
 
 # debug
-nohup python lms.py --server_port=$DEBUG_SERVICE_PORT --app_port=$DEBUG_SERVICE_PORT -log_file_prefix=$LOG_PATH/lms.debug.log.$DEBUG_SERVICE_PORT.$TIME --debug=True $CONFIG > /dev/null &
+nohup python dm.py --server_port=$DEBUG_SERVICE_PORT --app_port=$DEBUG_SERVICE_PORT
 
 echo "new pid:";ps aux | grep $CONFIG | grep -v 'grep'
 echo "Run Module: "$MODULE

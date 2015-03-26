@@ -13,16 +13,10 @@ from sputnik.Sputnik import set_logging_config
 from tornado.options import define, options, parse_command_line, enable_pretty_logging
 from sputnik.SpuLogging import *
 
-def to_debug(address):
-    if "com" not in address or "douban" in address:
-        return address
-    index = address.find(".")
-    return address[:index] + ".debug" + address[index:]
-
 config_file = sys.argv[-1]
 dirname, basename = os.path.split(config_file)
 module_name = basename.split(".")[0]
-sys.path.addpend(dirname)
+sys.path.append(dirname)
 cm = __import__(module_name)
 
 define("server_port", default=None, help="run on the given server port", type=int)
@@ -83,14 +77,13 @@ if DEBUG:
     logging.getLogger().setLevel(logging.DEBUG)
 else:
     logging.getLogger().setLevel(logging.INFO)
-sputnik_init(logging_config, spusys_config=spusys_config)
+sputnik_init(debug_logging_config, spusys_config=spusys_config)
 
 from sputnik.SpuFieldFilter import SpuFieldFilter
 from sputnik.SpuDB import SpuDB_Tornado
 SpuConfig.SpuSession_Config = cm.session_config
 session_config = cm.session_config
 
-# global config
 SpuConfig.SpuDebug = DEBUG
 SpuFieldFilter.debug = DEBUG
 version = 0.1
