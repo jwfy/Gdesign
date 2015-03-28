@@ -22,6 +22,7 @@ import sys
 import os
 from sae.storage import Bucket, Connection
 import logging
+from qiniu_image_upload import *
 
 
 MONGO_HOST = "127.0.0.1"
@@ -31,9 +32,9 @@ MONGO_COLLECTION = "movie"
 
 DOUBAN_BASIC_URL = "https://api.douban.com/v2/movie/subject/%s"
 
-SAE_ACCESS_KEY = ""
-SAE_SECRET_KEY = ""
-SAE_APP_NAME = ""
+SAE_ACCESS_KEY = "02l5jyk5o3"
+SAE_SECRET_KEY = "zzii50wxh3kzyjj42l04i2ll0kwil2zyhx50xyl0"
+SAE_APP_NAME = "sybing"
 
 
 def mongo_init():
@@ -79,8 +80,6 @@ def get_image_content(url):
     获取图片url具体的内容，然后存储到sae中
     """
     image_type = ['image/jpeg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-icon']
-    import ipdb
-    ipdb.set_trace()
     if url:
         try:
             img_content = requests.get(url)
@@ -95,18 +94,21 @@ def get_image_content(url):
             logging.error("图片解析错误")
             return None
 
-def image_upload(image, folder="/"):
+def sae_init():
+    conn = Connection(accesskey=SAE_ACCESS_KEY, secretkey=SAE_SECRET_KEY, account=SAE_APP_NAME)
+    bucket = Bucket("b", conn)
+    return bucket
+
+def image_upload(image, url, folder="/"):
     """
     上面获取到的图片，然后上传到sae storage中,得到其中的url
     """
-    pass
+    store_file_to_qiniu(image, url)
 
 def douban_to_dict(id):
     """
     通过豆瓣的电影id，读取json，然后返回字典
     """
-    import ipdb
-    ipdb.set_trace()
     contains = requests.get(DOUBAN_BASIC_URL %(id))
     time.sleep(1.5)
     if not check_requests_status(contains.status_code):
@@ -120,6 +122,5 @@ if __name__ == "__main__":
     #douban_to_dict(1764796)
     url = "http://img3.douban.com/view/movie_poster_cover/ipst/public/p494284924.jpg"
     s = get_image_content(url)
-    import ipdb
-    ipdb.set_trace()
+    image_upload(s, url)
     print s
