@@ -7,7 +7,7 @@
 
 """
 这是一个脚本库，主要的操作是读取豆瓣电影的数据，然后解析成对应的字典数据，同时
-如果其中有图片，则获取对应的图片，存到sina sae storage 中，
+如果其中有图片，则获取对应的图片，存到qiniu  中，
 针对具体的名称，解析包含种子下载链接的html，获取正确的下载连接
 最后最后 存到mongo 中
 """
@@ -31,11 +31,6 @@ MONGO_DATABASE = "dm"
 MONGO_COLLECTION = "movie"
 
 DOUBAN_BASIC_URL = "https://api.douban.com/v2/movie/subject/%s"
-
-SAE_ACCESS_KEY = "02l5jyk5o3"
-SAE_SECRET_KEY = "zzii50wxh3kzyjj42l04i2ll0kwil2zyhx50xyl0"
-SAE_APP_NAME = "sybing"
-
 
 def mongo_init():
     """
@@ -77,7 +72,7 @@ def check_requests_status(status):
 
 def get_image_content(url):
     """
-    获取图片url具体的内容，然后存储到sae中
+    获取图片url具体的内容，然后存储到qiniu 中
     """
     image_type = ['image/jpeg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-icon']
     if url:
@@ -87,7 +82,7 @@ def get_image_content(url):
             if img_content.headers["content-type"] in image_type:
                 image["content-type"] = img_content.headers["content-type"]
                 file_type = image["content-type"].split("/")[-1]
-                image["file_name"] = ".".join([url.split("/")[-1], file_type])
+                image["file_name"] = url.split("/")[-1].split(".")[0]
                 image["body"] = img_content.content
             return image
         except Exception as e:
@@ -99,11 +94,12 @@ def sae_init():
     bucket = Bucket("b", conn)
     return bucket
 
-def image_upload(image, url, folder="/"):
+def image_upload(image):
     """
     上面获取到的图片，然后上传到sae storage中,得到其中的url
     """
-    store_file_to_qiniu(image, url)
+    url = store_file_to_qiniu(image)
+    print url
 
 def douban_to_dict(id):
     """
@@ -121,6 +117,6 @@ def douban_to_dict(id):
 if __name__ == "__main__":
     #douban_to_dict(1764796)
     url = "http://img3.douban.com/view/movie_poster_cover/ipst/public/p494284924.jpg"
+    url = "http://img3.douban.com/view/movie_poster_cover/lpst/public/p494284924.jpg"
     s = get_image_content(url)
-    image_upload(s, url)
-    print s
+    image_upload(s)

@@ -8,37 +8,27 @@
 
 import logging
 from qiniu import Auth
-from qiniu import put_file
+from qiniu import put_file, put_data
 from qiniu import BucketManager
 from base64 import urlsafe_b64encode as safeb64
+import time
 
 ACCESS_KEY = "GNdXddPogJmjge7P_26hHONuulBirv0fcUVX8IhY"
 SECRET_KEY = "VRfWmKm8VNuwimm51iRaSEpDyFptIDn0D2caxfAr"
 BUCKET_NAME = "movie"
+BASIC_URL = "http://7xib6a.com1.z0.glb.clouddn.com/%s"
 
-def qiniu_init():
-    pass
-
-
-def store_file_to_qiniu(file):
+def store_file_to_qiniu(image):
     auth = Auth(access_key=ACCESS_KEY, secret_key=SECRET_KEY)
     put_policy = {
             "fsizeLimit":10000,
             "returnBody": "name=$(fname)&size=$(fsize)"
     }
-    key = image["file_name"] 
-    type = image["content-type"]
-    import ipdb
-    ipdb.set_trace()
-    token = auth.upload_token(bucket=BUCKET_NAME, key=key, policy=put_policy)
-    ret, info = put_file(up_token=token, key=key, file_path=image_url, mime_type=type, check_crc=True)
-    print ret
-    print info
-
-def store_url_to_qiniu(url):
-    """
-    """
-    pass
-
-def url_to_name(url):
-
+    key = image["file_name"] + "-" + str(int(time.time()))
+    mime_type = image["content-type"]
+    data = image["body"]
+    token = auth.upload_token(bucket=BUCKET_NAME, key=key)
+    ret, info = put_data(token, key, data, mime_type=mime_type, check_crc=True)
+    if info.status_code == 200:
+        return BASIC_URL %(key)
+    return None
