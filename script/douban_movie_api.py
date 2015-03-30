@@ -12,17 +12,14 @@
 最后最后 存到mongo 中
 """
 
-
-import requests
 from  pymongo import MongoClient
 import time
 import datetime
 import json
 import sys
 import os
-from sae.storage import Bucket, Connection
 import logging
-from qiniu_image_upload import *
+from image_load import *
 
 
 MONGO_HOST = "127.0.0.1"
@@ -70,37 +67,6 @@ def check_requests_status(status):
         logging.error("未知错误")
         return False
 
-def get_image_content(url):
-    """
-    获取图片url具体的内容，然后存储到qiniu 中
-    """
-    image_type = ['image/jpeg', 'image/pjpeg', 'image/gif', 'image/png', 'image/x-icon']
-    if url:
-        try:
-            img_content = requests.get(url)
-            image = {}
-            if img_content.headers["content-type"] in image_type:
-                image["content-type"] = img_content.headers["content-type"]
-                file_type = image["content-type"].split("/")[-1]
-                image["file_name"] = url.split("/")[-1].split(".")[0]
-                image["body"] = img_content.content
-            return image
-        except Exception as e:
-            logging.error("图片解析错误")
-            return None
-
-def sae_init():
-    conn = Connection(accesskey=SAE_ACCESS_KEY, secretkey=SAE_SECRET_KEY, account=SAE_APP_NAME)
-    bucket = Bucket("b", conn)
-    return bucket
-
-def image_upload(image):
-    """
-    上面获取到的图片，然后上传到sae storage中,得到其中的url
-    """
-    url = store_file_to_qiniu(image)
-    print url
-
 def douban_to_dict(id):
     """
     通过豆瓣的电影id，读取json，然后返回字典
@@ -108,15 +74,16 @@ def douban_to_dict(id):
     contains = requests.get(DOUBAN_BASIC_URL %(id))
     time.sleep(1.5)
     if not check_requests_status(contains.status_code):
-        return []
+        return {}
     text = contains.text
     text = json.loads(text)
     movies = {}
+
+
+
+
+
     
     
 if __name__ == "__main__":
-    #douban_to_dict(1764796)
-    url = "http://img3.douban.com/view/movie_poster_cover/ipst/public/p494284924.jpg"
-    url = "http://img3.douban.com/view/movie_poster_cover/lpst/public/p494284924.jpg"
-    s = get_image_content(url)
-    image_upload(s)
+    douban_to_dict(1764796)
