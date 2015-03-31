@@ -2,3 +2,4 @@
 *.bak
 *.~
 image_load.py
+*.txt
