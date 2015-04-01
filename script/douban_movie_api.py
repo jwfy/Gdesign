@@ -85,8 +85,14 @@ def downlink_to_list(title, flag=1):
         url += ".html"
     else:
         url += "/2-1.html"
+    headers = {}
+    headers["Accept"] = "text/html,application/xhtml+xml,application/xml'=0.9,image/webp,*/*'=0.8''"
+    headers["Accept-Encoding"] = "gzip, deflate, sdch"
+    headers["Cookie"] = "right_bottom=3; locale=CN; _gat=1; Hm_lvt_753914550ccbe3146e49ce3fab845366=1427863543,1427871102; Hm_lpvt_753914550ccbe3146e49ce3fab845366=1427871105; _ga=GA1.2.1552069543.1427863543"
+    headers["User-Agent"] = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36"
+
     try:
-        html = requests.get(url, timeout=1)
+        html = requests.get(url, timeout=3.00, headers=headers)
     except Timeout as e:
         logging.error("抓取下载链接 请求超时！")
         return []
@@ -128,10 +134,9 @@ def douban_to_dict(id):
     """
     通过豆瓣的电影id，读取json，然后返回字典
     """
-    file = open('./douban_error.txt', 'wb')
     contains = requests.get(DOUBAN_BASIC_URL %(id))
     if not check_requests_status(contains.status_code):
-        return {}
+        return {}, 0
     text = contains.text
     text = json.loads(text)
     movie = {}
@@ -162,11 +167,11 @@ def douban_to_dict(id):
     movie["aka"] = text.get("aka")
     
     movie["down_link"] = downlink_to_list(unicode_to_str(movie["title"]))
+    movie_link_flag = 1
     if not movie["down_link"]:
+        movie_link_flag = 0
         print("%s 未获取下载链接" %(movie["id"]))
-        file.write("豆瓣ID %s 未获取下载链接\n" %(movie["id"]))
-    file.close() 
-    return movie
+    return movie, movie_link_flag
 
 def write_to_mongo(id):
     """
@@ -174,21 +179,26 @@ def write_to_mongo(id):
     """
     if not _Collection:
         mongo_init()
-    movie_dict = douban_to_dict(id)
+    movie_dict, flag = douban_to_dict(id)
     if not movie_dict:
-        return None
+        return None, None
     id = _Collection.insert(movie_dict)
-    return str(id)
+    return str(id), flag
 
 def main():
     #id = '1764796'
-    files = open("./record.txt", "wb")
+    files = open("./record-%s.txt" %(time.strftime("%Y-%m-%d-%H:%M:%S", time.localtime(time.time()))), "wb+")
     for id in range(1764798, 1764806):
-        _id = write_to_mongo(id)
+        _id, flag = write_to_mongo(id)
         if not _id:
+            files.write("豆瓣ID %d 无数据\n"  %(id))
             continue
         print "%s\n" %(_id)
-        files.write("豆瓣ID %d 存储_id %s\n"  %(id, _id))
+        if flag:
+            files.write("豆瓣ID %d 存储_id %s\n"  %(id, _id))
+        else:
+            files.write("豆瓣ID %d 存储_id %s 没有获取下载链接\n"  %(id, _id))
+
     files.close()
     
 if __name__ == "__main__":
