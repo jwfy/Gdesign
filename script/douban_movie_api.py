@@ -21,7 +21,7 @@ import os
 import logging
 from image_load import *
 from bs4 import BeautifulSoup
-import requests
+from requests import *
 import urllib
 import ipdb
 sys.path.insert(0, "../module/")
@@ -85,9 +85,22 @@ def downlink_to_list(title, flag=1):
         url += ".html"
     else:
         url += "/2-1.html"
-    html = requests.get(url)
+    try:
+        html = requests.get(url, timeout=1)
+    except Timeout as e:
+        logging.error("抓取下载链接 请求超时！")
+        return []
+    except ConnectionError as e:
+        logging.error("抓取下载链接 dns 连接错误")
+        return []
+    except HTTPError as e:
+        logging.error("抓取下载链接 http 请求错误")
+        return []
+    except Exception as e:
+        logging.error("抓取下载链接 未知错误")
+        return []
     if not check_requests_status(html.status_code):
-        return {}
+        return []
     h = BeautifulSoup(html.content)
     lists = h.find_all("div", class_="search-item")
     res_list = []
@@ -108,12 +121,14 @@ def downlink_to_list(title, flag=1):
 
         rst_dict["link"] = down_link_dict
         res_list.append(rst_dict)
+    res_list = sorted(res_list, key = lambda item :(item["hot"], item["size"]), reverse=True)
     return res_list
     
-def douban_to_mongo(id):
+def douban_to_dict(id):
     """
     通过豆瓣的电影id，读取json，然后返回字典
     """
+    file = open('./douban_error.txt', 'wb')
     contains = requests.get(DOUBAN_BASIC_URL %(id))
     if not check_requests_status(contains.status_code):
         return {}
@@ -130,7 +145,7 @@ def douban_to_mongo(id):
         time.sleep(1.0)
         if url:
             movie["image"][k] = url
-    movie["id"] = text.get("id")
+    movie["id"] = unicode_to_str(text.get("id"))
     movie["title"] = text.get("title")
     movie["category"] = text.get("genres")
     movie["countries"] = text.get("countries")
@@ -147,28 +162,35 @@ def douban_to_mongo(id):
     movie["aka"] = text.get("aka")
     
     movie["down_link"] = downlink_to_list(unicode_to_str(movie["title"]))
+    if not movie["down_link"]:
+        print("%s 未获取下载链接" %(movie["id"]))
+        file.write("豆瓣ID %s 未获取下载链接\n" %(movie["id"]))
+    file.close() 
+    return movie
 
-    _id = write_to_mongo(movie)
-    return _id
-
-def write_to_mongo(movie_dict):
+def write_to_mongo(id):
     """
     dict store to mongo
     """
     if not _Collection:
         mongo_init()
-    id = _Collection.insert(movie_dict).str
-    return id
+    movie_dict = douban_to_dict(id)
+    if not movie_dict:
+        return None
+    id = _Collection.insert(movie_dict)
+    return str(id)
 
 def main():
-    id = '1764796'
-    files = open('./douban.txt', 'wb')
-    _id = douban_to_mongo(id)
-    print "%s\n" %(_id)
-    files.write("存入数据库id=%s\n" %(_id))
+    #id = '1764796'
+    files = open("./record.txt", "wb")
+    for id in range(1764798, 1764806):
+        _id = write_to_mongo(id)
+        if not _id:
+            continue
+        print "%s\n" %(_id)
+        files.write("豆瓣ID %d 存储_id %s\n"  %(id, _id))
     files.close()
     
-
 if __name__ == "__main__":
     main()
     #douban_to_dict(1764796)
