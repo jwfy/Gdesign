@@ -92,7 +92,7 @@ def downlink_to_list(title, flag=1):
     headers["User-Agent"] = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36"
 
     try:
-        html = requests.get(url, timeout=3.00, headers=headers)
+        html = requests.get(url, timeout=10.00, headers=headers)
     except Timeout as e:
         logging.error("抓取下载链接 请求超时！")
         return []
@@ -133,10 +133,12 @@ def downlink_to_list(title, flag=1):
 def douban_to_dict(id):
     """
     通过豆瓣的电影id，读取json，然后返回字典
+    NOTICE:筛选掉电影描述字段太短了的电影数据
     """
     contains = requests.get(DOUBAN_BASIC_URL %(id))
     if not check_requests_status(contains.status_code):
         return {}, 0
+    
     text = contains.text
     text = json.loads(text)
     movie = {}
@@ -144,6 +146,11 @@ def douban_to_dict(id):
     movie["year"] = text.get("year")
     movie["origin_image"] = text.get("images")
     movie["image"] = {}
+    
+    movie["summary"] = text.get("summary")
+    if len(movie["summary"]) < 20:
+        return {}, 0
+    
     for k, v in text.get("images", "{}").iteritems():
         image_url = v
         url = store_url(image_url, "douban-"+k)
@@ -159,7 +166,6 @@ def douban_to_dict(id):
         movie["casts"].append(cast["name"])
     
     movie["original_title"] = text.get("original_title")
-    movie["summary"] = text.get("summary")
     movie["subtype"] = text.get("subtype")
     movie["directors"] = []
     for director in text.get("directors"):
@@ -187,7 +193,7 @@ def write_to_mongo(id):
 
 def main():
     #id = '1764796'
-    files = open("./record-%s.txt" %(time.strftime("%Y-%m-%d-%H:%M:%S", time.localtime(time.time()))), "wb+")
+    files = open("../log/record-%s.log" %(time.strftime("%Y-%m-%d-%H:%M:%S", time.localtime(time.time()))), "wb+")
     for id in range(1764798, 1764806):
         _id, flag = write_to_mongo(id)
         if not _id:
