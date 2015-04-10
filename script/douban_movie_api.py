@@ -33,6 +33,7 @@ MONGO_DATABASE = "dm"
 MONGO_COLLECTION = "movie"
 
 DOUBAN_BASIC_URL = "https://api.douban.com/v2/movie/subject/%s"
+DOUBAN_URL_TOP_250 = "https://api.douban.com/v2/movie/top250?start=%s&count=%s"
 DOWNLINK_URL = "http://www.btbook.net/search/"
 
 _Collection = None
@@ -92,7 +93,7 @@ def downlink_to_list(title, flag=1):
     headers["User-Agent"] = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36"
 
     try:
-        html = requests.get(url, timeout=10.00, headers=headers)
+        html = requests.get(url, timeout=5.00, headers=headers)
     except Timeout as e:
         logging.error("抓取下载链接 请求超时！")
         return []
@@ -129,7 +130,33 @@ def downlink_to_list(title, flag=1):
         res_list.append(rst_dict)
     res_list = sorted(res_list, key = lambda item :(item["hot"], item["size"]), reverse=True)
     return res_list
-    
+
+def douban_top_250(start=0, count=100):
+    """
+    获取豆瓣电影的前面250部评分最高的电影id
+    存入到一个文件中去
+    """
+    contains = requests.get(DOUBAN_URL_TOP_250 %(start, count))
+    if not check_requests_status(contains.status_code):
+        return None
+    text = contains.text
+    text = json.loads(text)
+    items = text.get("subjects")
+
+    ids = []
+    for item in items:
+        print("douban ID %s" %(item["id"]))
+        ids.append(item["id"]+"\n")
+
+    files = open("../log/topid.log", "a")
+    files.writelines(ids)
+    files.close()
+
+def read_top_250():
+    douban_top_250()
+    douban_top_250(100)
+    douban_top_250(200)
+
 def douban_to_dict(id):
     """
     通过豆瓣的电影id，读取json，然后返回字典
@@ -173,6 +200,7 @@ def douban_to_dict(id):
     movie["aka"] = text.get("aka")
     
     movie["down_link"] = downlink_to_list(unicode_to_str(movie["title"]))
+    movie["status"] = "online"
     movie_link_flag = 1
     if not movie["down_link"]:
         movie_link_flag = 0
@@ -191,10 +219,18 @@ def write_to_mongo(id):
     id = _Collection.insert(movie_dict)
     return str(id), flag
 
+def get_ids():
+    files = open("../log/topid.log")
+    ids = files.readlines()
+    files.close()
+    return ids
+
 def main():
     #id = '1764796'
+    ids = get_ids()
     files = open("../log/record-%s.log" %(time.strftime("%Y-%m-%d-%H:%M:%S", time.localtime(time.time()))), "wb+")
-    for id in range(1764798, 1764806):
+    for id in ids:
+        id = int(id)
         _id, flag = write_to_mongo(id)
         if not _id:
             files.write("豆瓣ID %d 无数据\n"  %(id))
@@ -208,6 +244,7 @@ def main():
     files.close()
     
 if __name__ == "__main__":
+    #read_top_250()
     main()
     #douban_to_dict(1764796)
     #title = "超能陆战队"
