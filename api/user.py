@@ -6,6 +6,9 @@
 # e-mail: jwfy0902@foxmail.com
 
 from base import *
+from module.user_ctrl import UserCtrl
+
+user_ctrl = UserCtrl()
 
 class user(WebRequest):
     _logging = SpuLogging(module_name="user", class_name="user")

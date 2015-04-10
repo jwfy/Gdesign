@@ -13,7 +13,7 @@ app_port = 8910
 
 mysql_db_port = 6033
 mysql_db_host = '127.0.0.1'
-mysql_db_database = 'blog'
+mysql_db_database = 'dm'
 mysql_db_user = 'root'
 mysql_db_password = 'jwfych'
 
