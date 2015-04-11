@@ -7,7 +7,6 @@
 
 import time
 import hashlib
-import inspect
 
 def unicode_to_str(u):
     """

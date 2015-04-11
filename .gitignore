@@ -4,3 +4,4 @@
 image_load.py
 *.txt
 *.log
+*.idea/

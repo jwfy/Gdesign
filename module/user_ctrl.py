@@ -7,6 +7,7 @@
 
 from sputnik.SpuLogging import SpuLogging
 from sputnik.SpuDBObject import Sort, SqlNone, PageInfo
+from sputnik.SpuUtil import md5
 from datetime import datetime
 from model.user_model import User
 from base_ctrl import *
@@ -17,14 +18,17 @@ class UserCtrl(Object):
     def __init__(self):
         pass
 
+    def _password_encrypt(self, password):
+        return md5("dm_account" + md5(password) + "jwfy" + md5(2015year))
+
     def deal_login(self, name, password):
         """
         处理登录
         """
-        # TODO 需要对密码进行加密处理，好进行验证
         user_model = User.object()
         user_t = User.table()
         cond = user_t.name == name
+        password = self._password_encrype(password)
         cond & (user_t.password == password)
         if not user_model.find(cond):
             self._logging.error("用户名和密码不匹配")
@@ -54,13 +58,14 @@ class UserCtrl(Object):
         """
         user_model = User.object()
         user_t = User.table()
+        old_password = self._password_encrype(old_password)
         cond = user_t.name == name
-        cond & (user_t.password == password)
+        cond & (user_t.password == old_password)
         if not user_model.find(cond):
             self._logging.error("用户名和原始密码不匹配")
             return None
+        new_password = self._password_encrype(new_password)
         user_model.password = new_password
-        # TODO 需要对密码进行加密处理
         user_model.update()
         return 1
 
@@ -71,8 +76,8 @@ class UserCtrl(Object):
         user_model = User.object()
         user_model.name = name
         user_model.email = email
+        password = self._password_encrype(password)
         user_model.password = password
-        # TODO 考虑再三，还是在api层对密码进行加密处理
         try:
             flag = user_model.insert()
             if flag > 0:
@@ -82,19 +87,24 @@ class UserCtrl(Object):
             self._logging.error(e)
             return 0
 
-    def get_user(self, **kwargs):
+    def get_user(self, single=0, **kwargs):
         """
         根据相关参数，获取对应的用户信息
+        如果single为1则表示获取一个用户的信息
+        否则就是用户列表
         """
-        user_model = User.object()
+        user_model = User.objectlist()
         user_t = User.table()
         cond = SqlNone()
         for k,v in kwargs.items():
-            if v:
-                cond = cond & (getattr(user_t, k) == v)
+            if v and k != "password":
+                try:
+                    cond = cond & (getattr(user_t, k) == v)
+                except Exception as e:
+                    self._logging.error(e)
         if not user_model.find(cond):
             self._logging.error("无法获取该用户信息")
-        return 1
-        # TODO 返回的数据应该是一个关于用户的字典集合
-        
-
+            return None
+        if single
+            return user_model[0]
+        return user_model
