@@ -9,6 +9,7 @@ from bson import ObjectId
 from pymongo import MongoClient, ASCENDING, DESCENDING
 from sputnik.SpuLogging import SpuLogging
 from base_ctrl import *
+from comment_ctrl import *
 import json
 import datetime
 import random
@@ -17,6 +18,7 @@ import random
 整个的电影搜索相关的ctrl都在这里控制者
 """
 COLLECTION = "movie"
+comment_ctrl = CommentCtrl()
 
 class MovieCtrl(Object):
     _logging = SpuLogging(module_name="movie_ctrl", class_name="MovieCtrl")
@@ -32,7 +34,7 @@ class MovieCtrl(Object):
         """
         首页随机推荐的五部电影
         """
-        pass
+        # TODO 随机获取
 
     def list(self, page_num=1, page_size=10, q="", **kwargs):
         """
@@ -41,5 +43,22 @@ class MovieCtrl(Object):
         query = {}
         for k,v in kwargs.iteritems():
             query[k] = v
-        pass
-        
+        # TODO q 模糊查询summary
+        ress = self.collection.find(query).limit(page_size) \
+                .skip((page_num-1)*page_size).sort("id":pymongo.DESCENDING)
+        if not ress.count():
+            return None
+        movie_list = [res for res in ress]
+        return movie_list
+
+    def get(self, _id=""):
+        """
+        通过 _id 获取 对应的电影内容和对应评论
+        """
+        res = self.collection.find_one({"_id":_id})
+        if not res.count():
+            return None
+        res = res[0]
+        id = res.get("id", 0)
+        res['comment'] = comment_ctrl.get(_id=id)
+        return res

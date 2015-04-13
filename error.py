@@ -41,6 +41,8 @@ Error.login_error = (code(), "登录失败")
 Error.unlogin = (code(), "用户未登录")
 Error.register_duplicate = (code(), "重复注册")
 Error.register_failure = (code(), "注册失败")
+Error.movie_subject_failure = (code(), "暂无此电影数据")
+Error.movie_search_failure = (code(), "搜索不到相关内容")
 Error.load_code_tuple()
 
 info = "Error Info:<br> %s" %Error.doc_info
