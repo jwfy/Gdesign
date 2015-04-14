@@ -23,8 +23,9 @@ sys.path.insert(0, 'api')
 def init():
 
     SpuUOM.import_module('user')
+    SpuUOM.import_module('movie')
     SpuUOM.load()
-    
+   
     mongodb = SpuMongodb(mongo_dbcnf)
     mongodb.connection()
     SpuContext.init_context(None, mongodb)

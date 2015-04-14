@@ -20,14 +20,15 @@ import random
 COLLECTION = "movie"
 comment_ctrl = CommentCtrl()
 
-class MovieCtrl(Object):
+class MovieCtrl(object):
     _logging = SpuLogging(module_name="movie_ctrl", class_name="MovieCtrl")
 
 
     def __init__(self, mongo):
         client = MongoClient(mongo["host"], mongo["port"])
         database = client[mongo["database"]]
-        if not self.collection
+        self.collection = ""
+        if not self.collection:
             self.collection = database[COLLECTION]  
 
     def recommendation(self):
@@ -36,29 +37,56 @@ class MovieCtrl(Object):
         """
         # TODO 随机获取
 
-    def list(self, page_num=1, page_size=10, q="", **kwargs):
+    def list(self, page_num=1, page_size=10, status="online", q="", **kwargs):
         """
         筛选数据,获取数据列表
+        NOTICE ：电影 默认 显示上线的
         """
         query = {}
         for k,v in kwargs.iteritems():
-            query[k] = v
+            if isinstance(v, unicode):
+                query[k] = unicode_to_str(v)
+            else:
+                query[k] = str(v)
+        if status:
+            query["status"] = status
         # TODO q 模糊查询summary
-        ress = self.collection.find(query).limit(page_size) \
-                .skip((page_num-1)*page_size).sort("id":pymongo.DESCENDING)
-        if not ress.count():
-            return None
-        movie_list = [res for res in ress]
-        return movie_list
-
-    def get(self, _id=""):
-        """
-        通过 _id 获取 对应的电影内容和对应评论
-        """
-        res = self.collection.find_one({"_id":_id})
+        #if q:
+        #    Pattern pattern = Pattern.compile("^.*" + q + ".*$")
+        #    query["summary"] = pattern
+        res = self.collection.find(query).limit(page_size) \
+                .skip((page_num-1)*page_size).sort([("id", DESCENDING)])
         if not res.count():
             return None
-        res = res[0]
-        id = res.get("id", 0)
+        ans = []
+        for r in res:
+            id = r["id"]
+            r["comment_num"] = comment_ctrl.get(_id=id, get_num=True)
+            r.pop("_id","")
+            t = r.get("down_link", "[]")
+            down_num = len(list(r.get("donw_link",[])))
+            r.pop("down_link", "")
+            r["down_num"] = down_num
+            ans.append(r)
+        return ans
+
+    def get(self, id="", status="online"):
+        """
+        通过 id 获取 对应的电影内容和对应评论
+        """
+        res = self.collection.find_one({"id":id})
+        if not res:
+            return None
+        if res["status"] != status:
+            return None
+        res["_id"] = str(res["_id"])
         res['comment'] = comment_ctrl.get(_id=id)
         return res
+
+    def update_status(self, id="[]", status=""):
+        """
+        更新电影的上线、下线状态
+        可进行批量操作
+        """
+        pass
+        # TODO 需要进一步完善

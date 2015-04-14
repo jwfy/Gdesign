@@ -11,8 +11,8 @@ from datetime import datetime
 from model.comment_model import Comment
 from base_ctrl import *
 
-class CommentCtrl(Object):
-    _logging = SpuLogging(moduel_name="comment_ctrl", class_name="CommentCtrl")
+class CommentCtrl(object):
+    _logging = SpuLogging(module_name="comment_ctrl", class_name="CommentCtrl")
 
     def __init__(self):
         pass
@@ -34,9 +34,10 @@ class CommentCtrl(Object):
         comment_model.update()
         return 1
 
-    def get(self, category="movie", _id="0", status=1):
+    def get(self, category="movie", _id="0", status=1, get_num=False):
         """
         获取一个具体的博客或者电影的评论列表
+        NOTICE 如果get_num 为True 则是返回其个数，否则是
         """
         comment_model = Comment.objectlist()
         comment_t = Comment.table()
@@ -46,7 +47,7 @@ class CommentCtrl(Object):
         sort_style = Sort([(comment_t.id, Sort.desc)])
         comment_model.sort(sort_style)
         if not comment_model.find(cond):
-            self._logging.error("未找到对应评论")
+            self._logging.warn("未找到对应评论")
             return None
         comment_list = []
         for comment in comment_model:
@@ -55,6 +56,8 @@ class CommentCtrl(Object):
             comment_dict["contain"] = comment.contain
             comment_dict["time"] = comment.time
             comment_list.append(comment_dict)
+        if get_num:
+            return len(comment_list)
         return comment_list
 
     def list(self, page_num=1, page_size=10, category="movie", status=1,
@@ -73,12 +76,12 @@ class CommentCtrl(Object):
         comment_model.sort(sort_style)
         comment_model.pageinfo(pageinfo)
         if not comment_model.find(cond):
-            self._logging.error("未找到评论列表")
+            self._logging.warn("未找到评论列表")
             return None
         return comment_model
 
-    def add(self, name, email, title, contain, category="movie",ip="127.0.0.1"
-            _id="0"):
+    def add(self, name, email, title, contain, category="movie",
+            ip="127.0.0.1", _id="0"):
         """
         添加评论,默认的显示正常
         """

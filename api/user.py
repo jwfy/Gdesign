@@ -35,7 +35,7 @@ class user(WebRequest):
         # TODO 处理登录
         pass
     
-    @check_login
+    @check_login()
     def logout(self):
         """
         退出登录

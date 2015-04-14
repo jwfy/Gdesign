@@ -1,0 +1,525 @@
+[E 150414 10:07:27 dm.py:start:60] Uncaught exception GET /movie/movie/category?name=%E5%96%9C%E5%89%A7 (127.0.0.1)
+    HTTPRequest(protocol='http', host='127.0.0.1:8910', method='GET', uri='/movie/movie/category?name=%E5%96%9C%E5%89%A7', version='HTTP/1.1', remote_ip='127.0.0.1', body='', headers={'Connection': 'keep-alive', 'Accept-Language': 'zh-cn,en-us;q=0.7,en;q=0.3', 'Accept-Encoding': 'gzip, deflate', 'Cookie': 'sessionid=000041883628c1a6547eabd0b4fb0bd9110f68', 'Host': '127.0.0.1:8910', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0'})
+    Traceback (most recent call last):
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/web.py", line 954, in _execute
+        getattr(self, self.request.method.lower())(*args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 44, in request_process
+        r = func(self, *args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 544, in get
+        r = self.process_debug('Get', urlarg)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 261, in process_debug
+        return self.processer(**argdict)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuUOM.py", line 187, in caller
+        r = method(_clsobj, **kwargs)
+      File "api/movie.py", line 32, in category
+        res = movie_ctrl.list(page_num=page_num, page_size=page_size)
+      File "/home/jwfy/syb/github/Gdesign/module/movie_ctrl.py", line 52, in list
+        .skip((page_num-1)*page_size).sort([("id", DESCENDING)])
+    NameError: global name 'pymongo' is not defined
+[E 150414 10:07:27 dm.py:start:60] 500 GET /movie/movie/category?name=%E5%96%9C%E5%89%A7 (127.0.0.1) 76556.17ms
+[E 150414 12:55:33 dm.py:start:60] Uncaught exception GET /movie/movie/category?name=%E5%96%9C%E5%89%A7 (127.0.0.1)
+    HTTPRequest(protocol='http', host='127.0.0.1:8910', method='GET', uri='/movie/movie/category?name=%E5%96%9C%E5%89%A7', version='HTTP/1.1', remote_ip='127.0.0.1', body='', headers={'Accept-Language': 'zh-cn,en-us;q=0.7,en;q=0.3', 'Accept-Encoding': 'gzip, deflate', 'Host': '127.0.0.1:8910', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0', 'Connection': 'keep-alive', 'Cookie': 'sessionid=000041883628c1a6547eabd0b4fb0bd9110f68; jwfy_dm_website_session=19732a3b3d6056c49988e5247439670a', 'Cache-Control': 'max-age=0', 'If-None-Match': '"da39a3ee5e6b4b0d3255bfef95601890afd80709"'})
+    Traceback (most recent call last):
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/web.py", line 954, in _execute
+        getattr(self, self.request.method.lower())(*args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 44, in request_process
+        r = func(self, *args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 544, in get
+        r = self.process_debug('Get', urlarg)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 261, in process_debug
+        return self.processer(**argdict)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuUOM.py", line 187, in caller
+        r = method(_clsobj, **kwargs)
+      File "api/movie.py", line 35, in category
+        for r in res:
+    TypeError: 'NoneType' object is not iterable
+[E 150414 12:55:33 dm.py:start:60] 500 GET /movie/movie/category?name=%E5%96%9C%E5%89%A7 (127.0.0.1) 46378.88ms
+[E 150414 12:56:35 dm.py:start:60] Uncaught exception GET /movie/movie/category?name=%E5%96%9C%E5%89%A7 (127.0.0.1)
+    HTTPRequest(protocol='http', host='127.0.0.1:8910', method='GET', uri='/movie/movie/category?name=%E5%96%9C%E5%89%A7', version='HTTP/1.1', remote_ip='127.0.0.1', body='', headers={'Accept-Language': 'zh-cn,en-us;q=0.7,en;q=0.3', 'Accept-Encoding': 'gzip, deflate', 'Host': '127.0.0.1:8910', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0', 'Connection': 'keep-alive', 'Cookie': 'sessionid=000041883628c1a6547eabd0b4fb0bd9110f68; jwfy_dm_website_session=19732a3b3d6056c49988e5247439670a', 'Cache-Control': 'max-age=0'})
+    Traceback (most recent call last):
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/web.py", line 954, in _execute
+        getattr(self, self.request.method.lower())(*args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 44, in request_process
+        r = func(self, *args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 544, in get
+        r = self.process_debug('Get', urlarg)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 261, in process_debug
+        return self.processer(**argdict)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuUOM.py", line 187, in caller
+        r = method(_clsobj, **kwargs)
+      File "api/movie.py", line 35, in category
+        for r in res:
+    TypeError: 'NoneType' object is not iterable
+[E 150414 12:56:35 dm.py:start:60] 500 GET /movie/movie/category?name=%E5%96%9C%E5%89%A7 (127.0.0.1) 58573.68ms
+[E 150414 12:56:46 dm.py:start:60] Uncaught exception GET /movie/movie/category?name=%E5%96%9C%E5%89%A7 (127.0.0.1)
+    HTTPRequest(protocol='http', host='127.0.0.1:8910', method='GET', uri='/movie/movie/category?name=%E5%96%9C%E5%89%A7', version='HTTP/1.1', remote_ip='127.0.0.1', body='', headers={'Accept-Language': 'zh-cn,en-us;q=0.7,en;q=0.3', 'Accept-Encoding': 'gzip, deflate', 'Host': '127.0.0.1:8910', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0', 'Connection': 'keep-alive', 'Cookie': 'sessionid=000041883628c1a6547eabd0b4fb0bd9110f68; jwfy_dm_website_session=19732a3b3d6056c49988e5247439670a', 'Cache-Control': 'max-age=0'})
+    Traceback (most recent call last):
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/web.py", line 954, in _execute
+        getattr(self, self.request.method.lower())(*args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 44, in request_process
+        r = func(self, *args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 544, in get
+        r = self.process_debug('Get', urlarg)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 261, in process_debug
+        return self.processer(**argdict)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuUOM.py", line 187, in caller
+        r = method(_clsobj, **kwargs)
+      File "api/movie.py", line 35, in category
+        for r in res:
+    TypeError: 'NoneType' object is not iterable
+[E 150414 12:56:46 dm.py:start:60] 500 GET /movie/movie/category?name=%E5%96%9C%E5%89%A7 (127.0.0.1) 2950.87ms
+[E 150414 17:25:14 dm.py:start:60] Uncaught exception GET /movie/movie/category?name=%E5%96%9C%E5%89%A7 (127.0.0.1)
+    HTTPRequest(protocol='http', host='127.0.0.1:8910', method='GET', uri='/movie/movie/category?name=%E5%96%9C%E5%89%A7', version='HTTP/1.1', remote_ip='127.0.0.1', body='', headers={'Accept-Language': 'zh-cn,en-us;q=0.7,en;q=0.3', 'Accept-Encoding': 'gzip, deflate', 'Host': '127.0.0.1:8910', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0', 'Connection': 'keep-alive', 'Cookie': 'sessionid=000041883628c1a6547eabd0b4fb0bd9110f68; jwfy_dm_website_session=19732a3b3d6056c49988e5247439670a', 'Cache-Control': 'max-age=0', 'If-None-Match': '"da39a3ee5e6b4b0d3255bfef95601890afd80709"'})
+    Traceback (most recent call last):
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/web.py", line 954, in _execute
+        getattr(self, self.request.method.lower())(*args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 44, in request_process
+        r = func(self, *args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 544, in get
+        r = self.process_debug('Get', urlarg)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 261, in process_debug
+        return self.processer(**argdict)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuUOM.py", line 187, in caller
+        r = method(_clsobj, **kwargs)
+      File "api/movie.py", line 32, in category
+        res = movie_ctrl.list(page_num=page_num, page_size=page_size, category=name)
+      File "/home/jwfy/syb/github/Gdesign/module/movie_ctrl.py", line 59, in list
+        r["comment_num"] = comment_ctrl.get(_id=id, get_num=True)
+      File "/home/jwfy/syb/github/Gdesign/module/comment_ctrl.py", line 43, in get
+        comment_t = Comment.table()
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuDBObject.py", line 986, in table
+        return cls.scheme(table_as=table_as, nocache=nocache)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuDBObject.py", line 975, in scheme
+        scheme = SpuTableScheme(cls, table_as)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuDBObject.py", line 890, in __init__
+        obj = db_cls(None, None, False)
+      File "/home/jwfy/syb/github/Gdesign/model/comment_model.py", line 20, in __init__
+        SpuDBObject.__inti__(self, User._table_, spudb, spucache, debug=debug)
+    AttributeError: type object 'SpuDBObject' has no attribute '__inti__'
+[E 150414 17:25:14 dm.py:start:60] 500 GET /movie/movie/category?name=%E5%96%9C%E5%89%A7 (127.0.0.1) 12.92ms
+[E 150414 17:25:59 dm.py:start:60] Uncaught exception GET /movie/movie/category?name=%E5%96%9C%E5%89%A7 (127.0.0.1)
+    HTTPRequest(protocol='http', host='127.0.0.1:8910', method='GET', uri='/movie/movie/category?name=%E5%96%9C%E5%89%A7', version='HTTP/1.1', remote_ip='127.0.0.1', body='', headers={'Accept-Language': 'zh-cn,en-us;q=0.7,en;q=0.3', 'Accept-Encoding': 'gzip, deflate', 'Host': '127.0.0.1:8910', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0', 'Connection': 'keep-alive', 'Cookie': 'sessionid=000041883628c1a6547eabd0b4fb0bd9110f68; jwfy_dm_website_session=19732a3b3d6056c49988e5247439670a', 'Cache-Control': 'max-age=0'})
+    Traceback (most recent call last):
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/web.py", line 954, in _execute
+        getattr(self, self.request.method.lower())(*args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 44, in request_process
+        r = func(self, *args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 544, in get
+        r = self.process_debug('Get', urlarg)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 261, in process_debug
+        return self.processer(**argdict)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuUOM.py", line 187, in caller
+        r = method(_clsobj, **kwargs)
+      File "api/movie.py", line 32, in category
+        res = movie_ctrl.list(page_num=page_num, page_size=page_size, category=name)
+      File "/home/jwfy/syb/github/Gdesign/module/movie_ctrl.py", line 59, in list
+        r["comment_num"] = comment_ctrl.get(_id=id, get_num=True)
+      File "/home/jwfy/syb/github/Gdesign/module/comment_ctrl.py", line 43, in get
+        comment_t = Comment.table()
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuDBObject.py", line 986, in table
+        return cls.scheme(table_as=table_as, nocache=nocache)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuDBObject.py", line 975, in scheme
+        scheme = SpuTableScheme(cls, table_as)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuDBObject.py", line 890, in __init__
+        obj = db_cls(None, None, False)
+      File "/home/jwfy/syb/github/Gdesign/model/comment_model.py", line 20, in __init__
+        SpuDBObject.__init__(self, User._table_, spudb, spucache, debug=debug)
+    NameError: global name 'User' is not defined
+[E 150414 17:25:59 dm.py:start:60] 500 GET /movie/movie/category?name=%E5%96%9C%E5%89%A7 (127.0.0.1) 13.55ms
+[E 150414 17:26:46 comment_ctrl.py:get:50] 未找到对应评论
+[E 150414 17:26:46 comment_ctrl.py:get:50] 未找到对应评论
+[E 150414 17:26:46 comment_ctrl.py:get:50] 未找到对应评论
+[E 150414 17:26:46 comment_ctrl.py:get:50] 未找到对应评论
+[E 150414 17:26:46 comment_ctrl.py:get:50] 未找到对应评论
+[E 150414 17:26:46 comment_ctrl.py:get:50] 未找到对应评论
+[E 150414 17:26:46 comment_ctrl.py:get:50] 未找到对应评论
+[E 150414 17:26:46 comment_ctrl.py:get:50] 未找到对应评论
+[E 150414 17:26:46 comment_ctrl.py:get:50] 未找到对应评论
+[E 150414 17:26:46 comment_ctrl.py:get:50] 未找到对应评论
+[E 150414 17:30:11 comment_ctrl.py:get:50] 未找到对应评论
+[E 150414 17:30:11 comment_ctrl.py:get:50] 未找到对应评论
+[E 150414 17:35:47 comment_ctrl.py:get:50] 未找到对应评论
+[E 150414 17:35:47 comment_ctrl.py:get:50] 未找到对应评论
+[E 150414 17:35:47 comment_ctrl.py:get:50] 未找到对应评论
+[E 150414 17:35:47 comment_ctrl.py:get:50] 未找到对应评论
+[E 150414 17:35:47 comment_ctrl.py:get:50] 未找到对应评论
+[E 150414 17:35:47 comment_ctrl.py:get:50] 未找到对应评论
+[E 150414 17:35:47 comment_ctrl.py:get:50] 未找到对应评论
+[E 150414 17:35:47 comment_ctrl.py:get:50] 未找到对应评论
+[E 150414 17:35:47 comment_ctrl.py:get:50] 未找到对应评论
+[E 150414 17:35:47 comment_ctrl.py:get:50] 未找到对应评论
+[E 150414 17:37:23 comment_ctrl.py:get:50] 未找到对应评论
+[E 150414 17:37:33 comment_ctrl.py:get:50] 未找到对应评论
+[E 150414 17:37:56 comment_ctrl.py:get:50] 未找到对应评论
+[E 150414 17:38:54 comment_ctrl.py:get:50] 未找到对应评论
+[E 150414 17:38:55 comment_ctrl.py:get:50] 未找到对应评论
+[E 150414 17:38:56 comment_ctrl.py:get:50] 未找到对应评论
+[E 150414 17:38:56 comment_ctrl.py:get:50] 未找到对应评论
+[E 150414 17:38:56 comment_ctrl.py:get:50] 未找到对应评论
+[E 150414 17:38:57 comment_ctrl.py:get:50] 未找到对应评论
+[E 150414 17:38:57 comment_ctrl.py:get:50] 未找到对应评论
+[E 150414 17:39:13 comment_ctrl.py:get:50] 未找到对应评论
+[E 150414 17:39:13 dm.py:start:60] Uncaught exception GET /movie/movie/category?name=%E5%96%9C%E5%89%A7 (127.0.0.1)
+    HTTPRequest(protocol='http', host='127.0.0.1:8910', method='GET', uri='/movie/movie/category?name=%E5%96%9C%E5%89%A7', version='HTTP/1.1', remote_ip='127.0.0.1', body='', headers={'Accept-Language': 'zh-cn,en-us;q=0.7,en;q=0.3', 'Accept-Encoding': 'gzip, deflate', 'Host': '127.0.0.1:8910', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0', 'Connection': 'keep-alive', 'Cookie': 'sessionid=000041883628c1a6547eabd0b4fb0bd9110f68; jwfy_dm_website_session=19732a3b3d6056c49988e5247439670a', 'Cache-Control': 'max-age=0', 'If-None-Match': '"169b7da61fadc026c097355058fea0e6cb5e4e8d"'})
+    Traceback (most recent call last):
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/web.py", line 954, in _execute
+        getattr(self, self.request.method.lower())(*args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 44, in request_process
+        r = func(self, *args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 544, in get
+        r = self.process_debug('Get', urlarg)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 261, in process_debug
+        return self.processer(**argdict)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuUOM.py", line 187, in caller
+        r = method(_clsobj, **kwargs)
+      File "api/movie.py", line 32, in category
+        res = movie_ctrl.list(page_num=page_num, page_size=page_size, category=name)
+      File "/home/jwfy/syb/github/Gdesign/module/movie_ctrl.py", line 61, in list
+        down_num = len(r.get("donw_link"))
+    TypeError: object of type 'NoneType' has no len()
+[E 150414 17:39:13 dm.py:start:60] 500 GET /movie/movie/category?name=%E5%96%9C%E5%89%A7 (127.0.0.1) 10.50ms
+[E 150414 17:40:02 comment_ctrl.py:get:50] 未找到对应评论
+[E 150414 17:40:02 dm.py:start:60] Uncaught exception GET /movie/movie/category?name=%E5%96%9C%E5%89%A7 (127.0.0.1)
+    HTTPRequest(protocol='http', host='127.0.0.1:8910', method='GET', uri='/movie/movie/category?name=%E5%96%9C%E5%89%A7', version='HTTP/1.1', remote_ip='127.0.0.1', body='', headers={'Accept-Language': 'zh-cn,en-us;q=0.7,en;q=0.3', 'Accept-Encoding': 'gzip, deflate', 'Host': '127.0.0.1:8910', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0', 'Connection': 'keep-alive', 'Cookie': 'sessionid=000041883628c1a6547eabd0b4fb0bd9110f68; jwfy_dm_website_session=19732a3b3d6056c49988e5247439670a', 'Cache-Control': 'max-age=0'})
+    Traceback (most recent call last):
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/web.py", line 954, in _execute
+        getattr(self, self.request.method.lower())(*args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 44, in request_process
+        r = func(self, *args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 544, in get
+        r = self.process_debug('Get', urlarg)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 261, in process_debug
+        return self.processer(**argdict)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuUOM.py", line 187, in caller
+        r = method(_clsobj, **kwargs)
+      File "api/movie.py", line 32, in category
+        res = movie_ctrl.list(page_num=page_num, page_size=page_size, category=name)
+      File "/home/jwfy/syb/github/Gdesign/module/movie_ctrl.py", line 63, in list
+        t = r.get("down_link")
+    TypeError: object of type 'NoneType' has no len()
+[E 150414 17:40:02 dm.py:start:60] 500 GET /movie/movie/category?name=%E5%96%9C%E5%89%A7 (127.0.0.1) 656.32ms
+[E 150414 17:40:20 comment_ctrl.py:get:50] 未找到对应评论
+[E 150414 17:41:41 dm.py:start:60] Uncaught exception GET /movie/movie/category?name=%E5%96%9C%E5%89%A7 (127.0.0.1)
+    HTTPRequest(protocol='http', host='127.0.0.1:8910', method='GET', uri='/movie/movie/category?name=%E5%96%9C%E5%89%A7', version='HTTP/1.1', remote_ip='127.0.0.1', body='', headers={'Accept-Language': 'zh-cn,en-us;q=0.7,en;q=0.3', 'Accept-Encoding': 'gzip, deflate', 'Host': '127.0.0.1:8910', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0', 'Connection': 'keep-alive', 'Cookie': 'sessionid=000041883628c1a6547eabd0b4fb0bd9110f68; jwfy_dm_website_session=19732a3b3d6056c49988e5247439670a', 'Cache-Control': 'max-age=0'})
+    Traceback (most recent call last):
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/web.py", line 954, in _execute
+        getattr(self, self.request.method.lower())(*args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 44, in request_process
+        r = func(self, *args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 544, in get
+        r = self.process_debug('Get', urlarg)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 261, in process_debug
+        return self.processer(**argdict)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuUOM.py", line 187, in caller
+        r = method(_clsobj, **kwargs)
+      File "api/movie.py", line 32, in category
+        res = movie_ctrl.list(page_num=page_num, page_size=page_size, category=name)
+      File "/home/jwfy/syb/github/Gdesign/module/movie_ctrl.py", line 64, in list
+        down_num = len(r.get("donw_link"))
+    TypeError: object of type 'NoneType' has no len()
+[E 150414 17:41:41 dm.py:start:60] 500 GET /movie/movie/category?name=%E5%96%9C%E5%89%A7 (127.0.0.1) 81459.49ms
+[E 150414 17:42:10 comment_ctrl.py:get:50] 未找到对应评论
+[E 150414 17:43:18 dm.py:start:60] Uncaught exception GET /movie/movie/category?name=%E5%96%9C%E5%89%A7 (127.0.0.1)
+    HTTPRequest(protocol='http', host='127.0.0.1:8910', method='GET', uri='/movie/movie/category?name=%E5%96%9C%E5%89%A7', version='HTTP/1.1', remote_ip='127.0.0.1', body='', headers={'Accept-Language': 'zh-cn,en-us;q=0.7,en;q=0.3', 'Accept-Encoding': 'gzip, deflate', 'Host': '127.0.0.1:8910', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0', 'Connection': 'keep-alive', 'Cookie': 'sessionid=000041883628c1a6547eabd0b4fb0bd9110f68; jwfy_dm_website_session=19732a3b3d6056c49988e5247439670a', 'Cache-Control': 'max-age=0'})
+    Traceback (most recent call last):
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/web.py", line 954, in _execute
+        getattr(self, self.request.method.lower())(*args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 44, in request_process
+        r = func(self, *args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 544, in get
+        r = self.process_debug('Get', urlarg)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 261, in process_debug
+        return self.processer(**argdict)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuUOM.py", line 187, in caller
+        r = method(_clsobj, **kwargs)
+      File "api/movie.py", line 32, in category
+        res = movie_ctrl.list(page_num=page_num, page_size=page_size, category=name)
+      File "/home/jwfy/syb/github/Gdesign/module/movie_ctrl.py", line 64, in list
+        down_num = len(r.get("donw_link","[]"))
+    TypeError: object of type 'NoneType' has no len()
+[E 150414 17:43:18 dm.py:start:60] 500 GET /movie/movie/category?name=%E5%96%9C%E5%89%A7 (127.0.0.1) 68300.84ms
+[E 150414 17:43:20 comment_ctrl.py:get:50] 未找到对应评论
+[E 150414 17:44:13 comment_ctrl.py:get:50] 未找到对应评论
+[E 150414 17:44:20 comment_ctrl.py:get:50] 未找到对应评论
+[E 150414 17:44:58 comment_ctrl.py:get:50] 未找到对应评论
+[E 150414 17:45:08 comment_ctrl.py:get:50] 未找到对应评论
+[E 150414 17:45:08 comment_ctrl.py:get:50] 未找到对应评论
+[E 150414 18:06:48 comment_ctrl.py:get:50] 未找到对应评论
+[E 150414 18:06:48 comment_ctrl.py:get:50] 未找到对应评论
+[E 150414 18:07:09 comment_ctrl.py:get:50] 未找到对应评论
+[E 150414 18:07:09 comment_ctrl.py:get:50] 未找到对应评论
+[E 150414 18:07:27 comment_ctrl.py:get:50] 未找到对应评论
+[E 150414 18:07:27 comment_ctrl.py:get:50] 未找到对应评论
+[E 150414 18:10:57 dm.py:start:60] Uncaught exception GET /movie/movie/search?q=1234 (127.0.0.1)
+    HTTPRequest(protocol='http', host='127.0.0.1:8910', method='GET', uri='/movie/movie/search?q=1234', version='HTTP/1.1', remote_ip='127.0.0.1', body='', headers={'Connection': 'keep-alive', 'Accept-Language': 'zh-cn,en-us;q=0.7,en;q=0.3', 'Accept-Encoding': 'gzip, deflate', 'Cookie': 'sessionid=000041883628c1a6547eabd0b4fb0bd9110f68; jwfy_dm_website_session=19732a3b3d6056c49988e5247439670a', 'Host': '127.0.0.1:8910', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0'})
+    Traceback (most recent call last):
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/web.py", line 954, in _execute
+        getattr(self, self.request.method.lower())(*args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 44, in request_process
+        r = func(self, *args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 544, in get
+        r = self.process_debug('Get', urlarg)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 261, in process_debug
+        return self.processer(**argdict)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuUOM.py", line 187, in caller
+        r = method(_clsobj, **kwargs)
+      File "api/movie.py", line 57, in search
+        res = movie_ctrl.list(page_num=page_num, page_size=pahe_size,
+    NameError: global name 'pahe_size' is not defined
+[E 150414 18:10:57 dm.py:start:60] 500 GET /movie/movie/search?q=1234 (127.0.0.1) 4.57ms
+[E 150414 18:11:27 movie.py:search:53] 非法查询操作
+[E 150414 18:11:52 movie.py:search:53] 非法查询操作
+[E 150414 18:12:00 comment_ctrl.py:get:50] 未找到对应评论
+[E 150414 18:12:00 comment_ctrl.py:get:50] 未找到对应评论
+[E 150414 18:12:00 comment_ctrl.py:get:50] 未找到对应评论
+[E 150414 18:12:00 comment_ctrl.py:get:50] 未找到对应评论
+[E 150414 18:12:00 comment_ctrl.py:get:50] 未找到对应评论
+[E 150414 18:12:00 comment_ctrl.py:get:50] 未找到对应评论
+[E 150414 18:12:00 comment_ctrl.py:get:50] 未找到对应评论
+[E 150414 18:12:00 comment_ctrl.py:get:50] 未找到对应评论
+[E 150414 18:12:00 comment_ctrl.py:get:50] 未找到对应评论
+[E 150414 18:12:00 comment_ctrl.py:get:50] 未找到对应评论
+[E 150414 18:13:53 movie.py:search:53] 非法查询操作
+[E 150414 18:43:26 movie.py:search:53] 非法查询操作
+[E 150414 19:08:03 dm.py:start:60] Uncaught exception GET /movie/movie/search?token=1234 (127.0.0.1)
+    HTTPRequest(protocol='http', host='127.0.0.1:8910', method='GET', uri='/movie/movie/search?token=1234', version='HTTP/1.1', remote_ip='127.0.0.1', body='', headers={'Accept-Language': 'zh-cn,en-us;q=0.7,en;q=0.3', 'Accept-Encoding': 'gzip, deflate', 'Host': '127.0.0.1:8910', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0', 'Connection': 'keep-alive', 'Cookie': 'sessionid=000041883628c1a6547eabd0b4fb0bd9110f68; jwfy_dm_website_session=19732a3b3d6056c49988e5247439670a', 'If-None-Match': '"19fb6198029b3cc8c9e7c8a14ae7311a3c8cac0d"'})
+    Traceback (most recent call last):
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/web.py", line 954, in _execute
+        getattr(self, self.request.method.lower())(*args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 44, in request_process
+        r = func(self, *args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 544, in get
+        r = self.process_debug('Get', urlarg)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 261, in process_debug
+        return self.processer(**argdict)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuUOM.py", line 187, in caller
+        r = method(_clsobj, **kwargs)
+      File "api/movie.py", line 59, in search
+        if not q:
+      File "api/movie.py", line 59, in search
+        if not q:
+      File "/usr/lib/python2.7/bdb.py", line 49, in trace_dispatch
+        return self.dispatch_line(frame)
+      File "/usr/lib/python2.7/bdb.py", line 68, in dispatch_line
+        if self.quitting: raise BdbQuit
+    BdbQuit
+[E 150414 19:08:03 dm.py:start:60] 500 GET /movie/movie/search?token=1234 (127.0.0.1) 8280.38ms
+[E 150414 19:11:36 movie.py:search:52] 非法查询操作
+[E 150414 19:13:18 dm.py:start:60] Uncaught exception GET /movie/movie/category?name=%E5%96%9C%E5%89%A7&page_num=3 (127.0.0.1)
+    HTTPRequest(protocol='http', host='127.0.0.1:8910', method='GET', uri='/movie/movie/category?name=%E5%96%9C%E5%89%A7&page_num=3', version='HTTP/1.1', remote_ip='127.0.0.1', body='', headers={'Connection': 'keep-alive', 'Accept-Language': 'zh-cn,en-us;q=0.7,en;q=0.3', 'Accept-Encoding': 'gzip, deflate', 'Cookie': 'sessionid=000041883628c1a6547eabd0b4fb0bd9110f68; jwfy_dm_website_session=19732a3b3d6056c49988e5247439670a', 'Host': '127.0.0.1:8910', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0'})
+    Traceback (most recent call last):
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/web.py", line 954, in _execute
+        getattr(self, self.request.method.lower())(*args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 44, in request_process
+        r = func(self, *args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 544, in get
+        r = self.process_debug('Get', urlarg)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 261, in process_debug
+        return self.processer(**argdict)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuUOM.py", line 187, in caller
+        r = method(_clsobj, **kwargs)
+      File "api/movie.py", line 32, in category
+        res = movie_ctrl.list(page_num=page_num, page_size=page_size, category=name)
+      File "/home/jwfy/syb/github/Gdesign/module/movie_ctrl.py", line 53, in list
+        .skip((page_num-1)*page_size).sort([("id", DESCENDING)])
+    TypeError: unsupported operand type(s) for -: 'unicode' and 'int'
+[E 150414 19:13:18 dm.py:start:60] 500 GET /movie/movie/category?name=%E5%96%9C%E5%89%A7&page_num=3 (127.0.0.1) 4.22ms
+[E 150414 20:04:17 dm.py:start:60] Uncaught exception GET /movie/movie/subject?id=1292052 (127.0.0.1)
+    HTTPRequest(protocol='http', host='127.0.0.1:8910', method='GET', uri='/movie/movie/subject?id=1292052', version='HTTP/1.1', remote_ip='127.0.0.1', body='', headers={'Connection': 'keep-alive', 'Accept-Language': 'zh-cn,en-us;q=0.7,en;q=0.3', 'Accept-Encoding': 'gzip, deflate', 'Cookie': 'sessionid=000041883628c1a6547eabd0b4fb0bd9110f68; jwfy_dm_website_session=19732a3b3d6056c49988e5247439670a', 'Host': '127.0.0.1:8910', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0'})
+    Traceback (most recent call last):
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/web.py", line 954, in _execute
+        getattr(self, self.request.method.lower())(*args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 44, in request_process
+        r = func(self, *args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 544, in get
+        r = self.process_debug('Get', urlarg)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 261, in process_debug
+        return self.processer(**argdict)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuUOM.py", line 187, in caller
+        r = method(_clsobj, **kwargs)
+      File "api/movie.py", line 135, in subject
+        movie =  movie_ctrl.get(id)
+      File "/home/jwfy/syb/github/Gdesign/module/movie_ctrl.py", line 76, in get
+        if not res.count():
+    AttributeError: 'NoneType' object has no attribute 'count'
+[E 150414 20:04:17 dm.py:start:60] 500 GET /movie/movie/subject?id=1292052 (127.0.0.1) 7.50ms
+[E 150414 20:06:42 dm.py:start:60] Uncaught exception GET /movie/movie/subject?id=1292052 (127.0.0.1)
+    HTTPRequest(protocol='http', host='127.0.0.1:8910', method='GET', uri='/movie/movie/subject?id=1292052', version='HTTP/1.1', remote_ip='127.0.0.1', body='', headers={'Accept-Language': 'zh-cn,en-us;q=0.7,en;q=0.3', 'Accept-Encoding': 'gzip, deflate', 'Host': '127.0.0.1:8910', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0', 'Connection': 'keep-alive', 'Cookie': 'sessionid=000041883628c1a6547eabd0b4fb0bd9110f68; jwfy_dm_website_session=19732a3b3d6056c49988e5247439670a', 'Cache-Control': 'max-age=0'})
+    Traceback (most recent call last):
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/web.py", line 954, in _execute
+        getattr(self, self.request.method.lower())(*args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 44, in request_process
+        r = func(self, *args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 544, in get
+        r = self.process_debug('Get', urlarg)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 261, in process_debug
+        return self.processer(**argdict)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuUOM.py", line 187, in caller
+        r = method(_clsobj, **kwargs)
+      File "api/movie.py", line 135, in subject
+        movie =  movie_ctrl.get(id)
+      File "/home/jwfy/syb/github/Gdesign/module/movie_ctrl.py", line 76, in get
+        if not res.count():
+    AttributeError: 'NoneType' object has no attribute 'count'
+[E 150414 20:06:42 dm.py:start:60] 500 GET /movie/movie/subject?id=1292052 (127.0.0.1) 4.48ms
+[E 150414 20:06:44 dm.py:start:60] Uncaught exception GET /movie/movie/subject?id=1292052 (127.0.0.1)
+    HTTPRequest(protocol='http', host='127.0.0.1:8910', method='GET', uri='/movie/movie/subject?id=1292052', version='HTTP/1.1', remote_ip='127.0.0.1', body='', headers={'Accept-Language': 'zh-cn,en-us;q=0.7,en;q=0.3', 'Accept-Encoding': 'gzip, deflate', 'Host': '127.0.0.1:8910', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0', 'Connection': 'keep-alive', 'Cookie': 'sessionid=000041883628c1a6547eabd0b4fb0bd9110f68; jwfy_dm_website_session=19732a3b3d6056c49988e5247439670a', 'Cache-Control': 'max-age=0'})
+    Traceback (most recent call last):
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/web.py", line 954, in _execute
+        getattr(self, self.request.method.lower())(*args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 44, in request_process
+        r = func(self, *args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 544, in get
+        r = self.process_debug('Get', urlarg)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 261, in process_debug
+        return self.processer(**argdict)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuUOM.py", line 187, in caller
+        r = method(_clsobj, **kwargs)
+      File "api/movie.py", line 135, in subject
+        movie =  movie_ctrl.get(id)
+      File "/home/jwfy/syb/github/Gdesign/module/movie_ctrl.py", line 76, in get
+        if not res.count():
+    AttributeError: 'NoneType' object has no attribute 'count'
+[E 150414 20:06:44 dm.py:start:60] 500 GET /movie/movie/subject?id=1292052 (127.0.0.1) 3.94ms
+[E 150414 20:07:21 dm.py:start:60] Uncaught exception GET /movie/movie/subject?id=1292052 (127.0.0.1)
+    HTTPRequest(protocol='http', host='127.0.0.1:8910', method='GET', uri='/movie/movie/subject?id=1292052', version='HTTP/1.1', remote_ip='127.0.0.1', body='', headers={'Accept-Language': 'zh-cn,en-us;q=0.7,en;q=0.3', 'Accept-Encoding': 'gzip, deflate', 'Host': '127.0.0.1:8910', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0', 'Connection': 'keep-alive', 'Cookie': 'sessionid=000041883628c1a6547eabd0b4fb0bd9110f68; jwfy_dm_website_session=19732a3b3d6056c49988e5247439670a', 'Cache-Control': 'max-age=0'})
+    Traceback (most recent call last):
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/web.py", line 954, in _execute
+        getattr(self, self.request.method.lower())(*args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 44, in request_process
+        r = func(self, *args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 544, in get
+        r = self.process_debug('Get', urlarg)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 261, in process_debug
+        return self.processer(**argdict)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuUOM.py", line 187, in caller
+        r = method(_clsobj, **kwargs)
+      File "api/movie.py", line 135, in subject
+        movie =  movie_ctrl.get(id)
+      File "/home/jwfy/syb/github/Gdesign/module/movie_ctrl.py", line 76, in get
+        if not res.count():
+    AttributeError: 'NoneType' object has no attribute 'count'
+[E 150414 20:07:21 dm.py:start:60] 500 GET /movie/movie/subject?id=1292052 (127.0.0.1) 6.03ms
+[E 150414 20:08:48 dm.py:start:60] Uncaught exception GET /movie/movie/subject?id=1292052 (127.0.0.1)
+    HTTPRequest(protocol='http', host='127.0.0.1:8910', method='GET', uri='/movie/movie/subject?id=1292052', version='HTTP/1.1', remote_ip='127.0.0.1', body='', headers={'Accept-Language': 'zh-cn,en-us;q=0.7,en;q=0.3', 'Accept-Encoding': 'gzip, deflate', 'Host': '127.0.0.1:8910', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0', 'Connection': 'keep-alive', 'Cookie': 'sessionid=000041883628c1a6547eabd0b4fb0bd9110f68; jwfy_dm_website_session=19732a3b3d6056c49988e5247439670a', 'Cache-Control': 'max-age=0'})
+    Traceback (most recent call last):
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/web.py", line 954, in _execute
+        getattr(self, self.request.method.lower())(*args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 44, in request_process
+        r = func(self, *args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 544, in get
+        r = self.process_debug('Get', urlarg)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 261, in process_debug
+        return self.processer(**argdict)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuUOM.py", line 187, in caller
+        r = method(_clsobj, **kwargs)
+      File "api/movie.py", line 135, in subject
+        movie =  movie_ctrl.get(id)
+      File "/home/jwfy/syb/github/Gdesign/module/movie_ctrl.py", line 78, in get
+        if not res.count():
+    AttributeError: 'NoneType' object has no attribute 'count'
+[E 150414 20:08:48 dm.py:start:60] 500 GET /movie/movie/subject?id=1292052 (127.0.0.1) 58164.85ms
+[E 150414 20:09:53 dm.py:start:60] Uncaught exception GET /movie/movie/subject?id=1292052 (127.0.0.1)
+    HTTPRequest(protocol='http', host='127.0.0.1:8910', method='GET', uri='/movie/movie/subject?id=1292052', version='HTTP/1.1', remote_ip='127.0.0.1', body='', headers={'Accept-Language': 'zh-cn,en-us;q=0.7,en;q=0.3', 'Accept-Encoding': 'gzip, deflate', 'Host': '127.0.0.1:8910', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0', 'Connection': 'keep-alive', 'Cookie': 'sessionid=000041883628c1a6547eabd0b4fb0bd9110f68; jwfy_dm_website_session=19732a3b3d6056c49988e5247439670a', 'Cache-Control': 'max-age=0'})
+    Traceback (most recent call last):
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/web.py", line 954, in _execute
+        getattr(self, self.request.method.lower())(*args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 44, in request_process
+        r = func(self, *args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 544, in get
+        r = self.process_debug('Get', urlarg)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 261, in process_debug
+        return self.processer(**argdict)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuUOM.py", line 187, in caller
+        r = method(_clsobj, **kwargs)
+      File "api/movie.py", line 135, in subject
+        movie =  movie_ctrl.get(id)
+      File "/home/jwfy/syb/github/Gdesign/module/movie_ctrl.py", line 78, in get
+        if not res:
+    AttributeError: 'dict' object has no attribute 'count'
+[E 150414 20:09:53 dm.py:start:60] 500 GET /movie/movie/subject?id=1292052 (127.0.0.1) 63242.24ms
+[E 150414 20:09:59 dm.py:start:60] Uncaught exception GET /movie/movie/subject?id=1292052 (127.0.0.1)
+    HTTPRequest(protocol='http', host='127.0.0.1:8910', method='GET', uri='/movie/movie/subject?id=1292052', version='HTTP/1.1', remote_ip='127.0.0.1', body='', headers={'Accept-Language': 'zh-cn,en-us;q=0.7,en;q=0.3', 'Accept-Encoding': 'gzip, deflate', 'Host': '127.0.0.1:8910', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0', 'Connection': 'keep-alive', 'Cookie': 'sessionid=000041883628c1a6547eabd0b4fb0bd9110f68; jwfy_dm_website_session=19732a3b3d6056c49988e5247439670a', 'Cache-Control': 'max-age=0'})
+    Traceback (most recent call last):
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/web.py", line 954, in _execute
+        getattr(self, self.request.method.lower())(*args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 44, in request_process
+        r = func(self, *args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 544, in get
+        r = self.process_debug('Get', urlarg)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 261, in process_debug
+        return self.processer(**argdict)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuUOM.py", line 187, in caller
+        r = method(_clsobj, **kwargs)
+      File "api/movie.py", line 147, in subject
+        return self._write(ans)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 140, in _write
+        self.tornado.write(r)
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/web.py", line 440, in write
+        chunk = escape.json_encode(chunk)
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/escape.py", line 84, in json_encode
+        return _json_encode(recursive_unicode(value)).replace("</", "<\\/")
+      File "/usr/lib/python2.7/json/__init__.py", line 243, in dumps
+        return _default_encoder.encode(obj)
+      File "/usr/lib/python2.7/json/encoder.py", line 207, in encode
+        chunks = self.iterencode(o, _one_shot=True)
+      File "/usr/lib/python2.7/json/encoder.py", line 270, in iterencode
+        return _iterencode(o, 0)
+      File "/usr/lib/python2.7/json/encoder.py", line 184, in default
+        raise TypeError(repr(o) + " is not JSON serializable")
+    TypeError: ObjectId('552754f1e206a514e2257a2e') is not JSON serializable
+[E 150414 20:09:59 dm.py:start:60] 500 GET /movie/movie/subject?id=1292052 (127.0.0.1) 4061.45ms
+[E 150414 20:12:26 dm.py:start:60] Uncaught exception GET /movie/movie/subject?id=1292052 (127.0.0.1)
+    HTTPRequest(protocol='http', host='127.0.0.1:8910', method='GET', uri='/movie/movie/subject?id=1292052', version='HTTP/1.1', remote_ip='127.0.0.1', body='', headers={'Accept-Language': 'zh-cn,en-us;q=0.7,en;q=0.3', 'Accept-Encoding': 'gzip, deflate', 'Host': '127.0.0.1:8910', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0', 'Connection': 'keep-alive', 'Cookie': 'sessionid=000041883628c1a6547eabd0b4fb0bd9110f68; jwfy_dm_website_session=19732a3b3d6056c49988e5247439670a', 'Cache-Control': 'max-age=0'})
+    Traceback (most recent call last):
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/web.py", line 954, in _execute
+        getattr(self, self.request.method.lower())(*args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 44, in request_process
+        r = func(self, *args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 544, in get
+        r = self.process_debug('Get', urlarg)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 261, in process_debug
+        return self.processer(**argdict)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuUOM.py", line 187, in caller
+        r = method(_clsobj, **kwargs)
+      File "api/movie.py", line 145, in subject
+        if api_type == "json" and token == API_TOKEN:
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 140, in _write
+        self.tornado.write(r)
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/web.py", line 440, in write
+        chunk = escape.json_encode(chunk)
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/escape.py", line 84, in json_encode
+        return _json_encode(recursive_unicode(value)).replace("</", "<\\/")
+      File "/usr/lib/python2.7/json/__init__.py", line 243, in dumps
+        return _default_encoder.encode(obj)
+      File "/usr/lib/python2.7/json/encoder.py", line 207, in encode
+        chunks = self.iterencode(o, _one_shot=True)
+      File "/usr/lib/python2.7/json/encoder.py", line 270, in iterencode
+        return _iterencode(o, 0)
+      File "/usr/lib/python2.7/json/encoder.py", line 184, in default
+        raise TypeError(repr(o) + " is not JSON serializable")
+    TypeError: ObjectId('552754f1e206a514e2257a2e') is not JSON serializable
+[E 150414 20:12:26 dm.py:start:60] 500 GET /movie/movie/subject?id=1292052 (127.0.0.1) 134673.47ms
+[E 150414 20:22:37 movie.py:subject:142] 没有电影信息1292052
+[E 150414 20:23:17 movie.py:subject:142] 没有电影信息1292052
+[E 150414 20:23:23 movie.py:subject:142] 没有电影信息1292052
+[E 150414 20:25:08 movie.py:subject:142] 没有电影信息1292053
+[E 150414 20:36:18 dm.py:start:60] Uncaught exception GET /movie/movie/list (127.0.0.1)
+    HTTPRequest(protocol='http', host='127.0.0.1:8910', method='GET', uri='/movie/movie/list', version='HTTP/1.1', remote_ip='127.0.0.1', body='', headers={'Accept-Language': 'zh-cn,en-us;q=0.7,en;q=0.3', 'Accept-Encoding': 'gzip, deflate', 'Host': '127.0.0.1:8910', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0', 'Connection': 'keep-alive', 'Cookie': 'sessionid=000041883628c1a6547eabd0b4fb0bd9110f68; jwfy_dm_website_session=19732a3b3d6056c49988e5247439670a', 'If-None-Match': '"b5a623f2c5c5d8706efa4ff97d76e792cfed74c4"'})
+    Traceback (most recent call last):
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/web.py", line 954, in _execute
+        getattr(self, self.request.method.lower())(*args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 44, in request_process
+        r = func(self, *args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 544, in get
+        r = self.process_debug('Get', urlarg)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 261, in process_debug
+        return self.processer(**argdict)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuUOM.py", line 187, in caller
+        r = method(_clsobj, **kwargs)
+      File "api/movie.py", line 49, in list
+        length=len(res), movie=res)
+      File "api/base.py", line 44, in _return_ans
+        ans["status"] = status
+    TypeError: list indices must be integers, not str
+[E 150414 20:36:18 dm.py:start:60] 500 GET /movie/movie/list (127.0.0.1) 22.81ms

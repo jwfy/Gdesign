@@ -12,14 +12,14 @@ from datetime import datetime
 from model.user_model import User
 from base_ctrl import *
 
-class UserCtrl(Object):
-    _logging = SpuLogging(moduel_name="user_ctrl", class_name="UserCtrl")
+class UserCtrl(object):
+    _logging = SpuLogging(module_name="user_ctrl", class_name="UserCtrl")
 
     def __init__(self):
         pass
 
     def _password_encrypt(self, password):
-        return md5("dm_account" + md5(password) + "jwfy" + md5(2015year))
+        return md5("dm_account" + md5(password) + "jwfy" + md5("2015year"))
 
     def deal_login(self, name, password):
         """
@@ -105,6 +105,6 @@ class UserCtrl(Object):
         if not user_model.find(cond):
             self._logging.error("无法获取该用户信息")
             return None
-        if single
+        if single:
             return user_model[0]
         return user_model

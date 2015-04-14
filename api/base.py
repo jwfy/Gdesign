@@ -39,7 +39,16 @@ class WebRequest(SpuRequestHandler):
     def _redirect(self, uri):
         return self.tornado.redirect(uri)
 
-def check_login(permission=1)
+    def _return_ans(self, status, message, type, **kwargs):
+        ans = {}
+        ans["status"] = status
+        ans["message"] = message
+        ans["type"] = type
+        for k, v in kwargs.iteritems():
+            ans[k] = v
+        return ans
+
+def check_login(permission=1):
     def wrap(func):
         @UOM_WRAPS(func)
         def f(self, *args, **kwargs):
@@ -48,5 +57,5 @@ def check_login(permission=1)
                 self._logging.warn("未登录，请先登录")
                 return self._redirect("/user/user/login")
             return func(self, *args, **kwargs)
-        return f\
+        return f
     return wrap
