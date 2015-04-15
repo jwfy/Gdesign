@@ -39,7 +39,7 @@ class movie(WebRequest):
             ans = self._return_ans("failure", "暂无数据","list")
         else:
             ans = self._return_ans("success", "成功获取数据","list", 
-                    length=len(res), contains=res)
+                    page=page_num, size=len(res), contains=res)
         if api_type == "json" and token == API_TOKEN:
             return self._write(ans)
         return self._write(ans)
@@ -60,7 +60,7 @@ class movie(WebRequest):
             ans = self._return_ans("failure", "暂无数据","category")
         else:
             ans = self._return_ans("success", "成功获取数据","category", 
-                    length=len(res), contains=res)
+                    page=page_num, size=len(res), contains=res)
         if api_type == "json" and token == API_TOKEN:
             return self._write(ans)
         return self._write(ans)
@@ -86,7 +86,7 @@ class movie(WebRequest):
             ans = self._return_ans("failure", "暂无数据","search")
         else:
             ans = self._return_ans("success", "成功获取数据","search", 
-                    length=len(res), contains=res)
+                    page=page_num, size=len(res), contains=res)
         return self._write(ans)
 
     def director(self, page_num={"atype":int, "adef":1}, 
@@ -105,7 +105,7 @@ class movie(WebRequest):
             ans = self._return_ans("failure", "暂无数据","director")
         else:
             ans = self._return_ans("success", "成功获取数据","director", 
-                    length=len(res), contains=res)
+                    page=page_num, size=len(res), contains=res)
         if api_type == "json" and token == API_TOKEN:
             return self._write(ans)
         return self._write(ans)
@@ -117,7 +117,7 @@ class movie(WebRequest):
             token={"atype":str, "adef":""}
         ):
         """
-        通过导演进行搜索
+        通过演员进行搜索
         """
         res = movie_ctrl.list(page_num=int(page_num), page_size=int(page_size),
                 casts=name)
@@ -126,24 +126,23 @@ class movie(WebRequest):
             ans = self._return_ans("failure", "暂无数据","casts")
         else:
             ans = self._return_ans("success", "成功获取数据","casts", 
-                    length=len(res), contains=res)
+                    page=page_num, size=len(res), contains=res)
         if api_type == "json" and token == API_TOKEN:
             return self._write(ans)
         return self._write(ans)
 
     def subject(self,id={"atype":str, "adef":""},
             api_type={"atype":str, "adef":""},
+            status={"atype":str, "adef":"online"},
             token={"atype":str, "adef":""}
         ):
         """
         获取 单部电影和相关数据
         """
-        movie =  movie_ctrl.get(id)
+        res =  movie_ctrl.get(_id=id, status=status)
         ans = {}
-        if not movie:
+        if not res:
             self._logging.error("没有电影信息"+id)
-            ans["status"] = "failure"
-            ans["message"] = "没有具体的电影"
             ans = self._return_ans("failure", "暂无数据","subject")
         else:
             ans = self._return_ans("success", "成功获取数据","subject", 
@@ -151,3 +150,45 @@ class movie(WebRequest):
         if api_type == "json" and token == API_TOKEN:
             return self._write(ans)
         return self._write(ans)
+
+    @check_login()
+    @POST
+    def update_status(self, 
+            _ids={"atype":str, "adef":""},
+            status={"adef":str, "adef":""}
+        ):
+        """
+        更新电影的状态
+        """
+        ans = {}
+        # TODO eval 函数 应该被抛弃
+        r,desc = movie_ctrl.update_status(_ids=eval(_ids), status=status)
+        if not r:
+            r_status = "error"
+        else:
+            r_status = "success"
+        ans = self._return_ans(r_status,desc,"update_status")
+        return self._write(ans)
+
+    @check_login()
+    @POST
+    def update(self,
+            _id={"atype":str, "adef":""},
+            summary={"atype":unicode, "adef":""}, 
+            down_link={"atype":unicode, "adef":""}
+        ):
+        """
+        更新具体的电影信息
+        NOTICE 只是提供修改下载链接和电影简介
+        """
+        ans = {}
+        r, desc = movie_ctrl.update(_id=_id, summary=summary, down_link=down_link)
+        if not r:
+            r_status = "error"
+        else:
+            r_status = "success"
+        ans = self._return_ans(r_status,desc,"update")
+        return self._write(ans)
+
+         
+        

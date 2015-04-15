@@ -23,6 +23,7 @@ sys.path.insert(0, 'api')
 def init():
 
     SpuUOM.import_module('user')
+    SpuUOM.import_module('comment')
     SpuUOM.import_module('movie')
     SpuUOM.load()
    

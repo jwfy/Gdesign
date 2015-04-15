@@ -523,3 +523,125 @@
         ans["status"] = status
     TypeError: list indices must be integers, not str
 [E 150414 20:36:18 dm.py:start:60] 500 GET /movie/movie/list (127.0.0.1) 22.81ms
+[E 150415 09:26:36 dm.py:start:60] Uncaught exception GET /movie/movie/list?page_num=2&api_type=json&token=dm_movie (127.0.0.1)
+    HTTPRequest(protocol='http', host='127.0.0.1:8910', method='GET', uri='/movie/movie/list?page_num=2&api_type=json&token=dm_movie', version='HTTP/1.1', remote_ip='127.0.0.1', body='', headers={'Accept-Language': 'zh-cn,en-us;q=0.7,en;q=0.3', 'Accept-Encoding': 'gzip, deflate', 'Host': '127.0.0.1:8910', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0', 'Connection': 'keep-alive', 'Cookie': 'sessionid=000041925478895fd534e12ce7d291d295327e; jwfy_dm_website_session=555959f95dd66f9654d9d1cef7e525a4', 'If-None-Match': '"3dd76917e8565dee458f0437b78d868278326e84"'})
+    Traceback (most recent call last):
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/web.py", line 954, in _execute
+        getattr(self, self.request.method.lower())(*args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 44, in request_process
+        r = func(self, *args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 544, in get
+        r = self.process_debug('Get', urlarg)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 261, in process_debug
+        return self.processer(**argdict)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuUOM.py", line 187, in caller
+        r = method(_clsobj, **kwargs)
+      File "api/movie.py", line 44, in list
+        return self._write(ans)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 140, in _write
+        self.tornado.write(r)
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/web.py", line 440, in write
+        chunk = escape.json_encode(chunk)
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/escape.py", line 84, in json_encode
+        return _json_encode(recursive_unicode(value)).replace("</", "<\\/")
+      File "/usr/lib/python2.7/json/__init__.py", line 243, in dumps
+        return _default_encoder.encode(obj)
+      File "/usr/lib/python2.7/json/encoder.py", line 207, in encode
+        chunks = self.iterencode(o, _one_shot=True)
+      File "/usr/lib/python2.7/json/encoder.py", line 270, in iterencode
+        return _iterencode(o, 0)
+      File "/usr/lib/python2.7/json/encoder.py", line 184, in default
+        raise TypeError(repr(o) + " is not JSON serializable")
+    TypeError: ObjectId('552758bce206a514e2257ac9') is not JSON serializable
+[E 150415 09:26:36 dm.py:start:60] 500 GET /movie/movie/list?page_num=2&api_type=json&token=dm_movie (127.0.0.1) 65.37ms
+[E 150415 09:30:51 movie.py:subject:144] 没有电影信息5527568fe206a514e2257a80
+[E 150415 09:33:06 movie.py:subject:144] 没有电影信息5527568fe206a514e2257a80
+[E 150415 09:36:31 movie.py:subject:147] 没有电影信息5527568fe206a514e2257a80
+[E 150415 09:37:14 dm.py:start:60] Uncaught exception GET /movie/movie/subject?id=5527568fe206a514e2257a80 (127.0.0.1)
+    HTTPRequest(protocol='http', host='127.0.0.1:8910', method='GET', uri='/movie/movie/subject?id=5527568fe206a514e2257a80', version='HTTP/1.1', remote_ip='127.0.0.1', body='', headers={'Accept-Language': 'zh-cn,en-us;q=0.7,en;q=0.3', 'Accept-Encoding': 'gzip, deflate', 'Host': '127.0.0.1:8910', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0', 'Connection': 'keep-alive', 'Cookie': 'sessionid=000041925478895fd534e12ce7d291d295327e; jwfy_dm_website_session=555959f95dd66f9654d9d1cef7e525a4', 'If-None-Match': '"47bdc17c05c620cc25e2e835e2ebde2fd5469c0c"'})
+    Traceback (most recent call last):
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/web.py", line 954, in _execute
+        getattr(self, self.request.method.lower())(*args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 44, in request_process
+        r = func(self, *args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 544, in get
+        r = self.process_debug('Get', urlarg)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 261, in process_debug
+        return self.processer(**argdict)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuUOM.py", line 187, in caller
+        r = method(_clsobj, **kwargs)
+      File "api/movie.py", line 153, in subject
+        length=1, contains=res)
+    NameError: global name 'res' is not defined
+[E 150415 09:37:14 dm.py:start:60] 500 GET /movie/movie/subject?id=5527568fe206a514e2257a80 (127.0.0.1) 38678.38ms
+[E 150415 19:21:50 dm.py:start:60] Uncaught exception POST /movie/movie/update_status (127.0.0.1)
+    HTTPRequest(protocol='http', host='127.0.0.1:8910', method='POST', uri='/movie/movie/update_status', version='HTTP/1.1', remote_ip='127.0.0.1', body='_ids=552759c6e206a514e2257afe&_ids=55275549e206a514e2257a3b&status=offline', headers={'Origin': 'chrome-extension://fhbjgbiflinjbdggehcddcbncdddomop', 'Content-Length': '74', 'Accept-Language': 'zh-CN,zh;q=0.8', 'Accept-Encoding': 'gzip, deflate', 'Host': '127.0.0.1:8910', 'Accept': '*/*', 'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36', 'Connection': 'keep-alive', 'Cookie': 'jwfy_dm_website_session=27082a1ebf09c8ef17226d865e3e6bc5', 'Cache-Control': 'no-cache', 'Ra-Ver': '2.9.0', 'Ra-Sid': 'B781A14D-20150114-072113-476d3a-b673b7', 'Content-Type': 'application/x-www-form-urlencoded', 'Postman-Token': 'b716991f-d0cb-949c-cd53-fae2f6e13834'})
+    Traceback (most recent call last):
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/web.py", line 954, in _execute
+        getattr(self, self.request.method.lower())(*args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 44, in request_process
+        r = func(self, *args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 567, in post
+        r = self.process_debug('Post', args)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 261, in process_debug
+        return self.processer(**argdict)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuUOM.py", line 187, in caller
+        r = method(_clsobj, **kwargs)
+      File "api/movie.py", line 166, in update_status
+        ans = {}
+      File "/home/jwfy/syb/github/Gdesign/module/movie_ctrl.py", line 96, in update_status
+        _id = ObjectId(_id)
+      File "build/bdist.linux-x86_64/egg/bson/objectid.py", line 90, in __init__
+        self.__validate(oid)
+      File "build/bdist.linux-x86_64/egg/bson/objectid.py", line 194, in __validate
+        raise InvalidId("%s is not a valid ObjectId" % oid)
+    InvalidId: [ is not a valid ObjectId
+[E 150415 19:21:50 dm.py:start:60] 500 POST /movie/movie/update_status (127.0.0.1) 19154.29ms
+[E 150415 19:22:10 dm.py:start:60] Uncaught exception POST /movie/movie/update_status (127.0.0.1)
+    HTTPRequest(protocol='http', host='127.0.0.1:8910', method='POST', uri='/movie/movie/update_status', version='HTTP/1.1', remote_ip='127.0.0.1', body='_ids=552759c6e206a514e2257afe&_ids=55275549e206a514e2257a3b&status=offline', headers={'Origin': 'chrome-extension://fhbjgbiflinjbdggehcddcbncdddomop', 'Content-Length': '74', 'Accept-Language': 'zh-CN,zh;q=0.8', 'Accept-Encoding': 'gzip, deflate', 'Host': '127.0.0.1:8910', 'Accept': '*/*', 'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36', 'Connection': 'keep-alive', 'Cookie': 'jwfy_dm_website_session=27082a1ebf09c8ef17226d865e3e6bc5', 'Cache-Control': 'no-cache', 'Ra-Ver': '2.9.0', 'Ra-Sid': 'B781A14D-20150114-072113-476d3a-b673b7', 'Content-Type': 'application/x-www-form-urlencoded', 'Postman-Token': '21c86c14-88ff-bfc1-5553-8eea247423cd'})
+    Traceback (most recent call last):
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/web.py", line 954, in _execute
+        getattr(self, self.request.method.lower())(*args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 44, in request_process
+        r = func(self, *args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 567, in post
+        r = self.process_debug('Post', args)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 261, in process_debug
+        return self.processer(**argdict)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuUOM.py", line 187, in caller
+        r = method(_clsobj, **kwargs)
+      File "api/movie.py", line 166, in update_status
+        ans = {}
+      File "/home/jwfy/syb/github/Gdesign/module/movie_ctrl.py", line 96, in update_status
+        _id = ObjectId(_id)
+      File "build/bdist.linux-x86_64/egg/bson/objectid.py", line 90, in __init__
+        self.__validate(oid)
+      File "build/bdist.linux-x86_64/egg/bson/objectid.py", line 194, in __validate
+        raise InvalidId("%s is not a valid ObjectId" % oid)
+    InvalidId: [ is not a valid ObjectId
+[E 150415 19:22:10 dm.py:start:60] 500 POST /movie/movie/update_status (127.0.0.1) 9709.93ms
+[E 150415 19:23:00 dm.py:start:60] Uncaught exception POST /movie/movie/update_status (127.0.0.1)
+    HTTPRequest(protocol='http', host='127.0.0.1:8910', method='POST', uri='/movie/movie/update_status', version='HTTP/1.1', remote_ip='127.0.0.1', body='_ids=552759c6e206a514e2257afe&_ids=55275549e206a514e2257a3b&status=offline', headers={'Origin': 'chrome-extension://fhbjgbiflinjbdggehcddcbncdddomop', 'Content-Length': '74', 'Accept-Language': 'zh-CN,zh;q=0.8', 'Accept-Encoding': 'gzip, deflate', 'Host': '127.0.0.1:8910', 'Accept': '*/*', 'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36', 'Connection': 'keep-alive', 'Cookie': 'jwfy_dm_website_session=27082a1ebf09c8ef17226d865e3e6bc5', 'Cache-Control': 'no-cache', 'Ra-Ver': '2.9.0', 'Ra-Sid': 'B781A14D-20150114-072113-476d3a-b673b7', 'Content-Type': 'application/x-www-form-urlencoded', 'Postman-Token': '55fb6d9e-72d7-4307-76ac-bddc1572f322'})
+    Traceback (most recent call last):
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/web.py", line 954, in _execute
+        getattr(self, self.request.method.lower())(*args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 44, in request_process
+        r = func(self, *args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 567, in post
+        r = self.process_debug('Post', args)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 261, in process_debug
+        return self.processer(**argdict)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuUOM.py", line 187, in caller
+        r = method(_clsobj, **kwargs)
+      File "api/movie.py", line 166, in update_status
+        r,desc = movie_ctrl.update_status(_ids=eval(_ids), status=status)
+      File "/home/jwfy/syb/github/Gdesign/module/movie_ctrl.py", line 96, in update_status
+        _id = ObjectId(_id)
+      File "build/bdist.linux-x86_64/egg/bson/objectid.py", line 90, in __init__
+        self.__validate(oid)
+      File "build/bdist.linux-x86_64/egg/bson/objectid.py", line 194, in __validate
+        raise InvalidId("%s is not a valid ObjectId" % oid)
+    InvalidId: [ is not a valid ObjectId
+[E 150415 19:23:00 dm.py:start:60] 500 POST /movie/movie/update_status (127.0.0.1) 39605.25ms
+[E 150415 19:27:19 movie.py:subject:145] 没有电影信息55275549e206a514e2257a3b
+[E 150415 19:27:21 movie.py:subject:145] 没有电影信息55275549e206a514e2257a3b

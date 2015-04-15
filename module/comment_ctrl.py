@@ -29,10 +29,10 @@ class CommentCtrl(object):
         cond = comment_t.id == id
         if not comment_model.find(cond):
             self._logging.error("更新评论状态，未找到对应评论")
-            return None
+            return 0, "没有找到对应评论信息"
         comment_model.status = status
         comment_model.update()
-        return 1
+        return 1, "评论更新成"
 
     def get(self, category="movie", _id="0", status=1, get_num=False):
         """
@@ -77,8 +77,8 @@ class CommentCtrl(object):
         comment_model.pageinfo(pageinfo)
         if not comment_model.find(cond):
             self._logging.warn("未找到评论列表")
-            return None
-        return comment_model
+            return 0, "没有评论信息"
+        return 1, comment_model
 
     def add(self, name, email, title, contain, category="movie",
             ip="127.0.0.1", _id="0"):
@@ -97,8 +97,8 @@ class CommentCtrl(object):
         comment.time = datetime.now()
         try:
             comment_model.insert()
-            return None
+            return 1,"添加成功"
         except Exception as e:
             self._logging.error(e)
-            return e
+            return 0, e
             # 把错误信息返回给调用的地方,便于前端的异步调取
