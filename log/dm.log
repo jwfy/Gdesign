@@ -645,3 +645,20 @@
 [E 150415 19:23:00 dm.py:start:60] 500 POST /movie/movie/update_status (127.0.0.1) 39605.25ms
 [E 150415 19:27:19 movie.py:subject:145] 没有电影信息55275549e206a514e2257a3b
 [E 150415 19:27:21 movie.py:subject:145] 没有电影信息55275549e206a514e2257a3b
+[E 150416 12:44:26 dm.py:start:61] Uncaught exception GET /user/user/login (127.0.0.1)
+    HTTPRequest(protocol='http', host='127.0.0.1:8910', method='GET', uri='/user/user/login', version='HTTP/1.1', remote_ip='127.0.0.1', body='', headers={'Accept-Language': 'zh-cn,en-us;q=0.7,en;q=0.3', 'Accept-Encoding': 'gzip, deflate', 'Host': '127.0.0.1:8910', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0', 'Connection': 'keep-alive', 'Cookie': 'sessionid=000041925478895fd534e12ce7d291d295327e; jwfy_dm_website_session=a26c5580180d42b9992daaa5c319fc7a', 'If-None-Match': '"bceb1e602106a5175980625d04faacbfc755bb21"'})
+    Traceback (most recent call last):
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/web.py", line 954, in _execute
+        getattr(self, self.request.method.lower())(*args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 44, in request_process
+        r = func(self, *args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 544, in get
+        r = self.process_debug('Get', urlarg)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 261, in process_debug
+        return self.processer(**argdict)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuUOM.py", line 187, in caller
+        r = method(_clsobj, **kwargs)
+      File "api/user.py", line 24, in login
+        self._set_user_name("jwfy")
+    AttributeError: user instance has no attribute '_set_user_name'
+[E 150416 12:44:26 dm.py:start:61] 500 GET /user/user/login (127.0.0.1) 3.87ms

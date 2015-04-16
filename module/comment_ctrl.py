@@ -15,6 +15,9 @@ class CommentCtrl(object):
     _logging = SpuLogging(module_name="comment_ctrl", class_name="CommentCtrl")
 
     def __init__(self):
+        """
+        评论控制层
+        """
         pass
 
     def update_status(self, id, status):
@@ -26,11 +29,11 @@ class CommentCtrl(object):
         """
         comment_model = Comment.object()
         comment_t = Comment.table()
-        cond = comment_t.id == id
+        cond = comment_t.id == int(id)
         if not comment_model.find(cond):
             self._logging.error("更新评论状态，未找到对应评论")
             return 0, "没有找到对应评论信息"
-        comment_model.status = status
+        comment_model.status = int(status)
         comment_model.update()
         return 1, "评论更新成"
 
@@ -70,7 +73,7 @@ class CommentCtrl(object):
         cond = comment_t.category == category
         cond &= comment_t.status == status
         if contain:
-            cond &= FuzzyLike(comment_t.contain == contain)
+            cond &= FuzzyLike(comment_t.contain == unicode_to_str(contain))
         pageinfo = PageInfo(page_num, page_size)
         sort_style = Sort([(comment_t.id, Sort.desc)])
         comment_model.sort(sort_style)
@@ -80,16 +83,15 @@ class CommentCtrl(object):
             return 0, "没有评论信息"
         return 1, comment_model
 
-    def add(self, name, email, title, contain, category="movie",
-            ip="127.0.0.1", _id="0"):
+    def add(self, name, email, title, contain, category, ip, _id):
         """
         添加评论,默认的显示正常
         """
         comment_model = Comment.object()
-        comment_model.name = name
+        comment_model.name = unicode_to_str(name)
         comment.email = email
-        comment.title = title
-        comment.contain = contain
+        comment.title = unicode_to_str(title)
+        comment.contain = unicode_to_str(contain)
         comment.category = category
         comment.ip = ip
         comment._id = _id
@@ -101,4 +103,3 @@ class CommentCtrl(object):
         except Exception as e:
             self._logging.error(e)
             return 0, e
-            # 把错误信息返回给调用的地方,便于前端的异步调取

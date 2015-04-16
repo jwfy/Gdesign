@@ -167,7 +167,7 @@ class movie(WebRequest):
             r_status = "error"
         else:
             r_status = "success"
-        ans = self._return_ans(r_status,desc,"update_status")
+        ans = self._return_ans(r_status, desc, "update_status")
         return self._write(ans)
 
     @check_login()
@@ -187,7 +187,7 @@ class movie(WebRequest):
             r_status = "error"
         else:
             r_status = "success"
-        ans = self._return_ans(r_status,desc,"update")
+        ans = self._return_ans(r_status, desc, "update")
         return self._write(ans)
 
          

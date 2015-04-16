@@ -14,8 +14,7 @@ class comment(WebRequest):
     _logging = SpuLogging(module_name="comment", class_name="comment")
     
     """
-    NOTICE :
-    关于状态的值说明
+    NOTICE :关于状态的值说明
     0     所有的评论均显示(仅限后台查看)
     1     评论正常显示
     2     评论被隐藏，只可以在后台显示
@@ -28,7 +27,8 @@ class comment(WebRequest):
     @POST
     def add(self, name={"atype":unicode, "adef":""},
             email={"atype":str, "adef":""}, title={"atype":unicode, "adef":""}, 
-            contain={"atype":unicode, "adef":""}, category={"atype":str, "adef":"movie"}, 
+            contain={"atype":unicode, "adef":""}, 
+            category={"atype":str, "adef":"movie"}, 
             ip={"atype":str, "adef":"127.0.0.1"},
             _id={"atype":str, "adef":"0"}
         ):
@@ -36,6 +36,7 @@ class comment(WebRequest):
         添加评论
         NOTICE _id 为豆瓣id，而不是mongo 的_id
         """
+        ip = self._remote_ip()
         ans = {}
         try:
             r, desc = comment_ctrl.add(name=name, email=email, title=tile, 
@@ -79,6 +80,22 @@ class comment(WebRequest):
 
     @check_login()
     @POST
-    def update_status(self):
-        # TODO 明天写吧！！！！差不多了
-        pass
+    def update_status(self, id={"atype":int, "adef":0},
+            status={"atype":str, "adef":""}
+        ):
+        """
+        更新状态
+        TODO 需要添加批量修改评论状态 
+        """
+        ans = {}
+        try:
+            r, desc = comment_ctrl.update_status(id=int(id), status=str(status))
+            if not r:
+                r_status = "failure"
+            else:
+                r_status = "success"
+            ans = self._return_ans(r_status, desc, "comment_update_status")
+        except Exception as e:
+            self._logging.error(e)
+            ans = self._return_ans("error", e, "comment_update_status")
+        return self._write(ans)

@@ -5,7 +5,6 @@
 # time: 2015-03-25
 # e-mail: jwfy0902@foxmail.com
 
-from error import Error
 from config import *
 from sputnik.SpuRequest import SpuRequestHandler, SpuBaseHandler
 from sputnik.SpuLogging import SpuLogging
@@ -20,18 +19,18 @@ class WebRequest(SpuRequestHandler):
     def __init__(self):
         SpuRequestHandler.__init__(self)
     
-    def _get_user_name(self):
+    def _get_user_session(self):
         session = self.session
         if not session:
             return None
-        username = self.session.get("user_name", "")
-        return username
+        user_id = self.session.get("user_id", 0)
+        return user_id
 
-    def _set_user_name(self, username):
+    def _set_user_session(self, username):
         session = self.session
         if not session:
             return None
-        self.session["user_name"] = username
+        self.session["user_id"] = username
 
     def _remote_ip(self):
         return self.tornado.request.remote_ip
@@ -45,7 +44,7 @@ class WebRequest(SpuRequestHandler):
             ans["page_num"] = page_num
         ans["status"] = status
         ans["message"] = message
-        ans["type"] = type
+        ans["source"] = type
         for k, v in kwargs.iteritems():
             ans[k] = v
         return ans
