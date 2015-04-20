@@ -22,7 +22,7 @@ class user(WebRequest):
         """
         # TODO 登录首页
         self._set_user_session("jwfy")
-        return self._write("hello world! python+tornado+sputnik+mysql+mongodb+redis+pypi")
+        return self._html_render("base.html", {})
 
     @POST
     def deal_login(self, 

@@ -662,3 +662,142 @@
         self._set_user_name("jwfy")
     AttributeError: user instance has no attribute '_set_user_name'
 [E 150416 12:44:26 dm.py:start:61] 500 GET /user/user/login (127.0.0.1) 3.87ms
+[E 150420 18:37:07 dm.py:start:61] Uncaught exception GET /user/user/login (127.0.0.1)
+    HTTPRequest(protocol='http', host='127.0.0.1:8910', method='GET', uri='/user/user/login', version='HTTP/1.1', remote_ip='127.0.0.1', body='', headers={'Connection': 'keep-alive', 'Accept-Language': 'zh-cn,en-us;q=0.7,en;q=0.3', 'Accept-Encoding': 'gzip, deflate', 'Cookie': 'sessionid=000041925478895fd534e12ce7d291d295327e', 'Host': '127.0.0.1:8910', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0'})
+    Traceback (most recent call last):
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/web.py", line 954, in _execute
+        getattr(self, self.request.method.lower())(*args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 44, in request_process
+        r = func(self, *args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 544, in get
+        r = self.process_debug('Get', urlarg)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 261, in process_debug
+        return self.processer(**argdict)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuUOM.py", line 187, in caller
+        r = method(_clsobj, **kwargs)
+      File "api/user.py", line 25, in login
+        return self._html_render('base.html')
+    TypeError: _html_render() takes at least 3 arguments (2 given)
+[E 150420 18:37:07 dm.py:start:61] 500 GET /user/user/login (127.0.0.1) 4.74ms
+[E 150420 18:37:32 dm.py:start:61] Uncaught exception GET /user/user/login (127.0.0.1)
+    HTTPRequest(protocol='http', host='127.0.0.1:8910', method='GET', uri='/user/user/login', version='HTTP/1.1', remote_ip='127.0.0.1', body='', headers={'Accept-Language': 'zh-cn,en-us;q=0.7,en;q=0.3', 'Accept-Encoding': 'gzip, deflate', 'Host': '127.0.0.1:8910', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0', 'Connection': 'keep-alive', 'Cookie': 'sessionid=000041925478895fd534e12ce7d291d295327e', 'Cache-Control': 'max-age=0'})
+    Traceback (most recent call last):
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/web.py", line 954, in _execute
+        getattr(self, self.request.method.lower())(*args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 46, in request_process
+        self._save_session()
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 459, in _save_session
+        self.session.save()
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuSession.py", line 380, in save
+        self._redis.set(self.session_key, self._get_session(no_load=must_create))
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuSession.py", line 189, in _get_session_key
+        self._session_key = self._get_new_session_key()
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuSession.py", line 181, in _get_new_session_key
+        if not self.exists(session_key):
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuSession.py", line 385, in exists
+        return self._redis.exists(session_key)
+      File "build/bdist.linux-x86_64/egg/redis/client.py", line 561, in exists
+        return self.execute_command('EXISTS', name)
+      File "build/bdist.linux-x86_64/egg/redis/client.py", line 375, in execute_command
+        connection.send_command(*args)
+      File "build/bdist.linux-x86_64/egg/redis/connection.py", line 302, in send_command
+        self.send_packed_command(self.pack_command(*args))
+      File "build/bdist.linux-x86_64/egg/redis/connection.py", line 284, in send_packed_command
+        self.connect()
+      File "build/bdist.linux-x86_64/egg/redis/connection.py", line 235, in connect
+        self.on_connect()
+      File "build/bdist.linux-x86_64/egg/redis/connection.py", line 267, in on_connect
+        if nativestr(self.read_response()) != 'OK':
+      File "build/bdist.linux-x86_64/egg/redis/connection.py", line 312, in read_response
+        raise response
+    ResponseError: invalid DB index
+[E 150420 18:37:32 dm.py:start:61] 500 GET /user/user/login (127.0.0.1) 18.10ms
+[E 150420 18:37:54 dm.py:start:61] Uncaught exception GET /user/user/login (127.0.0.1)
+    HTTPRequest(protocol='http', host='127.0.0.1:8910', method='GET', uri='/user/user/login', version='HTTP/1.1', remote_ip='127.0.0.1', body='', headers={'Accept-Language': 'zh-cn,en-us;q=0.7,en;q=0.3', 'Accept-Encoding': 'gzip, deflate', 'Host': '127.0.0.1:8910', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0', 'Connection': 'keep-alive', 'Cookie': 'sessionid=000041925478895fd534e12ce7d291d295327e', 'Cache-Control': 'max-age=0'})
+    Traceback (most recent call last):
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/web.py", line 954, in _execute
+        getattr(self, self.request.method.lower())(*args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 46, in request_process
+        self._save_session()
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 459, in _save_session
+        self.session.save()
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuSession.py", line 380, in save
+        self._redis.set(self.session_key, self._get_session(no_load=must_create))
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuSession.py", line 189, in _get_session_key
+        self._session_key = self._get_new_session_key()
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuSession.py", line 181, in _get_new_session_key
+        if not self.exists(session_key):
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuSession.py", line 385, in exists
+        return self._redis.exists(session_key)
+      File "build/bdist.linux-x86_64/egg/redis/client.py", line 561, in exists
+        return self.execute_command('EXISTS', name)
+      File "build/bdist.linux-x86_64/egg/redis/client.py", line 375, in execute_command
+        connection.send_command(*args)
+      File "build/bdist.linux-x86_64/egg/redis/connection.py", line 302, in send_command
+        self.send_packed_command(self.pack_command(*args))
+      File "build/bdist.linux-x86_64/egg/redis/connection.py", line 284, in send_packed_command
+        self.connect()
+      File "build/bdist.linux-x86_64/egg/redis/connection.py", line 235, in connect
+        self.on_connect()
+      File "build/bdist.linux-x86_64/egg/redis/connection.py", line 267, in on_connect
+        if nativestr(self.read_response()) != 'OK':
+      File "build/bdist.linux-x86_64/egg/redis/connection.py", line 312, in read_response
+        raise response
+    ResponseError: invalid DB index
+[E 150420 18:37:54 dm.py:start:61] 500 GET /user/user/login (127.0.0.1) 10.49ms
+[E 150420 18:39:21 dm.py:start:61] Uncaught exception GET /user/user/login (127.0.0.1)
+    HTTPRequest(protocol='http', host='127.0.0.1:8910', method='GET', uri='/user/user/login', version='HTTP/1.1', remote_ip='127.0.0.1', body='', headers={'Accept-Language': 'zh-cn,en-us;q=0.7,en;q=0.3', 'Accept-Encoding': 'gzip, deflate', 'Host': '127.0.0.1:8910', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0', 'Connection': 'keep-alive', 'Cookie': 'sessionid=000041925478895fd534e12ce7d291d295327e', 'Cache-Control': 'max-age=0'})
+    Traceback (most recent call last):
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/web.py", line 954, in _execute
+        getattr(self, self.request.method.lower())(*args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 46, in request_process
+        self._save_session()
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 459, in _save_session
+        self.session.save()
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuSession.py", line 380, in save
+        self._redis.set(self.session_key, self._get_session(no_load=must_create))
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuSession.py", line 189, in _get_session_key
+        self._session_key = self._get_new_session_key()
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuSession.py", line 181, in _get_new_session_key
+        if not self.exists(session_key):
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuSession.py", line 385, in exists
+        return self._redis.exists(session_key)
+      File "build/bdist.linux-x86_64/egg/redis/client.py", line 561, in exists
+        return self.execute_command('EXISTS', name)
+      File "build/bdist.linux-x86_64/egg/redis/client.py", line 375, in execute_command
+        connection.send_command(*args)
+      File "build/bdist.linux-x86_64/egg/redis/connection.py", line 302, in send_command
+        self.send_packed_command(self.pack_command(*args))
+      File "build/bdist.linux-x86_64/egg/redis/connection.py", line 284, in send_packed_command
+        self.connect()
+      File "build/bdist.linux-x86_64/egg/redis/connection.py", line 235, in connect
+        self.on_connect()
+      File "build/bdist.linux-x86_64/egg/redis/connection.py", line 267, in on_connect
+        if nativestr(self.read_response()) != 'OK':
+      File "build/bdist.linux-x86_64/egg/redis/connection.py", line 312, in read_response
+        raise response
+    ResponseError: invalid DB index
+[E 150420 18:39:21 dm.py:start:61] 500 GET /user/user/login (127.0.0.1) 8303.81ms
+[E 150420 18:40:54 dm.py:start:61] Uncaught exception GET /user/user/login (127.0.0.1)
+    HTTPRequest(protocol='http', host='127.0.0.1:8910', method='GET', uri='/user/user/login', version='HTTP/1.1', remote_ip='127.0.0.1', body='', headers={'Accept-Language': 'zh-cn,en-us;q=0.7,en;q=0.3', 'Accept-Encoding': 'gzip, deflate', 'Host': '127.0.0.1:8910', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0', 'Connection': 'keep-alive', 'Cookie': 'sessionid=000041925478895fd534e12ce7d291d295327e', 'Cache-Control': 'max-age=0'})
+    Traceback (most recent call last):
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/web.py", line 954, in _execute
+        getattr(self, self.request.method.lower())(*args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 47, in request_process
+        self._process_handler_result()
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 487, in _process_handler_result
+        self._process_handler_result_debug()
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 477, in _process_handler_result_debug
+        self.processer_obj._real_html_render()
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 178, in _real_html_render
+        session = self.session)
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/web.py", line 447, in render
+        html = self.render_string(template_name, **kwargs)
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/web.py", line 545, in render_string
+        t = RequestHandler._templates[template_path].load(template_name)
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/template.py", line 298, in load
+        self.templates[name] = self._create_template(name)
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/template.py", line 328, in _create_template
+        f = open(path, "r")
+    IOError: [Errno 2] No such file or directory: '/home/jwfy/syb/github/Gdesign/templates/base.html'
+[E 150420 18:40:54 dm.py:start:61] 500 GET /user/user/login (127.0.0.1) 5751.31ms

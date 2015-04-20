@@ -15,7 +15,7 @@ session_config = {
     'session_save_every_request': True,
     'session_expire_at_browser_close': False,
     'session_db_config': {
-        'db': 17,
+        'db': 15,
         'host':'127.0.0.1',
         'port':6380
         }
