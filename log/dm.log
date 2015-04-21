@@ -801,3 +801,614 @@
         f = open(path, "r")
     IOError: [Errno 2] No such file or directory: '/home/jwfy/syb/github/Gdesign/templates/base.html'
 [E 150420 18:40:54 dm.py:start:61] 500 GET /user/user/login (127.0.0.1) 5751.31ms
+[E 150421 09:12:08 dm.py:start:61] Uncaught exception GET /comment/comment/list (127.0.0.1)
+    HTTPRequest(protocol='http', host='127.0.0.1:8910', method='GET', uri='/comment/comment/list', version='HTTP/1.1', remote_ip='127.0.0.1', body='', headers={'Connection': 'keep-alive', 'Accept-Language': 'zh-cn,en-us;q=0.7,en;q=0.3', 'Accept-Encoding': 'gzip, deflate', 'Cookie': 'sessionid=000041925478895fd534e12ce7d291d295327e; jwfy_dm_website_session=5730f47e5653cbea5213f9c6febda5c0', 'Host': '127.0.0.1:8910', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0'})
+    Traceback (most recent call last):
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/web.py", line 954, in _execute
+        getattr(self, self.request.method.lower())(*args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 44, in request_process
+        r = func(self, *args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 544, in get
+        r = self.process_debug('Get', urlarg)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 261, in process_debug
+        return self.processer(**argdict)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuUOM.py", line 187, in caller
+        r = method(_clsobj, **kwargs)
+      File "api/base.py", line 56, in f
+        user_name = self._get_user_name()
+    AttributeError: comment instance has no attribute '_get_user_name'
+[E 150421 09:12:08 dm.py:start:61] 500 GET /comment/comment/list (127.0.0.1) 28.08ms
+[E 150421 09:13:12 dm.py:start:61] Uncaught exception GET /comment/comment/list (127.0.0.1)
+    HTTPRequest(protocol='http', host='127.0.0.1:8910', method='GET', uri='/comment/comment/list', version='HTTP/1.1', remote_ip='127.0.0.1', body='', headers={'Accept-Language': 'zh-cn,en-us;q=0.7,en;q=0.3', 'Accept-Encoding': 'gzip, deflate', 'Host': '127.0.0.1:8910', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0', 'Connection': 'keep-alive', 'Cookie': 'sessionid=000041925478895fd534e12ce7d291d295327e; jwfy_dm_website_session=5730f47e5653cbea5213f9c6febda5c0', 'Cache-Control': 'max-age=0'})
+    Traceback (most recent call last):
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/web.py", line 954, in _execute
+        getattr(self, self.request.method.lower())(*args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 47, in request_process
+        self._process_handler_result()
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 487, in _process_handler_result
+        self._process_handler_result_debug()
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 477, in _process_handler_result_debug
+        self.processer_obj._real_html_render()
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 178, in _real_html_render
+        session = self.session)
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/web.py", line 447, in render
+        html = self.render_string(template_name, **kwargs)
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/web.py", line 545, in render_string
+        t = RequestHandler._templates[template_path].load(template_name)
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/template.py", line 298, in load
+        self.templates[name] = self._create_template(name)
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/template.py", line 329, in _create_template
+        template = Template(f.read(), name=name, loader=self)
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/template.py", line 207, in __init__
+        self.file = _File(_parse(reader, self))
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/template.py", line 752, in _parse
+        block_body = _parse(reader, template, operator)
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/template.py", line 752, in _parse
+        block_body = _parse(reader, template, operator)
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/template.py", line 635, in _parse
+        in_block)
+    ParseError: Missing {% end %} block for block
+[E 150421 09:13:12 dm.py:start:61] 500 GET /comment/comment/list (127.0.0.1) 24.48ms
+[E 150421 16:48:35 <stdin>:<module>:1] [SqlGenError]Node Stack Len: 0 Stack: []
+[E 150421 16:50:03 comment_ctrl.py:list:83] [SqlGenError]Node Stack Len: 0 Stack: []
+[E 150421 16:50:03 comment.py:list:77] 
+[E 150421 16:50:41 comment_ctrl.py:list:83] [SqlGenError]Node Stack Len: 0 Stack: []
+[E 150421 16:50:49 comment.py:list:69] 
+[E 150421 17:37:28 comment.py:list:85] global name 'v' is not defined
+[E 150421 17:37:28 dm.py:start:61] Uncaught exception GET /comment/comment/list (127.0.0.1)
+    HTTPRequest(protocol='http', host='127.0.0.1:8910', method='GET', uri='/comment/comment/list', version='HTTP/1.1', remote_ip='127.0.0.1', body='', headers={'Accept-Language': 'zh-cn,en-us;q=0.7,en;q=0.3', 'Accept-Encoding': 'gzip, deflate', 'Host': '127.0.0.1:8910', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0', 'Connection': 'keep-alive', 'Cookie': 'sessionid=000041925478895fd534e12ce7d291d295327e; jwfy_dm_website_session=5730f47e5653cbea5213f9c6febda5c0', 'Cache-Control': 'max-age=0', 'If-None-Match': '"832dc04c472d2b4f7e8faed3eb5a6c4861587129"'})
+    Traceback (most recent call last):
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/web.py", line 954, in _execute
+        getattr(self, self.request.method.lower())(*args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 44, in request_process
+        r = func(self, *args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 544, in get
+        r = self.process_debug('Get', urlarg)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 261, in process_debug
+        return self.processer(**argdict)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuUOM.py", line 187, in caller
+        r = method(_clsobj, **kwargs)
+      File "api/comment.py", line 86, in list
+        ans = self._return_ans("error", e, "comment_list")
+      File "api/base.py", line 47, in _return_ans
+        ans["message"] = message[1]
+    IndexError: tuple index out of range
+[E 150421 17:37:28 dm.py:start:61] 500 GET /comment/comment/list (127.0.0.1) 12.77ms
+[E 150421 17:44:56 comment.py:list:90] global name 'v' is not defined
+[E 150421 17:44:56 dm.py:start:61] Uncaught exception GET /comment/comment/list (127.0.0.1)
+    HTTPRequest(protocol='http', host='127.0.0.1:8910', method='GET', uri='/comment/comment/list', version='HTTP/1.1', remote_ip='127.0.0.1', body='', headers={'Accept-Language': 'zh-cn,en-us;q=0.7,en;q=0.3', 'Accept-Encoding': 'gzip, deflate', 'Host': '127.0.0.1:8910', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0', 'Connection': 'keep-alive', 'Cookie': 'sessionid=000041925478895fd534e12ce7d291d295327e; jwfy_dm_website_session=5730f47e5653cbea5213f9c6febda5c0', 'Cache-Control': 'max-age=0'})
+    Traceback (most recent call last):
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/web.py", line 954, in _execute
+        getattr(self, self.request.method.lower())(*args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 44, in request_process
+        r = func(self, *args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 544, in get
+        r = self.process_debug('Get', urlarg)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 261, in process_debug
+        return self.processer(**argdict)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuUOM.py", line 187, in caller
+        r = method(_clsobj, **kwargs)
+      File "api/comment.py", line 91, in list
+        ans = self._return_ans("error", e, "comment_list")
+      File "api/base.py", line 46, in _return_ans
+        ans["message"] = message[1]
+    IndexError: tuple index out of range
+[E 150421 17:44:56 dm.py:start:61] 500 GET /comment/comment/list (127.0.0.1) 12.07ms
+[E 150421 17:45:15 comment.py:list:90] global name 'v' is not defined
+[E 150421 17:46:43 comment.py:list:90] global name 'k' is not defined
+[E 150421 17:46:59 comment.py:list:90] global name 'desc_list' is not defined
+[E 150421 17:48:21 comment.py:list:91] global name 'query_list' is not defined
+[E 150421 17:57:23 comment.py:list:92] _return_ans() takes exactly 4 arguments (5 given)
+[E 150421 18:19:43 dm.py:start:61] comment.html code:
+      1  def _execute():
+      2      _buffer = []
+      3      _append = _buffer.append
+      4      _append('<!DOCTYPE html>\n<html>\n<head>\n<meta charset="UTF-8">\n<title>')
+      5      _append('\xe8\xaf\x84\xe8\xae\xba')
+      6      _append('-DM\xe5\x90\x8e\xe5\x8f\xb0</title>\n<meta content=\'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no\' name=\'viewport\'>\n<link href="/static/css/bootstrap.min.css" rel="stylesheet" type="text/css" />\n<link href="/static/css/font-awesome.min.css" rel="stylesheet" type="text/css" />\n<link href="/static/css/theme.min.css" rel="stylesheet" type="text/css" />\n<link href="/static/css/_all-skins.min.css" rel="stylesheet" type="text/css" />\n<link href="/static/css/flat/blue.css" rel="stylesheet" type="text/css"/>\n<link href="/static/css/base.css" rel="stylesheet" type="text/css"/>\n')
+      7      _append('\n</head>\n<body class="skin-blue fixed">\n<div class="wrapper">\n<!-- \xe5\xa4\xb4\xe9\x83\xa8\xef\xbc\x8c\xe5\xaf\xbc\xe8\x88\xaa\xe6\xa0\x8f -->\n')
+      8      _append('<header class="main-header">\n<a href="javascript:;" class="logo"><b>DM</b>\xe5\x90\x8e\xe5\x8f\xb0</a>\n<!-- Header Navbar: style can be found in header.less -->\n<nav class="navbar navbar-static-top" role="navigation">\n<!-- Sidebar toggle button-->\n<a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">\n<span class="sr-only">\xe5\xaf\xbc\xe8\x88\xaa\xe6\xa0\x8f\xe5\x88\x87\xe6\x8d\xa2</span>\n<span class="icon-bar"></span>\n<span class="icon-bar"></span>\n<span class="icon-bar"></span>\n</a>\n<ul class="nav navbar-nav navbar-right">\n<li class="dropdown">\n<a href="#" class="dropdown-toggle" data-toggle="dropdown">\xe8\xb4\xa6\xe6\x88\xb7 <span class="caret"></span></a>\n<ul class="dropdown-menu" role="menu">\n<li><a href="javascript:;">\xe4\xb8\xaa\xe4\xba\xba\xe4\xbf\xa1\xe6\x81\xaf</a></li>\n<li class="divider"></li>\n<li><a href="javascript:;">\xe9\x80\x80\xe5\x87\xba</a></li>\n</ul>\n</li>\n</ul>\n<form class="navbar-form navbar-right" role="search">\n<div class="form-group">\n<input type="text" class="form-control" id="navbar-search-input" placeholder="\xe6\x90\x9c\xe7\xb4\xa2">\n</div>\n</form>\n</nav>\n</header>')
+      9      _append('\n<!-- \xe5\xb7\xa6\xe4\xbe\xa7\xef\xbc\x8c\xe8\x8f\x9c\xe5\x8d\x95\xe6\xa0\x8f -->\n')
+     10      _append('<aside class="main-sidebar">\n<!-- sidebar: style can be found in sidebar.less -->\n<section class="sidebar">\n<!-- /.search form -->\n<ul class="sidebar-menu">\n<li class="header">\xe5\xaf\xbc\xe8\x88\xaa</li>\n<li>\n<a href="javascript:;">\n<i class="fa fa-dashboard"></i> <span>\xe4\xb8\xbb\xe9\xa1\xb5</span>\n</a>\n</li>\n<li class="treeview">\n<a href="#">\n<i class="fa fa-file-movie-o "></i> <span>\xe7\x94\xb5\xe5\xbd\xb1</span>\n<i class="fa fa-angle-left pull-right"></i>\n</a>\n<ul class="treeview-menu">\n<li><a href="javascript:;"><i class="fa fa-circle-o"></i>\xe7\x94\xb5\xe5\xbd\xb1\xe5\x88\x97\xe8\xa1\xa8</a></li>\n<li><a href="javascript:;"><i class="fa fa-circle-o"></i>\xe7\x94\xb5\xe5\xbd\xb1\xe6\x8e\xa8\xe8\x8d\x90</a></li>\n<li><a href="javascript:;"><i class="fa fa-circle-o"></i>\xe7\x94\xb5\xe5\xbd\xb1\xe5\xaf\xbc\xe5\x85\xa5</a></li>\n</ul>\n</li>\n<li class="treeview">\n<a href="#">\n<i class="fa fa-comment-o "></i> <span>\xe8\xaf\x84\xe8\xae\xba</span>\n<i class="fa fa-angle-left pull-right"></i>\n</a>\n<ul class="treeview-menu">\n<li><a href="javascript:;"><i class="fa fa-circle-o"></i>\xe7\x94\xb5\xe5\xbd\xb1</a></li>\n<li><a href="javascript:;"><i class="fa fa-circle-o"></i>\xe7\x94\xb5\xe5\xbd\xb1\xe6\x8e\xa8\xe8\x8d\x90</a></li>\n<li><a href="javascript:;"><i class="fa fa-circle-o"></i>\xe7\x94\xb5\xe5\xbd\xb1\xe5\xaf\xbc\xe5\x85\xa5</a></li>\n</ul>\n</li>\n<li class="treeview">\n<a href="#">\n<i class="fa fa-send-o"></i><span>\xe9\x82\xae\xe4\xbb\xb6</span>\n<i class="fa fa-angle-left pull-right"></i>\n</a>\n<ul class="treeview-menu">\n<li><a href="javascript:;"><i class="fa fa-circle-o"></i>\xe9\x82\xae\xe4\xbb\xb6\xe5\x88\x97\xe8\xa1\xa8</a></li>\n<li><a href="javascript:;"><i class="fa fa-circle-o"></i>\xe9\x82\xae\xe4\xbb\xb6\xe5\x8f\x91\xe9\x80\x81</a></li>\n</ul>\n</li>\n</ul>\n</section>\n<!-- /.sidebar -->\n</aside>')
+     11      _append('\n<!-- \xe4\xb8\xbb\xe8\xa6\x81\xe5\x86\x85\xe5\xae\xb9\xe6\xa1\x86 -->\n<div class="content-wrapper">\n<!-- \xe5\x86\x85\xe5\xae\xb9\xe5\xa4\xb4\xe9\x83\xa8 -->\n<section class="content-header">\n')
+     12      _append('\xe8\xaf\x84\xe8\xae\xba')
+     13      _append('\n</section>\n<!-- \xe4\xb8\xbb\xe8\xa6\x81\xe5\x86\x85\xe5\xae\xb9 -->\n<section class="content">\n')
+     14      _append('\n')
+     15      ans = pyobject.get('result')
+     16      _append('\n')
+     17      query = ans.get('query')
+     18      _append('\n')
+     19      _tmp = ans
+     20      if isinstance(_tmp, _string_types): _tmp = _utf8(_tmp)
+     21      else: _tmp = _utf8(str(_tmp))
+     22      _tmp = _utf8(xhtml_escape(_tmp))
+     23      _append(_tmp)
+     24      _append('\n<div class="row">\n<div class="col-md-12">\n<div class="box box-primary">\n<div class="box-header">\n<h3 class="box-title">\xe8\xaf\x84\xe8\xae\xba-')
+     25      _tmp = ans.get('category','')
+     26      if isinstance(_tmp, _string_types): _tmp = _utf8(_tmp)
+     27      else: _tmp = _utf8(str(_tmp))
+     28      _tmp = _utf8(xhtml_escape(_tmp))
+     29      _append(_tmp)
+     30      _append('</h3>\n</div>\n<div class="box-body">\n<div class="row" style="margin-bottom: 10px">\n<div class="col-xs-6">\n<button class="btn btn-default btn-sm checkbox-toggle" title="\xe5\x85\xa8\xe9\x80\x89/\xe5\x85\xa8\xe4\xb8\x8d\xe9\x80\x89"><i class="fa fa-square-o"></i></button>\n<div class="btn-group">\n<button class="btn btn-default btn-sm" title="\xe9\x9a\x90\xe8\x97\x8f"><i class="fa fa-trash-o"></i></button>\n<button class="btn btn-default btn-sm" title="\xe5\x88\xa0\xe9\x99\xa4"><i class="fa fa-reply"></i></button>\n<button class="btn btn-default btn-sm" title="\xe6\xad\xa3\xe5\xb8\xb8"><i class="fa fa-share"></i></button>\n</div>\n</div>\n<div class="col-xs-4" style="float: right">\n<div class="has-feedback">\n<input type="text" class="form-control input-sm" placeholder="\xe6\x9f\xa5\xe6\x89\xbe\xe8\xaf\x84\xe8\xae\xba"/>\n<span class="fa fa-search form-control-feedback"></span>\n</div>\n</div>\n</div>\n<table class="table table-hover">\n<thead>\n')
+     31      _append('<tr>\n<th></th>\n<th class="nickname">\xe6\x98\xb5\xe7\xa7\xb0</th>\n<th class="email">\xe9\x82\xae\xe7\xae\xb1\xe5\x9c\xb0\xe5\x9d\x80</th>\n<th class="content">\xe5\x86\x85\xe5\xae\xb9</th>\n<th class="status">\xe7\x8a\xb6\xe6\x80\x81</th>\n<th class="time">\xe6\x97\xb6\xe9\x97\xb4</th>\n</tr>\n')
+     32      _append('\n</thead>\n<tbody>\n')
+     33      for q in query:
+     34          _append('\n')
+     35          _append('<tr>\n<td><input type="checkbox" /></td>\n<td class="nickname">')
+     36          _tmp = q.get('name', '')
+     37          if isinstance(_tmp, _string_types): _tmp = _utf8(_tmp)
+     38          else: _tmp = _utf8(str(_tmp))
+     39          _tmp = _utf8(xhtml_escape(_tmp))
+     40          _append(_tmp)
+     41          _append('</td>\n<td class="email">')
+     42          _tmp = q.get('email', '')
+     43          if isinstance(_tmp, _string_types): _tmp = _utf8(_tmp)
+     44          else: _tmp = _utf8(str(_tmp))
+     45          _tmp = _utf8(xhtml_escape(_tmp))
+     46          _append(_tmp)
+     47          _append('</td>\n<td class="content">')
+     48          _tmp = q.get('contain', '')
+     49          if isinstance(_tmp, _string_types): _tmp = _utf8(_tmp)
+     50          else: _tmp = _utf8(str(_tmp))
+     51          _tmp = _utf8(xhtml_escape(_tmp))
+     52          _append(_tmp)
+     53          _append('</td>\n<td class="status">\xe5\x88\xa0\xe9\x99\xa4</td>\n<td class="time">')
+     54          _tmp = q.get('time', '')
+     55          if isinstance(_tmp, _string_types): _tmp = _utf8(_tmp)
+     56          else: _tmp = _utf8(str(_tmp))
+     57          _tmp = _utf8(xhtml_escape(_tmp))
+     58          _append(_tmp)
+     59          _append('</td>\n</tr>')
+     60          _append('\n')
+     61      _append('\n</tbody>\n</table>\n')
+     62      _append('<div class="row">\n<div class="col-xs-6">\n<div class="self-paginfo">\n\xe6\x80\xbb\xe5\x85\xb1')
+     63      _tmp = ans.get('total_num', 0)
+     64      if isinstance(_tmp, _string_types): _tmp = _utf8(_tmp)
+     65      else: _tmp = _utf8(str(_tmp))
+     66      _tmp = _utf8(xhtml_escape(_tmp))
+     67      _append(_tmp)
+     68      _append('\xe6\x9d\xa1\xe6\x95\xb0\xe6\x8d\xae\n</div>\n</div>\n')
+     69      current = ans.get('page_num', 1)
+     70      _append('\n')
+     71      total = ans.get('page_total', 1)
+     72      _append('\n<div class="col-xs-6">\n<div class="self-pagination">\n<ul class="pagination">\n<li class="prev disabled">\n<a href="javascript:;">\xe9\xa6\x96\xe9\xa1\xb5</a>\n</li>\n<li class="active">\n<a href="javascript:;">1</a>\n</li>\n<li>\n<a href="javascript:;">2</a>\n</li>\n<li>\n<a href="javascript:;">3</a>\n</li>\n<li>\n<a href="javascript:;">4</a>\n</li>\n<li>\n<a href="javascript:;">5</a>\n</li>\n<li class="next">\n<a hre="javascript:;">\xe5\xb0\xbe\xe9\xa1\xb5</a>\n</li>\n</ul>\n<ul class="pagination">\n')
+     73      if current != 1:
+     74          _append('<li><a href="')
+     75          _tmp = url%(current-1)
+     76          if isinstance(_tmp, _string_types): _tmp = _utf8(_tmp)
+     77          else: _tmp = _utf8(str(_tmp))
+     78          _tmp = _utf8(xhtml_escape(_tmp))
+     79          _append(_tmp)
+     80          _append('"><span aria-hidden="true">\xe4\xb8\x8a\xe4\xb8\x80\xe9\xa1\xb5</span><span class="sr-only">Previous</span></a></li>')
+     81      _append('\n')
+     82      if current-3 > 1:
+     83          _append('<li><a href="')
+     84          _tmp = url%(1)
+     85          if isinstance(_tmp, _string_types): _tmp = _utf8(_tmp)
+     86          else: _tmp = _utf8(str(_tmp))
+     87          _tmp = _utf8(xhtml_escape(_tmp))
+     88          _append(_tmp)
+     89          _append('">1</a></li>')
+     90      _append('\n')
+     91      if current-3 > 2:
+     92          _append('<li><span>...</span></li>')
+     93      _append('\n')
+     94      for i in [i for i in range(current-3,current) if i > 0]:
+     95          _append('\n<li><a href="')
+     96          _tmp = url%(i)
+     97          if isinstance(_tmp, _string_types): _tmp = _utf8(_tmp)
+     98          else: _tmp = _utf8(str(_tmp))
+     99          _tmp = _utf8(xhtml_escape(_tmp))
+    100          _append(_tmp)
+    101          _append('">')
+    102          _tmp = i
+    103          if isinstance(_tmp, _string_types): _tmp = _utf8(_tmp)
+    104          else: _tmp = _utf8(str(_tmp))
+    105          _tmp = _utf8(xhtml_escape(_tmp))
+    106          _append(_tmp)
+    107          _append('</a></li>\n')
+    108      _append('\n<li class="active"><span>')
+    109      _tmp = current
+    110      if isinstance(_tmp, _string_types): _tmp = _utf8(_tmp)
+    111      else: _tmp = _utf8(str(_tmp))
+    112      _tmp = _utf8(xhtml_escape(_tmp))
+    113      _append(_tmp)
+    114      _append('</span></li>\n')
+    115      for i in [i for i in range(current+1,current+4) if i <= total ]:
+    116          _append('\n<li><a href="')
+    117          _tmp = url%(i)
+    118          if isinstance(_tmp, _string_types): _tmp = _utf8(_tmp)
+    119          else: _tmp = _utf8(str(_tmp))
+    120          _tmp = _utf8(xhtml_escape(_tmp))
+    121          _append(_tmp)
+    122          _append('">')
+    123          _tmp = i
+    124          if isinstance(_tmp, _string_types): _tmp = _utf8(_tmp)
+    125          else: _tmp = _utf8(str(_tmp))
+    126          _tmp = _utf8(xhtml_escape(_tmp))
+    127          _append(_tmp)
+    128          _append('</a></li>\n')
+    129      _append('\n')
+    130      if current+3 < total:
+    131          _append(' <li><span>...</span></li>')
+    132      _append('\n')
+    133      if current < total:
+    134          _append(' <li><a href="')
+    135          _tmp = url%(current+1)
+    136          if isinstance(_tmp, _string_types): _tmp = _utf8(_tmp)
+    137          else: _tmp = _utf8(str(_tmp))
+    138          _tmp = _utf8(xhtml_escape(_tmp))
+    139          _append(_tmp)
+    140          _append('"><span aria-hidden="true">\xe4\xb8\x8b\xe4\xb8\x80\xe9\xa1\xb5</span><span class="sr-only">Next</span></a></li>')
+    141      _append('\n</ul>\n</div>\n</div>\n</div>')
+    142      _append('\n</div>\n</div>\n</div>\n</div>\n')
+    143      _append('\n</section>\n</div>\n')
+    144      _append('<footer class="main-footer">\n<div class="pull-right hidden-xs">\n<b>\xe5\xa3\xb0\xe6\x98\x8e</b> \xe6\x9c\xac\xe7\xab\x99\xe7\x82\xb9\xe9\x81\xb5\xe5\xbe\xaa<a hre="http://zh.wikipedia.org/zh-cn/MIT%E8%A8%B1%E5%8F%AF%E8%AD%89"><strong>MIT license.</strong></a>\n</div>\n<strong>Copyright \xc2\xa9 2015 <a href="javascript:;">DM Admin</a>.</strong> All rights reserved.\n</footer>')
+    145      _append('\n</div>\n<script type="text/javascript" src="/static/js/jquery-1.9.1.js"></script>\n<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>\n<script type="text/javascript" src="/static/js/jquery.slimscroll.min.js"></script>\n<script type="text/javascript" src="/static/js/icheck.min.js"></script>\n<script type="text/javascript" src="/static/js/app.min.js"></script>\n<!--\n<script type="text/javascript" src="/static/js/demo.js"></script>\n-->\n<script type="text/javascript" src="/static/js/base.js"></script>\n')
+    146      _append('\n<script>\n$(function () {\n$(\'input[type="checkbox"]\').iCheck({\ncheckboxClass: \'icheckbox_flat-blue\',\nradioClass: \'iradio_flat-blue\'\n});\n$(".checkbox-toggle").click(function () {\nvar clicks = $(this).data(\'clicks\');\nif (clicks) {\n//Uncheck all checkboxes\n$("input[type=\'checkbox\']", ".table").iCheck("uncheck");\n} else {\n//Check all checkboxes\n$("input[type=\'checkbox\']", ".table").iCheck("check");\n}\n$(this).data("clicks", !clicks);\n});\n});\n</script>\n')
+    147      _append('\n</body>\n</html>\n')
+    148      return _utf8('').join(_buffer)
+[E 150421 18:19:43 dm.py:start:61] Uncaught exception GET /comment/comment/list (127.0.0.1)
+    HTTPRequest(protocol='http', host='127.0.0.1:8910', method='GET', uri='/comment/comment/list', version='HTTP/1.1', remote_ip='127.0.0.1', body='', headers={'Accept-Language': 'zh-cn,en-us;q=0.7,en;q=0.3', 'Accept-Encoding': 'gzip, deflate', 'Host': '127.0.0.1:8910', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0', 'Connection': 'keep-alive', 'Cookie': 'sessionid=000041925478895fd534e12ce7d291d295327e; jwfy_dm_website_session=5730f47e5653cbea5213f9c6febda5c0', 'Cache-Control': 'max-age=0', 'If-None-Match': '"825975ce441dd545f3104460fc4ecd8fc97f2f61"'})
+    Traceback (most recent call last):
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/web.py", line 954, in _execute
+        getattr(self, self.request.method.lower())(*args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 47, in request_process
+        self._process_handler_result()
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 487, in _process_handler_result
+        self._process_handler_result_debug()
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 477, in _process_handler_result_debug
+        self.processer_obj._real_html_render()
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 178, in _real_html_render
+        session = self.session)
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/web.py", line 447, in render
+        html = self.render_string(template_name, **kwargs)
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/web.py", line 558, in render_string
+        return t.generate(**args)
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/template.py", line 236, in generate
+        return execute()
+      File "<template comment.html>", line 117, in _execute
+    TypeError: __call__() takes exactly 1 argument (2 given)
+[E 150421 18:19:43 dm.py:start:61] 500 GET /comment/comment/list (127.0.0.1) 27.88ms
+[E 150421 18:55:14 dm.py:start:61] comment.html code:
+      1  def _execute():
+      2      _buffer = []
+      3      _append = _buffer.append
+      4      _append('<!DOCTYPE html>\n<html>\n<head>\n<meta charset="UTF-8">\n<title>')
+      5      _append('\xe8\xaf\x84\xe8\xae\xba')
+      6      _append('-DM\xe5\x90\x8e\xe5\x8f\xb0</title>\n<meta content=\'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no\' name=\'viewport\'>\n<link href="/static/css/bootstrap.min.css" rel="stylesheet" type="text/css" />\n<link href="/static/css/font-awesome.min.css" rel="stylesheet" type="text/css" />\n<link href="/static/css/theme.min.css" rel="stylesheet" type="text/css" />\n<link href="/static/css/_all-skins.min.css" rel="stylesheet" type="text/css" />\n<link href="/static/css/flat/blue.css" rel="stylesheet" type="text/css"/>\n<link href="/static/css/base.css" rel="stylesheet" type="text/css"/>\n')
+      7      _append('\n</head>\n<body class="skin-blue fixed">\n<div class="wrapper">\n<!-- \xe5\xa4\xb4\xe9\x83\xa8\xef\xbc\x8c\xe5\xaf\xbc\xe8\x88\xaa\xe6\xa0\x8f -->\n')
+      8      _append('<header class="main-header">\n<a href="javascript:;" class="logo"><b>DM</b>\xe5\x90\x8e\xe5\x8f\xb0</a>\n<!-- Header Navbar: style can be found in header.less -->\n<nav class="navbar navbar-static-top" role="navigation">\n<!-- Sidebar toggle button-->\n<a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">\n<span class="sr-only">\xe5\xaf\xbc\xe8\x88\xaa\xe6\xa0\x8f\xe5\x88\x87\xe6\x8d\xa2</span>\n<span class="icon-bar"></span>\n<span class="icon-bar"></span>\n<span class="icon-bar"></span>\n</a>\n<ul class="nav navbar-nav navbar-right">\n<li class="dropdown">\n<a href="#" class="dropdown-toggle" data-toggle="dropdown">\xe8\xb4\xa6\xe6\x88\xb7 <span class="caret"></span></a>\n<ul class="dropdown-menu" role="menu">\n<li><a href="javascript:;">\xe4\xb8\xaa\xe4\xba\xba\xe4\xbf\xa1\xe6\x81\xaf</a></li>\n<li class="divider"></li>\n<li><a href="javascript:;">\xe9\x80\x80\xe5\x87\xba</a></li>\n</ul>\n</li>\n</ul>\n<form class="navbar-form navbar-right" role="search">\n<div class="form-group">\n<input type="text" class="form-control" id="navbar-search-input" placeholder="\xe6\x90\x9c\xe7\xb4\xa2">\n</div>\n</form>\n</nav>\n</header>')
+      9      _append('\n<!-- \xe5\xb7\xa6\xe4\xbe\xa7\xef\xbc\x8c\xe8\x8f\x9c\xe5\x8d\x95\xe6\xa0\x8f -->\n')
+     10      _append('<aside class="main-sidebar">\n<!-- sidebar: style can be found in sidebar.less -->\n<section class="sidebar">\n<!-- /.search form -->\n<ul class="sidebar-menu">\n<li class="header">\xe5\xaf\xbc\xe8\x88\xaa</li>\n<li>\n<a href="javascript:;">\n<i class="fa fa-dashboard"></i> <span>\xe4\xb8\xbb\xe9\xa1\xb5</span>\n</a>\n</li>\n<li class="treeview">\n<a href="#">\n<i class="fa fa-file-movie-o "></i> <span>\xe7\x94\xb5\xe5\xbd\xb1</span>\n<i class="fa fa-angle-left pull-right"></i>\n</a>\n<ul class="treeview-menu">\n<li><a href="javascript:;"><i class="fa fa-circle-o"></i>\xe7\x94\xb5\xe5\xbd\xb1\xe5\x88\x97\xe8\xa1\xa8</a></li>\n<li><a href="javascript:;"><i class="fa fa-circle-o"></i>\xe7\x94\xb5\xe5\xbd\xb1\xe6\x8e\xa8\xe8\x8d\x90</a></li>\n<li><a href="javascript:;"><i class="fa fa-circle-o"></i>\xe7\x94\xb5\xe5\xbd\xb1\xe5\xaf\xbc\xe5\x85\xa5</a></li>\n</ul>\n</li>\n<li class="treeview">\n<a href="#">\n<i class="fa fa-comment-o "></i> <span>\xe8\xaf\x84\xe8\xae\xba</span>\n<i class="fa fa-angle-left pull-right"></i>\n</a>\n<ul class="treeview-menu">\n<li><a href="javascript:;"><i class="fa fa-circle-o"></i>\xe7\x94\xb5\xe5\xbd\xb1</a></li>\n<li><a href="javascript:;"><i class="fa fa-circle-o"></i>\xe7\x94\xb5\xe5\xbd\xb1\xe6\x8e\xa8\xe8\x8d\x90</a></li>\n<li><a href="javascript:;"><i class="fa fa-circle-o"></i>\xe7\x94\xb5\xe5\xbd\xb1\xe5\xaf\xbc\xe5\x85\xa5</a></li>\n</ul>\n</li>\n<li class="treeview">\n<a href="#">\n<i class="fa fa-send-o"></i><span>\xe9\x82\xae\xe4\xbb\xb6</span>\n<i class="fa fa-angle-left pull-right"></i>\n</a>\n<ul class="treeview-menu">\n<li><a href="javascript:;"><i class="fa fa-circle-o"></i>\xe9\x82\xae\xe4\xbb\xb6\xe5\x88\x97\xe8\xa1\xa8</a></li>\n<li><a href="javascript:;"><i class="fa fa-circle-o"></i>\xe9\x82\xae\xe4\xbb\xb6\xe5\x8f\x91\xe9\x80\x81</a></li>\n</ul>\n</li>\n</ul>\n</section>\n<!-- /.sidebar -->\n</aside>')
+     11      _append('\n<!-- \xe4\xb8\xbb\xe8\xa6\x81\xe5\x86\x85\xe5\xae\xb9\xe6\xa1\x86 -->\n<div class="content-wrapper">\n<!-- \xe5\x86\x85\xe5\xae\xb9\xe5\xa4\xb4\xe9\x83\xa8 -->\n<section class="content-header">\n')
+     12      _append('\xe8\xaf\x84\xe8\xae\xba')
+     13      _append('\n</section>\n<!-- \xe4\xb8\xbb\xe8\xa6\x81\xe5\x86\x85\xe5\xae\xb9 -->\n<section class="content">\n')
+     14      _append('\n')
+     15      ans = pyobject.get('result')
+     16      _append('\n')
+     17      query = ans.get('query')
+     18      _append('\n')
+     19      status = ans.get('r_status', 0)
+     20      _append('\n')
+     21      category = ans.get('category', 'movie')
+     22      _append('\n<div class="row">\n<div class="col-md-12">\n<div class="box box-primary">\n<div class="box-header">\n<h3 class="box-title">\xe8\xaf\x84\xe8\xae\xba-')
+     23      _tmp = ans.get('category','')
+     24      if isinstance(_tmp, _string_types): _tmp = _utf8(_tmp)
+     25      else: _tmp = _utf8(str(_tmp))
+     26      _tmp = _utf8(xhtml_escape(_tmp))
+     27      _append(_tmp)
+     28      _append('</h3>\n</div>\n<div class="box-body">\n<div class="row" style="margin-bottom: 10px">\n<div class="col-xs-6">\n<button class="btn btn-default btn-sm checkbox-toggle" title="\xe5\x85\xa8\xe9\x80\x89/\xe5\x85\xa8\xe4\xb8\x8d\xe9\x80\x89"><i class="fa fa-square-o"></i></button>\n<div class="btn-group">\n<button class="btn btn-default btn-sm" title="\xe9\x9a\x90\xe8\x97\x8f"><i class="fa fa-trash-o"></i></button>\n<button class="btn btn-default btn-sm" title="\xe5\x88\xa0\xe9\x99\xa4"><i class="fa fa-reply"></i></button>\n<button class="btn btn-default btn-sm" title="\xe6\xad\xa3\xe5\xb8\xb8"><i class="fa fa-share"></i></button>\n</div>\n</div>\n<div class="col-xs-4" style="float: right">\n<div class="has-feedback">\n<input type="text" class="form-control input-sm" placeholder="\xe6\x9f\xa5\xe6\x89\xbe\xe8\xaf\x84\xe8\xae\xba"/>\n<span class="fa fa-search form-control-feedback"></span>\n</div>\n</div>\n</div>\n<table class="table table-hover">\n<thead>\n')
+     29      _append('<tr>\n<th></th>\n<th class="nickname">\xe6\x98\xb5\xe7\xa7\xb0</th>\n<th class="email">\xe9\x82\xae\xe7\xae\xb1\xe5\x9c\xb0\xe5\x9d\x80</th>\n<th class="content">\xe5\x86\x85\xe5\xae\xb9</th>\n<th class="status">\xe7\x8a\xb6\xe6\x80\x81</th>\n<th class="time">\xe6\x97\xb6\xe9\x97\xb4</th>\n</tr>\n')
+     30      _append('\n</thead>\n<tbody>\n')
+     31      for q in query:
+     32          _append('\n')
+     33          _append('<tr>\n<td><input type="checkbox" /></td>\n<td class="nickname">')
+     34          _tmp = q.get('name', '')
+     35          if isinstance(_tmp, _string_types): _tmp = _utf8(_tmp)
+     36          else: _tmp = _utf8(str(_tmp))
+     37          _tmp = _utf8(xhtml_escape(_tmp))
+     38          _append(_tmp)
+     39          _append('</td>\n<td class="email">')
+     40          _tmp = q.get('email', '')
+     41          if isinstance(_tmp, _string_types): _tmp = _utf8(_tmp)
+     42          else: _tmp = _utf8(str(_tmp))
+     43          _tmp = _utf8(xhtml_escape(_tmp))
+     44          _append(_tmp)
+     45          _append('</td>\n<td class="content">')
+     46          _tmp = q.get('contain', '')
+     47          if isinstance(_tmp, _string_types): _tmp = _utf8(_tmp)
+     48          else: _tmp = _utf8(str(_tmp))
+     49          _tmp = _utf8(xhtml_escape(_tmp))
+     50          _append(_tmp)
+     51          _append('</td>\n<td class="status">\xe5\x88\xa0\xe9\x99\xa4</td>\n<td class="time">')
+     52          _tmp = q.get('time', '')
+     53          if isinstance(_tmp, _string_types): _tmp = _utf8(_tmp)
+     54          else: _tmp = _utf8(str(_tmp))
+     55          _tmp = _utf8(xhtml_escape(_tmp))
+     56          _append(_tmp)
+     57          _append('</td>\n</tr>')
+     58          _append('\n')
+     59      _append('\n</tbody>\n</table>\n')
+     60      url = '/comment/comment/list?category=%s&status=%s' %(category, status) + "&page_num=%s"
+     61      _append('\n')
+     62      _append('<div class="row">\n<div class="col-xs-6">\n<div class="self-paginfo">\n\xe6\x80\xbb\xe5\x85\xb1')
+     63      _tmp = ans.get('total_num', 0)
+     64      if isinstance(_tmp, _string_types): _tmp = _utf8(_tmp)
+     65      else: _tmp = _utf8(str(_tmp))
+     66      _tmp = _utf8(xhtml_escape(_tmp))
+     67      _append(_tmp)
+     68      _append('\xe6\x9d\xa1\xe6\x95\xb0\xe6\x8d\xae\n</div>\n</div>\n')
+     69      current = ans.get('page_num', 1)
+     70      _append('\n')
+     71      total = ans.get('page_total', 1)
+     72      _append('\n<div class="col-xs-6">\n<div class="self-pagination">\n<!--\n<ul class="pagination">\n<li class="prev disabled">\n<a href="javascript:;">\xe9\xa6\x96\xe9\xa1\xb5</a>\n</li>\n<li class="active">\n<a href="javascript:;">1</a>\n</li>\n<li>\n<a href="javascript:;">2</a>\n</li>\n<li>\n<a href="javascript:;">3</a>\n</li>\n<li>\n<a href="javascript:;">4</a>\n</li>\n<li>\n<a href="javascript:;">5</a>\n</li>\n<li class="next">\n<a hre="javascript:;">\xe5\xb0\xbe\xe9\xa1\xb5</a>\n</li>\n</ul>\n-->\n<ul class="pagination">\n')
+     73      if current != 1:
+     74          _append('<li><a href="')
+     75          _tmp = url %(current-1)
+     76          if isinstance(_tmp, _string_types): _tmp = _utf8(_tmp)
+     77          else: _tmp = _utf8(str(_tmp))
+     78          _tmp = _utf8(xhtml_escape(_tmp))
+     79          _append(_tmp)
+     80          _append('">\xe4\xb8\x8a\xe4\xb8\x80\xe9\xa1\xb5</a></li>')
+     81      _append('\n')
+     82      if current-3 > 1:
+     83          _append('<li><a href="')
+     84          _tmp = url %(1)
+     85          if isinstance(_tmp, _string_types): _tmp = _utf8(_tmp)
+     86          else: _tmp = _utf8(str(_tmp))
+     87          _tmp = _utf8(xhtml_escape(_tmp))
+     88          _append(_tmp)
+     89          _append('">1</a></li>')
+     90      _append('\n')
+     91      if current-3 > 2:
+     92          _append('<li><span>...</span></li>')
+     93      _append('\n')
+     94      for i in [i for i in range(current-3,current) if i > 0]:
+     95          _append('\n<li><a href="')
+     96          _tmp = url %(i)
+     97          if isinstance(_tmp, _string_types): _tmp = _utf8(_tmp)
+     98          else: _tmp = _utf8(str(_tmp))
+     99          _tmp = _utf8(xhtml_escape(_tmp))
+    100          _append(_tmp)
+    101          _append('">')
+    102          _tmp = i
+    103          if isinstance(_tmp, _string_types): _tmp = _utf8(_tmp)
+    104          else: _tmp = _utf8(str(_tmp))
+    105          _tmp = _utf8(xhtml_escape(_tmp))
+    106          _append(_tmp)
+    107          _append('</a></li>\n')
+    108      _append('\n<li class="active"><span>')
+    109      _tmp = current
+    110      if isinstance(_tmp, _string_types): _tmp = _utf8(_tmp)
+    111      else: _tmp = _utf8(str(_tmp))
+    112      _tmp = _utf8(xhtml_escape(_tmp))
+    113      _append(_tmp)
+    114      _append('</span></li>\n')
+    115      for i in [i for i in range(current+1,current+4) if i <= total ]:
+    116          _append('\n<li><a href="')
+    117          _tmp = url %(i)
+    118          if isinstance(_tmp, _string_types): _tmp = _utf8(_tmp)
+    119          else: _tmp = _utf8(str(_tmp))
+    120          _tmp = _utf8(xhtml_escape(_tmp))
+    121          _append(_tmp)
+    122          _append('">')
+    123          _tmp = i
+    124          if isinstance(_tmp, _string_types): _tmp = _utf8(_tmp)
+    125          else: _tmp = _utf8(str(_tmp))
+    126          _tmp = _utf8(xhtml_escape(_tmp))
+    127          _append(_tmp)
+    128          _append('</a></li>\n')
+    129      _append('\n')
+    130      if current+3 < total:
+    131          _append(' <li><span>...</span></li>')
+    132      _append('\n')
+    133      if current < total:
+    134          _append(' <li><a href="')
+    135          _tmp = url %(current+1)
+    136          if isinstance(_tmp, _string_types): _tmp = _utf8(_tmp)
+    137          else: _tmp = _utf8(str(_tmp))
+    138          _tmp = _utf8(xhtml_escape(_tmp))
+    139          _append(_tmp)
+    140          _append('">\xe4\xb8\x8b\xe4\xb8\x80\xe9\xa1\xb5</a></li>')
+    141      _append('\n</ul>\n</div>\n</div>\n</div>')
+    142      _append('\n</div>\n</div>\n</div>\n</div>\n')
+    143      _append('\n</section>\n</div>\n')
+    144      _append('<footer class="main-footer">\n<div class="pull-right hidden-xs">\n<b>\xe5\xa3\xb0\xe6\x98\x8e</b> \xe6\x9c\xac\xe7\xab\x99\xe7\x82\xb9\xe9\x81\xb5\xe5\xbe\xaa<a hre="http://zh.wikipedia.org/zh-cn/MIT%E8%A8%B1%E5%8F%AF%E8%AD%89"><strong>MIT license.</strong></a>\n</div>\n<strong>Copyright \xc2\xa9 2015 <a href="javascript:;">DM Admin</a>.</strong> All rights reserved.\n</footer>')
+    145      _append('\n</div>\n<script type="text/javascript" src="/static/js/jquery-1.9.1.js"></script>\n<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>\n<script type="text/javascript" src="/static/js/jquery.slimscroll.min.js"></script>\n<script type="text/javascript" src="/static/js/icheck.min.js"></script>\n<script type="text/javascript" src="/static/js/app.min.js"></script>\n<!--\n<script type="text/javascript" src="/static/js/demo.js"></script>\n-->\n<script type="text/javascript" src="/static/js/base.js"></script>\n')
+    146      _append('\n<script>\n$(function () {\n$(\'input[type="checkbox"]\').iCheck({\ncheckboxClass: \'icheckbox_flat-blue\',\nradioClass: \'iradio_flat-blue\'\n});\n$(".checkbox-toggle").click(function () {\nvar clicks = $(this).data(\'clicks\');\nif (clicks) {\n//Uncheck all checkboxes\n$("input[type=\'checkbox\']", ".table").iCheck("uncheck");\n} else {\n//Check all checkboxes\n$("input[type=\'checkbox\']", ".table").iCheck("check");\n}\n$(this).data("clicks", !clicks);\n});\n});\n</script>\n')
+    147      _append('\n</body>\n</html>\n')
+    148      return _utf8('').join(_buffer)
+[E 150421 18:55:14 dm.py:start:61] Uncaught exception GET /comment/comment/list?category=movie&status=0&page_num=3 (127.0.0.1)
+    HTTPRequest(protocol='http', host='127.0.0.1:8910', method='GET', uri='/comment/comment/list?category=movie&status=0&page_num=3', version='HTTP/1.1', remote_ip='127.0.0.1', body='', headers={'Accept-Language': 'zh-cn,en-us;q=0.7,en;q=0.3', 'Accept-Encoding': 'gzip, deflate', 'Host': '127.0.0.1:8910', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0', 'Connection': 'keep-alive', 'Referer': 'http://127.0.0.1:8910/comment/comment/list?category=movie&status=0&page_num=1', 'Cache-Control': 'max-age=0', 'If-None-Match': '"c6caa9da2427509eb908008e9da58f56472d9c72"', 'Cookie': 'sessionid=000041925478895fd534e12ce7d291d295327e; jwfy_dm_website_session=5730f47e5653cbea5213f9c6febda5c0'})
+    Traceback (most recent call last):
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/web.py", line 954, in _execute
+        getattr(self, self.request.method.lower())(*args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 47, in request_process
+        self._process_handler_result()
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 487, in _process_handler_result
+        self._process_handler_result_debug()
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 477, in _process_handler_result_debug
+        self.processer_obj._real_html_render()
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 178, in _real_html_render
+        session = self.session)
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/web.py", line 447, in render
+        html = self.render_string(template_name, **kwargs)
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/web.py", line 558, in render_string
+        return t.generate(**args)
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/template.py", line 236, in generate
+        return execute()
+      File "<template comment.html>", line 34, in _execute
+    AttributeError: 'str' object has no attribute 'get'
+[E 150421 18:55:14 dm.py:start:61] 500 GET /comment/comment/list?category=movie&status=0&page_num=3 (127.0.0.1) 27.14ms
+[E 150421 18:55:52 dm.py:start:61] comment.html code:
+      1  def _execute():
+      2      _buffer = []
+      3      _append = _buffer.append
+      4      _append('<!DOCTYPE html>\n<html>\n<head>\n<meta charset="UTF-8">\n<title>')
+      5      _append('\xe8\xaf\x84\xe8\xae\xba')
+      6      _append('-DM\xe5\x90\x8e\xe5\x8f\xb0</title>\n<meta content=\'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no\' name=\'viewport\'>\n<link href="/static/css/bootstrap.min.css" rel="stylesheet" type="text/css" />\n<link href="/static/css/font-awesome.min.css" rel="stylesheet" type="text/css" />\n<link href="/static/css/theme.min.css" rel="stylesheet" type="text/css" />\n<link href="/static/css/_all-skins.min.css" rel="stylesheet" type="text/css" />\n<link href="/static/css/flat/blue.css" rel="stylesheet" type="text/css"/>\n<link href="/static/css/base.css" rel="stylesheet" type="text/css"/>\n')
+      7      _append('\n</head>\n<body class="skin-blue fixed">\n<div class="wrapper">\n<!-- \xe5\xa4\xb4\xe9\x83\xa8\xef\xbc\x8c\xe5\xaf\xbc\xe8\x88\xaa\xe6\xa0\x8f -->\n')
+      8      _append('<header class="main-header">\n<a href="javascript:;" class="logo"><b>DM</b>\xe5\x90\x8e\xe5\x8f\xb0</a>\n<!-- Header Navbar: style can be found in header.less -->\n<nav class="navbar navbar-static-top" role="navigation">\n<!-- Sidebar toggle button-->\n<a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">\n<span class="sr-only">\xe5\xaf\xbc\xe8\x88\xaa\xe6\xa0\x8f\xe5\x88\x87\xe6\x8d\xa2</span>\n<span class="icon-bar"></span>\n<span class="icon-bar"></span>\n<span class="icon-bar"></span>\n</a>\n<ul class="nav navbar-nav navbar-right">\n<li class="dropdown">\n<a href="#" class="dropdown-toggle" data-toggle="dropdown">\xe8\xb4\xa6\xe6\x88\xb7 <span class="caret"></span></a>\n<ul class="dropdown-menu" role="menu">\n<li><a href="javascript:;">\xe4\xb8\xaa\xe4\xba\xba\xe4\xbf\xa1\xe6\x81\xaf</a></li>\n<li class="divider"></li>\n<li><a href="javascript:;">\xe9\x80\x80\xe5\x87\xba</a></li>\n</ul>\n</li>\n</ul>\n<form class="navbar-form navbar-right" role="search">\n<div class="form-group">\n<input type="text" class="form-control" id="navbar-search-input" placeholder="\xe6\x90\x9c\xe7\xb4\xa2">\n</div>\n</form>\n</nav>\n</header>')
+      9      _append('\n<!-- \xe5\xb7\xa6\xe4\xbe\xa7\xef\xbc\x8c\xe8\x8f\x9c\xe5\x8d\x95\xe6\xa0\x8f -->\n')
+     10      _append('<aside class="main-sidebar">\n<!-- sidebar: style can be found in sidebar.less -->\n<section class="sidebar">\n<!-- /.search form -->\n<ul class="sidebar-menu">\n<li class="header">\xe5\xaf\xbc\xe8\x88\xaa</li>\n<li>\n<a href="javascript:;">\n<i class="fa fa-dashboard"></i> <span>\xe4\xb8\xbb\xe9\xa1\xb5</span>\n</a>\n</li>\n<li class="treeview">\n<a href="#">\n<i class="fa fa-file-movie-o "></i> <span>\xe7\x94\xb5\xe5\xbd\xb1</span>\n<i class="fa fa-angle-left pull-right"></i>\n</a>\n<ul class="treeview-menu">\n<li><a href="javascript:;"><i class="fa fa-circle-o"></i>\xe7\x94\xb5\xe5\xbd\xb1\xe5\x88\x97\xe8\xa1\xa8</a></li>\n<li><a href="javascript:;"><i class="fa fa-circle-o"></i>\xe7\x94\xb5\xe5\xbd\xb1\xe6\x8e\xa8\xe8\x8d\x90</a></li>\n<li><a href="javascript:;"><i class="fa fa-circle-o"></i>\xe7\x94\xb5\xe5\xbd\xb1\xe5\xaf\xbc\xe5\x85\xa5</a></li>\n</ul>\n</li>\n<li class="treeview">\n<a href="#">\n<i class="fa fa-comment-o "></i> <span>\xe8\xaf\x84\xe8\xae\xba</span>\n<i class="fa fa-angle-left pull-right"></i>\n</a>\n<ul class="treeview-menu">\n<li><a href="javascript:;"><i class="fa fa-circle-o"></i>\xe7\x94\xb5\xe5\xbd\xb1</a></li>\n<li><a href="javascript:;"><i class="fa fa-circle-o"></i>\xe7\x94\xb5\xe5\xbd\xb1\xe6\x8e\xa8\xe8\x8d\x90</a></li>\n<li><a href="javascript:;"><i class="fa fa-circle-o"></i>\xe7\x94\xb5\xe5\xbd\xb1\xe5\xaf\xbc\xe5\x85\xa5</a></li>\n</ul>\n</li>\n<li class="treeview">\n<a href="#">\n<i class="fa fa-send-o"></i><span>\xe9\x82\xae\xe4\xbb\xb6</span>\n<i class="fa fa-angle-left pull-right"></i>\n</a>\n<ul class="treeview-menu">\n<li><a href="javascript:;"><i class="fa fa-circle-o"></i>\xe9\x82\xae\xe4\xbb\xb6\xe5\x88\x97\xe8\xa1\xa8</a></li>\n<li><a href="javascript:;"><i class="fa fa-circle-o"></i>\xe9\x82\xae\xe4\xbb\xb6\xe5\x8f\x91\xe9\x80\x81</a></li>\n</ul>\n</li>\n</ul>\n</section>\n<!-- /.sidebar -->\n</aside>')
+     11      _append('\n<!-- \xe4\xb8\xbb\xe8\xa6\x81\xe5\x86\x85\xe5\xae\xb9\xe6\xa1\x86 -->\n<div class="content-wrapper">\n<!-- \xe5\x86\x85\xe5\xae\xb9\xe5\xa4\xb4\xe9\x83\xa8 -->\n<section class="content-header">\n')
+     12      _append('\xe8\xaf\x84\xe8\xae\xba')
+     13      _append('\n</section>\n<!-- \xe4\xb8\xbb\xe8\xa6\x81\xe5\x86\x85\xe5\xae\xb9 -->\n<section class="content">\n')
+     14      _append('\n')
+     15      ans = pyobject.get('result')
+     16      _append('\n')
+     17      query = ans.get('query')
+     18      _append('\n')
+     19      status = ans.get('r_status', 0)
+     20      _append('\n')
+     21      category = ans.get('category', 'movie')
+     22      _append('\n<div class="row">\n<div class="col-md-12">\n<div class="box box-primary">\n<div class="box-header">\n<h3 class="box-title">\xe8\xaf\x84\xe8\xae\xba-')
+     23      _tmp = ans.get('category','')
+     24      if isinstance(_tmp, _string_types): _tmp = _utf8(_tmp)
+     25      else: _tmp = _utf8(str(_tmp))
+     26      _tmp = _utf8(xhtml_escape(_tmp))
+     27      _append(_tmp)
+     28      _append('</h3>\n</div>\n<div class="box-body">\n<div class="row" style="margin-bottom: 10px">\n<div class="col-xs-6">\n<button class="btn btn-default btn-sm checkbox-toggle" title="\xe5\x85\xa8\xe9\x80\x89/\xe5\x85\xa8\xe4\xb8\x8d\xe9\x80\x89"><i class="fa fa-square-o"></i></button>\n<div class="btn-group">\n<button class="btn btn-default btn-sm" title="\xe9\x9a\x90\xe8\x97\x8f"><i class="fa fa-trash-o"></i></button>\n<button class="btn btn-default btn-sm" title="\xe5\x88\xa0\xe9\x99\xa4"><i class="fa fa-reply"></i></button>\n<button class="btn btn-default btn-sm" title="\xe6\xad\xa3\xe5\xb8\xb8"><i class="fa fa-share"></i></button>\n</div>\n</div>\n<div class="col-xs-4" style="float: right">\n<div class="has-feedback">\n<input type="text" class="form-control input-sm" placeholder="\xe6\x9f\xa5\xe6\x89\xbe\xe8\xaf\x84\xe8\xae\xba"/>\n<span class="fa fa-search form-control-feedback"></span>\n</div>\n</div>\n</div>\n<table class="table table-hover">\n<thead>\n')
+     29      _append('<tr>\n<th></th>\n<th class="nickname">\xe6\x98\xb5\xe7\xa7\xb0</th>\n<th class="email">\xe9\x82\xae\xe7\xae\xb1\xe5\x9c\xb0\xe5\x9d\x80</th>\n<th class="content">\xe5\x86\x85\xe5\xae\xb9</th>\n<th class="status">\xe7\x8a\xb6\xe6\x80\x81</th>\n<th class="time">\xe6\x97\xb6\xe9\x97\xb4</th>\n</tr>\n')
+     30      _append('\n</thead>\n<tbody>\n')
+     31      for q in query:
+     32          _append('\n')
+     33          _append('<tr>\n<td><input type="checkbox" /></td>\n<td class="nickname">')
+     34          _tmp = q.get('name', '')
+     35          if isinstance(_tmp, _string_types): _tmp = _utf8(_tmp)
+     36          else: _tmp = _utf8(str(_tmp))
+     37          _tmp = _utf8(xhtml_escape(_tmp))
+     38          _append(_tmp)
+     39          _append('</td>\n<td class="email">')
+     40          _tmp = q.get('email', '')
+     41          if isinstance(_tmp, _string_types): _tmp = _utf8(_tmp)
+     42          else: _tmp = _utf8(str(_tmp))
+     43          _tmp = _utf8(xhtml_escape(_tmp))
+     44          _append(_tmp)
+     45          _append('</td>\n<td class="content">')
+     46          _tmp = q.get('contain', '')
+     47          if isinstance(_tmp, _string_types): _tmp = _utf8(_tmp)
+     48          else: _tmp = _utf8(str(_tmp))
+     49          _tmp = _utf8(xhtml_escape(_tmp))
+     50          _append(_tmp)
+     51          _append('</td>\n<td class="status">\xe5\x88\xa0\xe9\x99\xa4</td>\n<td class="time">')
+     52          _tmp = q.get('time', '')
+     53          if isinstance(_tmp, _string_types): _tmp = _utf8(_tmp)
+     54          else: _tmp = _utf8(str(_tmp))
+     55          _tmp = _utf8(xhtml_escape(_tmp))
+     56          _append(_tmp)
+     57          _append('</td>\n</tr>')
+     58          _append('\n')
+     59      _append('\n</tbody>\n</table>\n')
+     60      url = '/comment/comment/list?category=%s&status=%s' %(category, status) + "&page_num=%s"
+     61      _append('\n')
+     62      _append('<div class="row">\n<div class="col-xs-6">\n<div class="self-paginfo">\n\xe6\x80\xbb\xe5\x85\xb1')
+     63      _tmp = ans.get('total_num', 0)
+     64      if isinstance(_tmp, _string_types): _tmp = _utf8(_tmp)
+     65      else: _tmp = _utf8(str(_tmp))
+     66      _tmp = _utf8(xhtml_escape(_tmp))
+     67      _append(_tmp)
+     68      _append('\xe6\x9d\xa1\xe6\x95\xb0\xe6\x8d\xae\n</div>\n</div>\n')
+     69      current = ans.get('page_num', 1)
+     70      _append('\n')
+     71      total = ans.get('page_total', 1)
+     72      _append('\n<div class="col-xs-6">\n<div class="self-pagination">\n<!--\n<ul class="pagination">\n<li class="prev disabled">\n<a href="javascript:;">\xe9\xa6\x96\xe9\xa1\xb5</a>\n</li>\n<li class="active">\n<a href="javascript:;">1</a>\n</li>\n<li>\n<a href="javascript:;">2</a>\n</li>\n<li>\n<a href="javascript:;">3</a>\n</li>\n<li>\n<a href="javascript:;">4</a>\n</li>\n<li>\n<a href="javascript:;">5</a>\n</li>\n<li class="next">\n<a hre="javascript:;">\xe5\xb0\xbe\xe9\xa1\xb5</a>\n</li>\n</ul>\n-->\n<ul class="pagination">\n')
+     73      if current != 1:
+     74          _append('<li><a href="')
+     75          _tmp = url %(current-1)
+     76          if isinstance(_tmp, _string_types): _tmp = _utf8(_tmp)
+     77          else: _tmp = _utf8(str(_tmp))
+     78          _tmp = _utf8(xhtml_escape(_tmp))
+     79          _append(_tmp)
+     80          _append('">\xe4\xb8\x8a\xe4\xb8\x80\xe9\xa1\xb5</a></li>')
+     81      _append('\n')
+     82      if current-3 > 1:
+     83          _append('<li><a href="')
+     84          _tmp = url %(1)
+     85          if isinstance(_tmp, _string_types): _tmp = _utf8(_tmp)
+     86          else: _tmp = _utf8(str(_tmp))
+     87          _tmp = _utf8(xhtml_escape(_tmp))
+     88          _append(_tmp)
+     89          _append('">1</a></li>')
+     90      _append('\n')
+     91      if current-3 > 2:
+     92          _append('<li><span>...</span></li>')
+     93      _append('\n')
+     94      for i in [i for i in range(current-3,current) if i > 0]:
+     95          _append('\n<li><a href="')
+     96          _tmp = url %(i)
+     97          if isinstance(_tmp, _string_types): _tmp = _utf8(_tmp)
+     98          else: _tmp = _utf8(str(_tmp))
+     99          _tmp = _utf8(xhtml_escape(_tmp))
+    100          _append(_tmp)
+    101          _append('">')
+    102          _tmp = i
+    103          if isinstance(_tmp, _string_types): _tmp = _utf8(_tmp)
+    104          else: _tmp = _utf8(str(_tmp))
+    105          _tmp = _utf8(xhtml_escape(_tmp))
+    106          _append(_tmp)
+    107          _append('</a></li>\n')
+    108      _append('\n<li class="active"><span>')
+    109      _tmp = current
+    110      if isinstance(_tmp, _string_types): _tmp = _utf8(_tmp)
+    111      else: _tmp = _utf8(str(_tmp))
+    112      _tmp = _utf8(xhtml_escape(_tmp))
+    113      _append(_tmp)
+    114      _append('</span></li>\n')
+    115      for i in [i for i in range(current+1,current+4) if i <= total ]:
+    116          _append('\n<li><a href="')
+    117          _tmp = url %(i)
+    118          if isinstance(_tmp, _string_types): _tmp = _utf8(_tmp)
+    119          else: _tmp = _utf8(str(_tmp))
+    120          _tmp = _utf8(xhtml_escape(_tmp))
+    121          _append(_tmp)
+    122          _append('">')
+    123          _tmp = i
+    124          if isinstance(_tmp, _string_types): _tmp = _utf8(_tmp)
+    125          else: _tmp = _utf8(str(_tmp))
+    126          _tmp = _utf8(xhtml_escape(_tmp))
+    127          _append(_tmp)
+    128          _append('</a></li>\n')
+    129      _append('\n')
+    130      if current+3 < total:
+    131          _append(' <li><span>...</span></li>')
+    132      _append('\n')
+    133      if current < total:
+    134          _append(' <li><a href="')
+    135          _tmp = url %(current+1)
+    136          if isinstance(_tmp, _string_types): _tmp = _utf8(_tmp)
+    137          else: _tmp = _utf8(str(_tmp))
+    138          _tmp = _utf8(xhtml_escape(_tmp))
+    139          _append(_tmp)
+    140          _append('">\xe4\xb8\x8b\xe4\xb8\x80\xe9\xa1\xb5</a></li>')
+    141      _append('\n</ul>\n</div>\n</div>\n</div>')
+    142      _append('\n</div>\n</div>\n</div>\n</div>\n')
+    143      _append('\n</section>\n</div>\n')
+    144      _append('<footer class="main-footer">\n<div class="pull-right hidden-xs">\n<b>\xe5\xa3\xb0\xe6\x98\x8e</b> \xe6\x9c\xac\xe7\xab\x99\xe7\x82\xb9\xe9\x81\xb5\xe5\xbe\xaa<a hre="http://zh.wikipedia.org/zh-cn/MIT%E8%A8%B1%E5%8F%AF%E8%AD%89"><strong>MIT license.</strong></a>\n</div>\n<strong>Copyright \xc2\xa9 2015 <a href="javascript:;">DM Admin</a>.</strong> All rights reserved.\n</footer>')
+    145      _append('\n</div>\n<script type="text/javascript" src="/static/js/jquery-1.9.1.js"></script>\n<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>\n<script type="text/javascript" src="/static/js/jquery.slimscroll.min.js"></script>\n<script type="text/javascript" src="/static/js/icheck.min.js"></script>\n<script type="text/javascript" src="/static/js/app.min.js"></script>\n<!--\n<script type="text/javascript" src="/static/js/demo.js"></script>\n-->\n<script type="text/javascript" src="/static/js/base.js"></script>\n')
+    146      _append('\n<script>\n$(function () {\n$(\'input[type="checkbox"]\').iCheck({\ncheckboxClass: \'icheckbox_flat-blue\',\nradioClass: \'iradio_flat-blue\'\n});\n$(".checkbox-toggle").click(function () {\nvar clicks = $(this).data(\'clicks\');\nif (clicks) {\n//Uncheck all checkboxes\n$("input[type=\'checkbox\']", ".table").iCheck("uncheck");\n} else {\n//Check all checkboxes\n$("input[type=\'checkbox\']", ".table").iCheck("check");\n}\n$(this).data("clicks", !clicks);\n});\n});\n</script>\n')
+    147      _append('\n</body>\n</html>\n')
+    148      return _utf8('').join(_buffer)
+[E 150421 18:55:52 dm.py:start:61] Uncaught exception GET /comment/comment/list?category=movie&status=0&page_num=3 (127.0.0.1)
+    HTTPRequest(protocol='http', host='127.0.0.1:8910', method='GET', uri='/comment/comment/list?category=movie&status=0&page_num=3', version='HTTP/1.1', remote_ip='127.0.0.1', body='', headers={'Accept-Language': 'zh-cn,en-us;q=0.7,en;q=0.3', 'Accept-Encoding': 'gzip, deflate', 'Host': '127.0.0.1:8910', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:31.0) Gecko/20100101 Firefox/31.0', 'Connection': 'keep-alive', 'Referer': 'http://127.0.0.1:8910/comment/comment/list?category=movie&status=0&page_num=1', 'Cache-Control': 'max-age=0', 'Cookie': 'sessionid=000041925478895fd534e12ce7d291d295327e; jwfy_dm_website_session=5730f47e5653cbea5213f9c6febda5c0'})
+    Traceback (most recent call last):
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/web.py", line 954, in _execute
+        getattr(self, self.request.method.lower())(*args, **kwargs)
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 47, in request_process
+        self._process_handler_result()
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 487, in _process_handler_result
+        self._process_handler_result_debug()
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 477, in _process_handler_result_debug
+        self.processer_obj._real_html_render()
+      File "build/bdist.linux-x86_64/egg/sputnik/SpuRequest.py", line 178, in _real_html_render
+        session = self.session)
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/web.py", line 447, in render
+        html = self.render_string(template_name, **kwargs)
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/web.py", line 558, in render_string
+        return t.generate(**args)
+      File "/home/jwfy/.virtualenvs/yinyu/local/lib/python2.7/site-packages/tornado-2.1.1-py2.7.egg/tornado/template.py", line 236, in generate
+        return execute()
+      File "<template comment.html>", line 34, in _execute
+    AttributeError: 'str' object has no attribute 'get'
+[E 150421 18:55:52 dm.py:start:61] 500 GET /comment/comment/list?category=movie&status=0&page_num=3 (127.0.0.1) 30.22ms

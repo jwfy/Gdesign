@@ -51,10 +51,10 @@ class comment(WebRequest):
             ans = self._return_ans("error", e, "comment_add")
         return self._write(ans)
 
-    @check_login()
+    #@check_login()
     @POST
     def list(self, page_num={"atype":int, "adef":1},
-            page_size={"atype":int, "adef":10},
+            page_size={"atype":int, "adef":2},
             category={"atype":str, "adef":"movie"},
             status={"atype":int, "adef":0},
             contain={"atype":unicode, "adef":""}
@@ -64,19 +64,40 @@ class comment(WebRequest):
         """
         ans = {}
         try:
-            r, desc = comment_ctrl.list(page_num=int(page_num), 
+            total, desc = comment_ctrl.list(page_num=int(page_num), 
                 page_size=int(page_size), category=category, status=int(status),
                 contain=contain)
-            # TODO unicode 
-            if not r:
-                r_status = "failure"
+            # TODO unicode
+            kwargs = {}
+            kwargs["category"] = category
+            kwargs['r_status'] = status
+
+            if not total:
+                status = "failure"
+                query = desc
             else:
-                r_status = "success"
-            ans = self._return_ans(r_status, desc, "comment_add")
+                status = "success"
+                query = []
+                for d in desc:
+                    field_name = d.object_field_names()
+                    query_dict = {}
+                    for field in field_name:
+                        value = getattr(d, field)
+                        query_dict[field] = value
+                    query.append(query_dict)
+                kwargs['total_num'] = total
+                kwargs['len'] = len(query)
+                kwargs['page_num'] = page_num
+                if total % int(page_size) == 0:
+                    kwargs['page_total'] = total / int(page_size)
+                else:
+                    kwargs['page_total'] = total / int(page_size) + 1
+            ans = self._return_ans(status, query, "comment_list", kwargs)
         except Exception as e:
             self._logging.error(e)
-            ans = self._return_ans("error", e, "comment_add")
-        return self._write(ans)
+            ans = self._return_ans("error", e, "comment_list")
+        return self._html_render("comment.html", ans)
+        #return self._write(ans)
 
     @check_login()
     @POST

@@ -1,0 +1,26 @@
+.self-paginfo {
+    padding-top: 8px;
+}
+.self-pagination {
+    float: right;
+    margin: 0px;
+}
+.self-pagination ul.pagination {
+    margin: 2px 0px;
+    white-space: nowrap;
+}
+.table > tbody > tr > td {
+    vertical-align: middle !important;
+}
+/*
+.table .nickname, .table .status {
+    min-width: 8%;
+}
+.table .time {
+    min-width: 8%;
+}
+
+.table .content {
+    max-width: 20%;
+}
+*/

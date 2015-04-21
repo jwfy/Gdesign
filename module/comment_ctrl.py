@@ -81,7 +81,8 @@ class CommentCtrl(object):
         if not comment_model.find(cond):
             self._logging.warn("未找到评论列表")
             return 0, "没有评论信息"
-        return 1, comment_model
+        sum = pageinfo.total_record
+        return sum, comment_model
 
     def add(self, name, email, title, contain, category, ip, _id):
         """
