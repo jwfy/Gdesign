@@ -1,8 +1,18 @@
 <tr>
-    <td><input type="checkbox" /></td>
-    <td class="nickname">{{ q.get('name', '') }}</td>
+    <td><input type="checkbox" data-id="{{ q.get('id',0) }}"></td>
+    <td class="nickname" data-_id="{{ q.get('_id', 0) }}" data-title="{{ q.get('title', '') }}" >{{ q.get('name', '') }}</td>
     <td class="email">{{ q.get('email', '') }}</td>
+    <td class="title">{{ q.get('title', '') }}</td>
     <td class="content">{{ q.get('contain', '') }}</td>
-    <td class="status">删除</td>
+    <td class="status">
+        {% set status = int(q.get('status', 0)) %}
+        {%if status == 1 %}
+            <span class="label label-success">正常</span>
+        {% elif status == 2 %}
+            <span class="label label-danger">删除</span>
+        {% elif status == 3 %}
+            <span class="label label-primary">隐藏</span>
+        {% end %}
+    </td>
     <td class="time">{{ q.get('time', '') }}</td>
 </tr>

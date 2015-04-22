@@ -38,7 +38,7 @@ class WebRequest(SpuRequestHandler):
     def _redirect(self, uri):
         return self.tornado.redirect(uri)
 
-    def _return_ans(self, status, message, type, kwargs):
+    def _return_ans(self, status, message, type, kwargs={}):
         ans = {}
         ans["status"] = status
         ans["query"] = message

@@ -6,7 +6,7 @@
 # e-mail: jwfy0902@foxmail.com
 
 from sputnik.SpuLogging import SpuLogging
-from sputnik.SpuDBObject import Sort, SqlNone, PageInfo, FuzzyLike, FN
+from sputnik.SpuDBObject import Sort, SqlNone, PageInfo, FuzzyLike, FN, In
 from datetime import datetime
 from model.comment_model import Comment
 from base_ctrl import *
@@ -20,21 +20,24 @@ class CommentCtrl(object):
         """
         pass
 
-    def update_status(self, id, status):
+    def update_status(self, ids, status):
         """
-        更新评论状态
+        更新评论状态,可以进行批量删除
         1: 评论正常显示
         2：评论被删除
         3：评论被屏蔽
         """
-        comment_model = Comment.object()
+        comment_model = Comment.objectlist()
         comment_t = Comment.table()
-        cond = comment_t.id == int(id)
+        if not isinstance(ids, list):
+            id = ids
+            ids = []
+            ids.append(int(id))
+        cond = In(comment_t.id, ids)
         if not comment_model.find(cond):
             self._logging.error("更新评论状态，未找到对应评论")
             return 0, "没有找到对应评论信息"
-        comment_model.status = int(status)
-        comment_model.update()
+        comment_model.update({'status':status})
         return 1, "评论更新成"
 
     def get(self, category="movie", _id="0", status=1, get_num=False):
@@ -63,7 +66,7 @@ class CommentCtrl(object):
             return len(comment_list)
         return comment_list
 
-    def list(self, page_num=1, page_size=10, category="movie", status=1,
+    def list(self, page_num=1, page_size=10, category="movie", status=0,
             contain=""):
         """
         后台，显示评论列表
@@ -71,9 +74,14 @@ class CommentCtrl(object):
         comment_model = Comment.objectlist()
         comment_t = Comment.table()
         cond = comment_t.category == category
-        cond &= comment_t.status == status
+        if status:
+            cond &= comment_t.status == status
+        cond1 = SqlNone()
         if contain:
-            cond &= FuzzyLike(comment_t.contain == unicode_to_str(contain))
+            cond1 = FuzzyLike(comment_t.contain, unicode_to_str(contain))
+            cond1 |= FuzzyLike(comment_t.title, unicode_to_str(contain))
+        if cond1:
+           cond &= cond1 
         pageinfo = PageInfo(page_num, page_size)
         sort_style = Sort([(comment_t.id, Sort.desc)])
         comment_model.sort(sort_style)
@@ -88,8 +96,8 @@ class CommentCtrl(object):
         """
         添加评论,默认的显示正常
         """
-        comment_model = Comment.object()
-        comment_model.name = unicode_to_str(name)
+        comment = Comment.object()
+        comment.name = unicode_to_str(name)
         comment.email = email
         comment.title = unicode_to_str(title)
         comment.contain = unicode_to_str(contain)
@@ -99,8 +107,8 @@ class CommentCtrl(object):
         comment.status = 1
         comment.time = datetime.now()
         try:
-            comment_model.insert()
-            return 1,"添加成功"
+            comment.insert()
+            return 1,comment
         except Exception as e:
             self._logging.error(e)
             return 0, e

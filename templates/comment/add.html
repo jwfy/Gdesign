@@ -1,0 +1,37 @@
+<div class="box box-primary">
+    <div class="box-header">
+        <h3 class="box-title">添加评论</h3>
+        <button type="button" class="comment-close close" data-dismiss="alert" aria-hidden="true" title="关闭">×</button>
+    </div>
+    <form role="form" method="post" action="/comment/comment/add" class="comment-form">
+        <div class="box-body">
+            <input type="hidden" name="q" value="csrf_123ABCDF"/>
+            <input type="hidden" name="category" value="{{ category }}"/>
+            <input type="hidden" name="_id" value="{{ ans.get('_id', 0) }}"/>
+            <input type="hidden" name="title" value="{{ ans.get('title', '') }}"/>
+            <div class="form-group">
+                <label for="name">昵称</label>
+                <input name="name" type="text" class="form-control" id="name" placeholder="输入昵称">
+            </div>
+            <div class="form-group">
+                <label for="email">邮箱地址</label>
+                <input name="email" type="email" class="form-control" id="email" placeholder="输入邮箱地址">
+            </div>
+            <div class="form-group">
+                <label for="contain">评论内容</label>
+                <textarea name="contain" type="text" class="form-control" id="contain" placeholder="输入评论内容"></textarea>
+            </div>
+            {% if ans.get('len',-1) == -1 %}
+            <div class="form-group">
+                <label for="captcha">验证码</label>
+                <input name="captcha" type="text" class="form-control" id="captcha" placeholder="输入验证码">
+                <img src="#" title="点击刷新验证码" class="captcha-image"/>
+            </div>
+            {% end %}
+
+        </div>
+        <div class="box-footer">
+            <button type="submit" class="btn btn-primary comment-add">提交评论</button>
+        </div>
+    </form>
+</div>

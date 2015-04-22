@@ -26,10 +26,12 @@ class comment(WebRequest):
 
     @POST
     def add(self, name={"atype":unicode, "adef":""},
-            email={"atype":str, "adef":""}, title={"atype":unicode, "adef":""}, 
+            email={"atype":str, "adef":""}, 
+            title={"atype":unicode, "adef":""}, 
             contain={"atype":unicode, "adef":""}, 
             category={"atype":str, "adef":"movie"}, 
             ip={"atype":str, "adef":"127.0.0.1"},
+            captcha={"atype":str, "adef":""},
             _id={"atype":str, "adef":"0"}
         ):
         """
@@ -39,25 +41,35 @@ class comment(WebRequest):
         ip = self._remote_ip()
         ans = {}
         try:
-            r, desc = comment_ctrl.add(name=name, email=email, title=tile, 
+            r, desc = comment_ctrl.add(name=name, email=email, title=title, 
                     contain=contain, category=category, ip=ip, _id=_id)
+            other_desc = "comment_add"
             if not r:
                 r_status = "failure"
+                query = desc
             else:
                 r_status = "success"
-            ans = self._return_ans(r_status, desc, "comment_add")
+                query={}
+                query["time"] = desc.time.strftime("%Y-%m-%d %H:%M:%S")
+                query["id"] = desc.id
+                query["contain"] = desc.contain
+                query["email"] = desc.email
+                query["name"] = desc.name
+                query["title"] = desc.title
+                query["_id"] = desc._id
+                other_desc = "comment_add_by_backend"
+            ans = self._return_ans(r_status, query, other_desc)
         except Exception as e:
             self._logging.error(e)
             ans = self._return_ans("error", e, "comment_add")
         return self._write(ans)
 
-    #@check_login()
     @POST
     def list(self, page_num={"atype":int, "adef":1},
-            page_size={"atype":int, "adef":2},
+            page_size={"atype":int, "adef":20},
             category={"atype":str, "adef":"movie"},
             status={"atype":int, "adef":0},
-            contain={"atype":unicode, "adef":""}
+            contain={"atype":unicode, "adef":""},
         ):
         """
         可以正常显示评论列表，可以提供搜索功能
@@ -67,9 +79,9 @@ class comment(WebRequest):
             total, desc = comment_ctrl.list(page_num=int(page_num), 
                 page_size=int(page_size), category=category, status=int(status),
                 contain=contain)
-            # TODO unicode
             kwargs = {}
             kwargs["category"] = category
+            kwargs['contain'] = contain
             kwargs['r_status'] = status
 
             if not total:
@@ -97,20 +109,20 @@ class comment(WebRequest):
             self._logging.error(e)
             ans = self._return_ans("error", e, "comment_list")
         return self._html_render("comment.html", ans)
-        #return self._write(ans)
 
     @check_login()
     @POST
-    def update_status(self, id={"atype":int, "adef":0},
-            status={"atype":str, "adef":""}
+    def update_status(self, ids={"atype":str, "adef":""},
+            status={"atype":int, "adef":""}
         ):
         """
         更新状态
         TODO 需要添加批量修改评论状态 
         """
         ans = {}
+        ids = json.loads(ids)
         try:
-            r, desc = comment_ctrl.update_status(id=int(id), status=str(status))
+            r, desc = comment_ctrl.update_status(ids=ids, status=int(status))
             if not r:
                 r_status = "failure"
             else:
