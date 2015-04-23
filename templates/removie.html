@@ -1,20 +1,17 @@
 {% extends 'base.html' %}
-{% block active3 %}active{% end %}
-{% block title %}电影列表{% end block %}
-{% block content-head %}电影列表{% end block %}
+{% block active2 %}active{% end %}
+{% block title %}电影推荐{% end block %}
+{% block content-head %}电影推荐{% end block %}
 {% block content %}
 {% set ans = pyobject.get('result') %}
 {% set query = ans.get('query') %}
 {% set r_status = ans.get('r_status', 0) %}
-{% set contain = ans.get('contain', '') %}
-{% set category = ans.get('category', '') %}
-{% set director = ans.get('director', '') %}
-{% set cates = ans.get('cats', '') %}
+{% set title = ans.get('title', '') %}
 <div class="row">
     <div class="col-md-12">
         <div class="box box-primary">
             <div class="box-header">
-                <h3 class="box-title">电影列表{% if contain %}-搜索-{{ contain }}{% end %}</h3>
+                <h3 class="box-title">首页电影推荐{% if title %}-搜索-{{ title }}{% end %}</h3>
             </div>
             <div class="box-body">
                 <div class="row" style="margin-bottom: 10px">

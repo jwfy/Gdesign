@@ -12,15 +12,7 @@
 .table > tbody > tr > td {
     vertical-align: middle !important;
 }
-/*
-.table .nickname, .table .status {
-    min-width: 8%;
+.table > tbody > tr > td > img {
+    display:block;
+    height:100px;
 }
-.table .time {
-    min-width: 8%;
-}
-
-.table .content {
-    max-width: 20%;
-}
-*/

@@ -7,8 +7,11 @@
 
 from base import *
 from module.movie_ctrl import MovieCtrl
+from module.recomment_ctrl import MovieReCommentCtrl
+from module.image_ctrl import *
 
 movie_ctrl = MovieCtrl(mongo_dbcnf)
+removie_ctrl = MovieReCommentCtrl()
 
 API_TOKEN = "dm_movie"
 
@@ -20,10 +23,152 @@ class movie(WebRequest):
 
     def index(self):
         """
-        首页，随机推荐五部电影
+        首页，推荐展示的电影
         """
-        # TODO api 随机推荐
-        pass
+        ans = {}
+        try:
+            total, desc = removie_ctrl.list(page_size=5, status=1)
+            if not total:
+                r_status = "failure"
+                query = desc
+            else:
+                r_status = "success"
+                query = []
+                for d in desc:
+                    query_dict = {}
+                    query_list["img"] = d.img_url
+                    query_list["_id"] = d._id
+                    query_list["movie"] = movie_ctrl.get(_id=d._id)
+                query.append(query_list)
+            ans = self._return_ans(r_status, query, "recommentmovie_list")
+        except Exception as e:
+            self._logging.error(e)
+            ans = self._return_ans("error", e, "recommentmovie_list")
+        return self._html_render("index.html", ans)
+
+    @POST
+    def re_update_status(self, ids={"atype":str, "adef":""},
+            status={"atype":int, "adef":""}
+        ):
+        """
+        推荐电影状态更新
+        """
+        ans = {}
+        ids = json.loads(ids)
+        try:
+            r, desc = removie_ctrl.update_status(ids=ids, status=int(status))
+            if not r:
+                r_status = "failure"
+            else:
+                r_status = "success"
+            ans = self._return_ans(r_status, desc, "recommentmovie_update_status")
+        except Exception as e:
+            self._logging.error(e)
+            ans = self._return_ans("error", e, "recommentmovie_update_status")
+        return self._write(ans)
+
+    @POST
+    def re_list(self, page_num={"atype":int, "adef":1},
+            page_size={"atype":int, "adef":5},
+            status={"atype":int, "adef":0},
+            contain={"atype":unicode, "adef":""},
+        ):
+        """
+        推荐电影
+        """
+        ans = {}
+        try:
+            total, desc = removie_ctrl.list(page_num=int(page_num), 
+                page_size=int(page_size), status=int(status),
+                title=contain)
+            kwargs = {}
+            kwargs['title'] = contain
+            kwargs['r_status'] = status
+
+            if not total:
+                status = "failure"
+                query = desc
+            else:
+                status = "success"
+                query = []
+                for d in desc:
+                    field_name = d.object_field_names()
+                    query_dict = {}
+                    for field in field_name:
+                        value = getattr(d, field)
+                        query_dict[field] = value
+                    query.append(query_dict)
+                kwargs['total_num'] = total
+                kwargs['len'] = len(query)
+                kwargs['page_num'] = page_num
+                if total % int(page_size) == 0:
+                    kwargs['page_total'] = total / int(page_size)
+                else:
+                    kwargs['page_total'] = total / int(page_size) + 1
+            ans = self._return_ans(status, query, "recommentmovie_list", kwargs)
+        except Exception as e:
+            self._logging.error(e)
+            ans = self._return_ans("error", e, "recommentmovie_list")
+        return self._html_render("removie.html", ans)
+
+    @POST 
+    def re_add(self, title={"atype":unicode, "adef":""},
+            _id={"atype":str, "adef":"",}, img_url={"atype":str, "adef":""}
+        ):
+        """
+        推荐电影添加
+        _id 为 mongo _id
+        """
+        try:
+            r, desc = removie_ctrl.add(title=title, _id=_id, img_url=img_url)
+            if not r:
+                r_status = "failure"
+            else:
+                r_status = "success"
+            ans = self._return_ans(r_status, desc, "recommentmovie_add")
+        except Exception as e:
+            self._logging.error(e)
+            ans = self._return_asn("error", e, "recommentmovie_add")
+        return self._write(ans)
+
+    @POST
+    def add(self, name={"atype":unicode, "adef":""},
+            email={"atype":str, "adef":""}, 
+            title={"atype":unicode, "adef":""}, 
+            contain={"atype":unicode, "adef":""}, 
+            category={"atype":str, "adef":"movie"}, 
+            ip={"atype":str, "adef":"127.0.0.1"},
+            captcha={"atype":str, "adef":""},
+            _id={"atype":str, "adef":"0"}
+        ):
+        """
+        添加评论,_id 为 mongo id
+        """
+        ip = self._remote_ip()
+        ans = {}
+        try:
+            r, desc = comment_ctrl.add(name=name, email=email, title=title, 
+                    contain=contain, category=category, ip=ip, _id=_id)
+            other_desc = "comment_add"
+            if not r:
+                r_status = "failure"
+                query = desc
+            else:
+                r_status = "success"
+                query={}
+                query["time"] = desc.time.strftime("%Y-%m-%d %H:%M:%S")
+                query["id"] = desc.id
+                query["contain"] = desc.contain
+                query["email"] = desc.email
+                query["name"] = desc.name
+                query["title"] = desc.title
+                query["_id"] = desc._id
+                other_desc = "comment_add_by_backend"
+            ans = self._return_ans(r_status, query, other_desc)
+        except Exception as e:
+            self._logging.error(e)
+            ans = self._return_ans("error", e, "comment_add")
+        return self._write(ans)
     
     def list(self, page_num={"atype":int, "adef":1}, 
             page_size={"atype":int, "adef":10}, 

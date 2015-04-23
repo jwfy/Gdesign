@@ -1,0 +1,15 @@
+<tr>
+    <td><input type="checkbox" data-id="{{ q.get('id',0) }}"></td>
+    <td class="image"><img src="{{ q.get('img_url', '') }}" /></td>
+    <td class="title">{{ q.get('title', '') }}</td>
+    <td class="status">
+        {% set status = int(q.get('status', 0)) %}
+        {%if status == 1 %}
+        <span class="label label-success">上线</span>
+        {% elif status == 2 %}
+        <span class="label label-danger">下线</span>
+        {% end %}
+    </td>
+    <td class="time">{{ q.get('time', '') }}</td>
+    <td class="update_time">{{ q.get('update_time', '') }}</td>
+</tr>

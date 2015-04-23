@@ -72,15 +72,15 @@ class MovieCtrl(object):
 
     def get(self, _id="", status="online"):
         """
-        通过 _id 获取 对应的电影内容和对应评论
+        通过 _id 获取 对应的电影内容和对应评论,并且通过_id 获取对应评论
         """
         res = self.collection.find_one({"_id":ObjectId(_id), "status":status})
         if not res:
             return ""
         self.collection.update({"_id":ObjectId(_id)},{"$inc":{"pv":1}})
-        res["_id"] = str(res["_id"])
-        id = res["id"]
-        res['comment'] = comment_ctrl.get(_id=id)
+        _id = res["_id"]
+        res["_id"] = str(_id)
+        res['comment'] = comment_ctrl.get(_id=_id)
         return res
 
     def update_status(self, _ids=[], status=""):

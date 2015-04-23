@@ -35,8 +35,7 @@ class comment(WebRequest):
             _id={"atype":str, "adef":"0"}
         ):
         """
-        添加评论
-        NOTICE _id 为豆瓣id，而不是mongo 的_id
+        添加评论,_id 为 mongo _id
         """
         ip = self._remote_ip()
         ans = {}
@@ -116,8 +115,7 @@ class comment(WebRequest):
             status={"atype":int, "adef":""}
         ):
         """
-        更新状态
-        TODO 需要添加批量修改评论状态 
+        更新状态,可进行批量更新
         """
         ans = {}
         ids = json.loads(ids)

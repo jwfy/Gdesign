@@ -1,7 +1,5 @@
 <aside class="main-sidebar">
-    <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
-        <!-- /.search form -->
         <ul class="sidebar-menu">
             <li class="header">导航</li>
             <li class="{% block active1 %}{% end %}">
@@ -15,8 +13,8 @@
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="{% block active2 %}{% end %}"><a href="javascript:;"><i class="fa fa-circle-o"></i>电影列表</a></li>
-                    <li class="{% block active3 %}{% end %}"><a href="javascript:;"><i class="fa fa-circle-o"></i>电影推荐</a></li>
+                    <li class="{% block active2 %}{% end %}"><a href="/movie/movie/re_list"><i class="fa fa-circle-o"></i>电影推荐</a></li>
+                    <li class="{% block active3 %}{% end %}"><a href="/movie/movie/list"><i class="fa fa-circle-o"></i>电影列表</a></li>
                     <li class="{% block active4 %}{% end %}"><a href="javascript:;"><i class="fa fa-circle-o"></i>电影导入</a></li>
                 </ul>
             </li>
@@ -42,5 +40,4 @@
             </li>
         </ul>
     </section>
-    <!-- /.sidebar -->
 </aside>
