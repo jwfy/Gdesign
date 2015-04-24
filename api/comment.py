@@ -99,10 +99,11 @@ class comment(WebRequest):
                 kwargs['total_num'] = total
                 kwargs['len'] = len(query)
                 kwargs['page_num'] = page_num
-                if total % int(page_size) == 0:
-                    kwargs['page_total'] = total / int(page_size)
-                else:
-                    kwargs['page_total'] = total / int(page_size) + 1
+                kwargs['page_total'] = total / int(page_size) if not total % int(page_size) else total / int(page_size) + 1
+                #if total % int(page_size) == 0:
+                #    kwargs['page_total'] = total / int(page_size)
+                #else:
+                #    kwargs['page_total'] = total / int(page_size) + 1
             ans = self._return_ans(status, query, "comment_list", kwargs)
         except Exception as e:
             self._logging.error(e)

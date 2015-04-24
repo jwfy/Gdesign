@@ -170,24 +170,55 @@ class movie(WebRequest):
             ans = self._return_ans("error", e, "comment_add")
         return self._write(ans)
     
+    @POST
     def list(self, page_num={"atype":int, "adef":1}, 
-            page_size={"atype":int, "adef":10}, 
-            api_type={"atype":str, "adef":""}, 
+            page_size={"atype":int, "adef":10},
+            category={"atype": unicode, "adef":""},
+            directors={"atype": unicode, "adef":""},
+            casts={"atype": unicode, "adef":""},
+            q={"atype": unicode, "adef":""},
+            csrf_code={"atype":str, "adef":""},
+            api_type={"atype":str, "adef":""},
+            status={"atype":str, "adef":""},
             token={"atype":str, "adef":""}
         ):
         """
-        通过类目筛选数据
+        获取列表，通过上述条件进行筛选
         """
-        res = movie_ctrl.list(page_num=int(page_num), page_size=int(page_size))
         ans = {}
-        if not res:
-            ans = self._return_ans("failure", "暂无数据","list")
+        kwargs = {}
+        kwargs["category"] = category
+        kwargs["directors"] = directors
+        kwargs["casts"] = casts
+        kwargs["q"] = q
+        if q and csrf_code != "1234":
+            self._logging.error("非法查询操作")
+            ans = self._return_ans("error", "非法查询","search", kwargs)
+            return self._write(ans)
+        status = ""
+        if not self._get_user_session():
+            status = "online"
+        total, desc = movie_ctrl.list(page_num=int(page_num), page_size=int(page_size),status=status, q=q, directors=directors,
+                casts=casts, category=category)
+
+        if not total:
+            r_status = "failure"
+            query = desc
         else:
-            ans = self._return_ans("success", "成功获取数据","list", 
-                    page=page_num, size=len(res), contains=res)
+            r_status = "success"
+
+            kwargs["page_num"] = page_num
+            kwargs["len"] = len(desc)
+            kwargs["total_num"] = total
+            kwargs["page_total"] = total / int(page_size) if not total % int(page_size) else total / int(page_size) + 1
+        ans = self._return_ans(r_status, desc,"list", kwargs)
         if api_type == "json" and token == API_TOKEN:
             return self._write(ans)
-        return self._write(ans)
+        if self._get_user_session():
+            return self._html_render("movie.html", ans)
+        else:
+            return self._html_render("front_movie", ans)
+        #return self._write(ans)
     
     def category(self, page_num={"atype":int, "adef":1}, 
             page_size={"atype":int, "adef":10}, 

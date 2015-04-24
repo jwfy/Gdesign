@@ -22,17 +22,21 @@ class image(WebRequest):
         """
         pass
 
-    @POST_FILE('file')
-    def file(self, file):
+    @POST_FILE('image')
+    def file(self, image):
         """
         上传文件
         """
-        pass
+        import ipdb
+        ipdb.set_trace()
+        url = image_ctrl.file_upload(image)
+        return self._write(111)
 
     @POST
-    def url(self, url={"atype"="unicode", "adef":""}):
+    def url(self, url={"atype":"unicode", "adef":""}):
         """
         根据图片上传，可识别中文
         """
+        # TODO
         pass
 

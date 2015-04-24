@@ -5,16 +5,15 @@
 {% block content %}
 {% set ans = pyobject.get('result') %}
 {% set query = ans.get('query') %}
-{% set r_status = ans.get('r_status', 0) %}
-{% set contain = ans.get('contain', '') %}
-{% set category = ans.get('category', '') %}
-{% set director = ans.get('director', '') %}
-{% set cates = ans.get('cats', '') %}
+{% set q = ans.get('q', '') %}
+{% set r_category = ans.get('category', '') %}
+{% set r_director = ans.get('directors', '') %}
+{% set cast = ans.get('casts', '') %}
 <div class="row">
     <div class="col-md-12">
         <div class="box box-primary">
             <div class="box-header">
-                <h3 class="box-title">电影列表{% if contain %}-搜索-{{ contain }}{% end %}</h3>
+                <h3 class="box-title">电影列表{% if q %}-搜索-{{ q }}{% end %}</h3>
             </div>
             <div class="box-body">
                 <div class="row" style="margin-bottom: 10px">
@@ -25,41 +24,49 @@
                             <button class="btn btn-default btn-sm inormal" title="上线"><i class="fa fa-bars"></i></button>
                         </div>
                     </div>
-                    <form class="col-xs-3" style="float: right" role="search" method="post" action="/movie/movie/re_list">
+                    <form class="col-xs-3" style="float: right" role="search" method="post" action="/movie/movie/list">
                         <div class="has-feedback">
-                            <input type="hidden" name="status" value="{{ r_status }}"/>
-                            <input type="text" class="form-control input-sm" name="contain" placeholder="查找评论"/>
+                            <input type="text" class="form-control input-sm" name="contain" placeholder="查找电影"/>
                             <span class="fa fa-search form-control-feedback"></span>
                         </div>
                     </form>
                 </div>
                 <table class="table table-hover removie-table">
                     <thead>
-                    {% include removie/head.html %}
+                    {% include movie/head.html %}
                     </thead>
                     <tbody>
                     {% if type(query) == list %}
-                    {% for q in query %}
-                    {% include removie/body.html %}
+                    {% for qe in query %}
+                        {% include movie/body.html %}
                     {% end %}
                     {% end %}
                     </tbody>
                 </table>
-                {% set url = '/movie/movie/re_list?status=%s' %(r_status) %}
-                {% if title %}
-                {% set url = url + '&title=%s' %(title) %}
+                {% set url = '/movie/movie/list?' %}
+                {% if r_director %}
+                    {% set url = url + 'directors=%s' %(r_director) %}
+                {% end %}
+                {% if cast %}
+                    {% set url = url + '&casts=%s' %(cast) %}
+                {% end %}
+                {% if r_category %}
+                    {% set url = url + '&category=%s' %(r_category) %}
+                {% end %}
+                {% if q %}
+                {% set url = url + '&q=%s' %(q) %}
                 {% end %}
                 {% set url = url + "&page_num=%s" %}
                 {% include page.html %}
             </div>
         </div>
     </div>
-    <div class="col-md-6 comment-box hidden">
-    </div>
 </div>
+{% include movie/add.html %}
 {% end %}
 
 {% block js %}
+<script src="/static/js/ajaxfileupload.js" type="text/javascript"></script>
 <script>
     $(function () {
         $(".inormal").click(function(){
@@ -72,6 +79,7 @@
             var status = 2;
             ajax_status(ids, status);
         });
+
         function ajax_status(ids, status){
             $.ajax({
                 url:"/movie/movie/re_update_status",
@@ -80,7 +88,7 @@
                 success: function(data){
                     console.log(data);
                     if(data["status"] == "success"){
-                        window.location.href="/movie/movie/re_list";
+                        window.location.href="/movie/movie/list";
                     }
                     else
                         alert(data["query"]);
@@ -90,7 +98,30 @@
                 }
             });
             return false;
-        }
+        };
+
+        $("tr[data-target='#movie-add']").click(function(){
+            var title = $(this).find("input[name='title']").val();
+            console.log(title);
+            var _id = $(this).find("input[name='_id']").val();
+            $("#movie-add").find("input[name='title']").val(title);
+            $("#movie-add").find("input[name='_id']").val(_id);
+        });
+
+        $(".img-load").click(function(){
+            $.ajaxFileUpload({
+                url:"/image/image/file",
+                fileElementId:"image",
+                success:function(data, status){
+                    alert(data);
+                },
+                error:function(data, status, e){
+                    alert(e);
+                }
+            });
+
+        })
     });
+
 </script>
 {% end %}

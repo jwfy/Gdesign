@@ -15,7 +15,7 @@ class ImageCtrl(object):
     def __init__(self):
         pass
 
-    def url_image(self, url):
+    def url_upload(self, url):
         """
         根据图片文件进行上传，存储，返回url值
         """
@@ -27,9 +27,9 @@ class ImageCtrl(object):
             self._logging.error(e)
             return None
 
-    def file_image(self, file):
+    def file_upload(self, file):
         """
-        根据url进行上传，存储，返回url值
+        根据文件进行上传，存储，返回url值
         """
         # TODO 还未完成
         store_file(file)

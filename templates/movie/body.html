@@ -1,0 +1,21 @@
+<tr data-toggle="modal" data-target="#movie-add">
+    <input type="hidden" name="_id" value="{{ qe.get('_id','') }}"/>
+    <input type="hidden" name="title" value="{{ qe.get('title', '') }}" />
+    <td><input type="checkbox" data-id="{{ qe.get('_id','') }}"></td>
+    <td class="image"><img src="{{ qe.get('image').get('small') }}" title="电影剧照"></td>
+    <td class="title">{{ qe.get('title', '') }}</td>
+    {% set category = qe.get('category', []) %}
+    <td class="douban_category">{% for ca in category %}{{ ca }} {% end %}</td>
+    <td class="douban_year">{{ qe.get('year', '') }}</td>
+    <td class="douban_id">{{ qe.get('id') }}</td>
+    <td class="douban_score">{{ qe.get('rating').get('average' ,'6.0') }}</td>
+    <td class="down">{{ qe.get('down_num', '0') }}</td>
+    <td class="status">
+        {% set status = str(qe.get('status', '')) %}
+        {%if status == "online" %}
+        <span class="label label-success">上线</span>
+        {% else %}
+        <span class="label label-danger">下线</span>
+        {% end %}
+    </td>
+</tr>

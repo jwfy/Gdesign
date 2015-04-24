@@ -31,11 +31,6 @@ class MovieCtrl(object):
         if not self.collection:
             self.collection = database[COLLECTION]  
 
-    def recommendation(self):
-        """
-        首页随机推荐的五部电影
-        """
-        # TODO 随机获取
 
     def list(self, page_num=1, page_size=10, status="online", q="", **kwargs):
         """
@@ -46,10 +41,10 @@ class MovieCtrl(object):
         for k,v in kwargs.iteritems():
             if isinstance(v, unicode):
                 query[k] = unicode_to_str(v)
-            else:
+            elif v:
                 query[k] = str(v)
         if status:
-            query["status"] = status
+            query["r_status"] = status
         # TODO q 模糊查询summary
         #if q:
         #    Pattern pattern = Pattern.compile("^.*" + q + ".*$")
@@ -57,18 +52,20 @@ class MovieCtrl(object):
         res = self.collection.find(query).limit(page_size) \
                 .skip((page_num-1)*page_size).sort([("id", DESCENDING)])
         if not res.count():
-            return ""
+            return 0, "没有数据"
         ans = []
         for r in res:
-            id = r["id"]
-            r["comment_num"] = comment_ctrl.get(_id=id, get_num=True) or 0
+            ff = r
+            _id = str(r["_id"])
+            r["comment_num"] = comment_ctrl.get(_id=_id, get_num=True) or 0
             r["_id"] = str(r["_id"])
             t = r.get("down_link", "[]")
-            down_num = len(list(r.get("donw_link",[])))
+            down_num = len(list(r.get("down_link",[])))
             r.pop("down_link", "")
             r["down_num"] = down_num
+            r["category"] = [unicode_to_str(ca) for ca in r["category"]]
             ans.append(r)
-        return ans
+        return res.count(), ans
 
     def get(self, _id="", status="online"):
         """

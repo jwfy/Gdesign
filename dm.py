@@ -25,6 +25,7 @@ def init():
     SpuUOM.import_module('user')
     SpuUOM.import_module('comment')
     SpuUOM.import_module('movie')
+    SpuUOM.import_module('image')
     SpuUOM.load()
    
     mongodb = SpuMongodb(mongo_dbcnf)

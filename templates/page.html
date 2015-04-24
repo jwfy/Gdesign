@@ -11,7 +11,7 @@
             <ul class="pagination">
                 {%if current != 1 %}<li><a href="{{ url %(current-1) }}">上一页</a></li>{%end%}
                 {%if current-3 > 1 %}<li><a href="{{ url %(1) }}">1</a></li>{%end%}
-                {%if current-3 > 2 %}<li><...</li>{%end%}
+                {%if current-3 > 2 %}<li>...</li>{%end%}
                 {%for i in [i for i in range(current-3,current) if i > 0]%}
                 <li><a href="{{ url %(i) }}">{{i}}</a></li>
                 {%end%}
