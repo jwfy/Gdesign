@@ -125,6 +125,7 @@ class movie(WebRequest):
                 r_status = "failure"
             else:
                 r_status = "success"
+                desc = "首页推荐电影添加成功"
             ans = self._return_ans(r_status, desc, "recommentmovie_add")
         except Exception as e:
             self._logging.error(e)

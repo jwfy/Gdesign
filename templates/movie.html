@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% block css %}<link href="/static/css/webuploader.css" rel="stylesheet" type="text/css"/>{% end %}
 {% block active3 %}active{% end %}
 {% block title %}电影列表{% end block %}
 {% block content-head %}电影列表{% end block %}
@@ -68,6 +69,7 @@
 {% end %}
 
 {% block js %}
+        <script type="text/javascript" src="/static/js/webuploader.js"></script>
 <script>
     $(function () {
         $(".inormal").click(function(){
@@ -101,41 +103,97 @@
             return false;
         }
 
-        $("tr[data-target='#movie-add']").click(function(){
-            var title = $(this).find("input[name='title']").val();
-            var _id = $(this).find("input[name='_id']").val();
-            $("#movie-add").find("input[name='title']").val(title);
-            $("#movie-add").find("input[name='_id']").val(_id);
-        });
-
-        $(".img-load").click(function(){
-            debugger;
-            if($("#image").val().length <= 0){
-                alert("请添加需要上传的图片");
-                return false;
-            }
-            $.ajaxFileUpload({
-                url:"/image/image/file",
-                fileElementId:"image",
-                dataType: "json",
-                success:function(data, status){
-                    debugger;
-                    alert(data["url"]);
-                    console.log("33333"+data["url"]);
-                    if(status == "success"){
-
-                        console.log("11111"+data);
+        $(".img-add").click(function(){
+            $.ajax({
+                url:"/movie/movie/re_add",
+                data:{"title":$("input[name='title']").val(),
+                    "_id":$("input[name='_id']").val(),
+                    "img_url":$("input[name='image']").val()},
+                dataType: "json" ,
+                success: function(data){
+                    console.log(data);
+                    //debugger;
+                    if(data["status"] == "success"){
+                        $("#movie-add").modal('hide')
+                        alert(data["query"]);
                     }
                     else
-                        console.log("2222"+data);
-                        //console.log(data);
+                        alert(data["query"]);
                 },
                 error:function(data, status, e){
                     alert(e);
                 }
             });
             return false;
-        })
+        });
+
+        $("tr[data-target='#movie-add']").click(function(){
+            var title = $(this).find("input[name='title']").val();
+            var _id = $(this).find("input[name='_id']").val();
+            $("#movie-add").find("input[name='title']").val(title);
+            $("#movie-add").find("input[name='_id']").val(_id);
+            webuload();
+        });
+
+        var webuload = function(){
+            var $ = jQuery,
+                $list = $('#fileList'),
+                ratio =  1,
+                thumbnailWidth = 100 * ratio,
+                thumbnailHeight = 100 * ratio,
+                uploader,num=0;
+
+            uploader = WebUploader.create({
+                auto: true,
+                server: '/image/image/file',
+                pick: '#filePicker',
+                accept: {
+                    title: 'Images',
+                    extensions: 'gif,jpg,jpeg,bmp,png',
+                    mimeTypes: 'image/*'
+                }
+            });
+
+            uploader.on( 'fileQueued', function( file ) {
+                if(num >=1){
+                    $list.html("");
+                }
+                var $li = $(
+                        '<div id="' + file.id + '" class="file-item thumbnail">' +
+                        '<img>' +
+                        '<div class="info">' + file.name + '</div>' +
+                        '</div>'
+                      ),
+                $img = $li.find('img');
+                $list.append( $li );
+                num += 1;
+                // 创建缩略图
+                uploader.makeThumb( file, function( error, src ) {
+                    if ( error ) {
+                        $img.replaceWith('<span>不能预览</span>');
+                        return;
+                    }
+                    $img.attr( 'src', src );
+                }, thumbnailWidth, thumbnailHeight );
+            });
+
+            uploader.on( 'uploadSuccess', function( file , response) {
+                var url = response["url"];
+                $("input[name='image']").val(url);
+                $( '#'+file.id ).addClass('upload-state-done');
+            });
+
+            uploader.on( 'uploadError', function( file ) {
+                var $li = $( '#'+file.id ),
+                        $error = $li.find('div.error');
+
+                if ( !$error.length ) {
+                    $error = $('<div class="error"></div>').appendTo( $li );
+                }
+                $error.text('上传失败');
+            });
+        };
+
     });
 
 </script>

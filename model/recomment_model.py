@@ -19,7 +19,7 @@ class MovieReComment(SpuDBObject):
     def __init__(self, spudb, spucache, debug):
         SpuDBObject.__init__(self, MovieReComment._table_, spudb, spucache, debug=debug)
         self.id = Field(int, 0, 5, auto_inc=True)
-        self._id = Field(str, "", 15)
+        self._id = Field(str, "", 30)
         self.status = Field(int, 0, 5)
         self.title = Field(str, "", 20)
         self.img_url = Field(str, 0, 200)

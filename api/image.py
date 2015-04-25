@@ -22,12 +22,12 @@ class image(WebRequest):
         """
         pass
 
-    @POST_FILE('image')
-    def file(self, image):
+    @POST_FILE('file')
+    def file(self, file):
         """
         上传文件
         """
-        image = image[0]
+        image = file[0]
         store_img = {}
         store_img["name"] = image["filename"]
         store_img["mime_type"] = image["content_type"]
@@ -35,8 +35,6 @@ class image(WebRequest):
         url = image_ctrl.file_upload(store_img, "file-upload")
         ans = {}
         ans["url"] = url
-        import ipdb
-        ipdb.set_trace()
         return self._write(ans)
 
     @POST

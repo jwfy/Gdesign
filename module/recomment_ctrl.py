@@ -70,8 +70,8 @@ class MovieReCommentCtrl(object):
         recomment.title = unicode_to_str(title)
         recomment.time = datetime.now()
         recomment.update_time = datetime.now()
-        comment._id = _id
-        comment.status = 2
+        recomment._id = _id
+        recomment.status = 2
         recomment.img_url = img_url
         try:
             recomment.insert()
