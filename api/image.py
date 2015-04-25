@@ -27,10 +27,17 @@ class image(WebRequest):
         """
         上传文件
         """
+        image = image[0]
+        store_img = {}
+        store_img["name"] = image["filename"]
+        store_img["mime_type"] = image["content_type"]
+        store_img["body"] = image["body"]
+        url = image_ctrl.file_upload(store_img, "file-upload")
+        ans = {}
+        ans["url"] = url
         import ipdb
         ipdb.set_trace()
-        url = image_ctrl.file_upload(image)
-        return self._write(111)
+        return self._write(ans)
 
     @POST
     def url(self, url={"atype":"unicode", "adef":""}):

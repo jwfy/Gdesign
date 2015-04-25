@@ -27,13 +27,16 @@ class ImageCtrl(object):
             self._logging.error(e)
             return None
 
-    def file_upload(self, file):
+    def file_upload(self, file, name):
         """
         根据文件进行上传，存储，返回url值
         """
-        # TODO 还未完成
-        store_file(file)
-        pass
+        try:
+            url = store_bindata(file, name)
+            return url
+        except Exception as e:
+            self._logging.error(e)
+            return None
     
     def captcha_image(self, height=50, width=100):
         """
