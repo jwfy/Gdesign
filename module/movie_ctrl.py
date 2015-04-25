@@ -8,6 +8,7 @@
 from bson import ObjectId
 from pymongo import MongoClient, ASCENDING, DESCENDING
 from sputnik.SpuLogging import SpuLogging
+from script.douban_movie_api import *
 from base_ctrl import *
 from comment_ctrl import *
 import json
@@ -114,4 +115,23 @@ class MovieCtrl(object):
         except Exception as e:
             self._logging.error(e)
             return 0, e
-
+    
+    def add(self, ids=""):
+        """
+        添加电影数据
+        ids 应该为一序列的豆瓣 id 的值
+        """
+        if not _ids:
+            self._logging.error("无有效id")
+            return 0, "无有效id"
+        _ids = []
+        for id in ids:
+            try:
+                _id, flag = write_to_mongo(id)
+                _ids.append(_id)
+            except Exception as e:
+                self._logging.error(e)
+                pass
+        if _ids:
+            return _ids
+        return None

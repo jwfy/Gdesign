@@ -23,9 +23,6 @@ from image_load import *
 from bs4 import BeautifulSoup
 from requests import *
 import urllib
-import ipdb
-sys.path.insert(0, "../module/")
-from base_ctrl import *
 
 MONGO_HOST = "127.0.0.1"
 MONGO_PORT = 27017
@@ -37,6 +34,9 @@ DOUBAN_URL_TOP_250 = "https://api.douban.com/v2/movie/top250?start=%s&count=%s"
 DOWNLINK_URL = "http://www.btbook.net/search/"
 
 _Collection = None
+
+def unicode_to_str(u):
+    return u.encode("utf-8")
 
 def mongo_init():
     """

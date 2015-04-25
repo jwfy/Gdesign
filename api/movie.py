@@ -133,6 +133,17 @@ class movie(WebRequest):
         return self._write(ans)
 
     @POST
+    def m_add(self, ids={"atype":list, "adef":""}
+        ):
+        """
+        添加电影数据
+        NOTICE： 通过豆瓣电影ID 获取相关数据
+        """
+        # TODO 添加电影数据
+
+        pass
+
+    @POST
     def add(self, name={"atype":unicode, "adef":""},
             email={"atype":str, "adef":""}, 
             title={"atype":unicode, "adef":""}, 
