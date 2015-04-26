@@ -36,10 +36,11 @@ class movie(WebRequest):
                 query = []
                 for d in desc:
                     query_dict = {}
-                    query_list["img"] = d.img_url
-                    query_list["_id"] = d._id
-                    query_list["movie"] = movie_ctrl.get(_id=d._id)
-                query.append(query_list)
+                    query_dict["img"] = d.img_url
+                    query_dict["_id"] = d._id
+                    query_dict["title"] = d.title
+                    query_dict["movie"] = movie_ctrl.get(_id=d._id)
+                    query.append(query_dict)
             ans = self._return_ans(r_status, query, "recommentmovie_list")
         except Exception as e:
             self._logging.error(e)

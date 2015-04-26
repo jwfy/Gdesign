@@ -3,8 +3,8 @@
         <ul class="sidebar-menu">
             <li class="header">导航</li>
             <li class="{% block active1 %}{% end %}">
-                <a href="javascript:;">
-                    <i class="fa fa-dashboard"></i> <span>主页</span>
+                <a href="/movie/movie/index" target="_blank">
+                    <i class="fa fa-dashboard"></i> <span>前台主页</span>
                 </a>
             </li>
             <li class="treeview {% block active2 %}{% end %}{% block active3 %}{% end %}{% block active4 %}{% end %}">
@@ -28,6 +28,7 @@
                     <li class="{% block active6 %}{% end %}"><a href="/comment/comment/list?category=blog"><i class="fa fa-circle-o"></i>博客</a></li>
                 </ul>
             </li>
+            <!--
             <li class="treeview">
                 <a href="#">
                     <i class="fa fa-send-o"></i><span>邮件</span>
@@ -38,6 +39,7 @@
                     <li><a href="javascript:;"><i class="fa fa-circle-o"></i>邮件发送</a></li>
                 </ul>
             </li>
+            -->
         </ul>
     </section>
 </aside>

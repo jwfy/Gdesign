@@ -12,7 +12,7 @@ from script.douban_movie_api import *
 from base_ctrl import *
 from comment_ctrl import *
 import json
-import datetime
+from datetime import datetime
 import random
 
 """
@@ -72,12 +72,13 @@ class MovieCtrl(object):
         """
         通过 _id 获取 对应的电影内容和对应评论,并且通过_id 获取对应评论
         """
+        _id = unicode_to_str(_id)
         res = self.collection.find_one({"_id":ObjectId(_id), "status":status})
         if not res:
             return ""
         self.collection.update({"_id":ObjectId(_id)},{"$inc":{"pv":1}})
-        _id = res["_id"]
-        res["_id"] = str(_id)
+        _id = str(res["_id"])
+        res["_id"] = _id
         res['comment'] = comment_ctrl.get(_id=_id)
         return res
 

@@ -16,3 +16,16 @@
     display:block;
     height:100px;
 }
+.index-font {
+    background: rgba(0, 0, 0, 0.5) none repeat scroll !important;
+    border-radius: 5px;
+}
+.index-font h3 {
+    margin-top: 0px;
+}
+.index-font p {
+    font-family: "宋体", Arial, sans-serif;
+    padding: 0 10px;
+    text-align: left;
+    text-indent:2em;
+}

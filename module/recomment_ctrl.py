@@ -5,6 +5,7 @@
 # time: 2015-04-13
 # e-mail: jwfy0902@foxmail.com
 
+
 from sputnik.SpuLogging import SpuLogging
 from sputnik.SpuDBObject import Sort, SqlNone, PageInfo, FuzzyLike, FN, In
 from datetime import datetime
@@ -26,6 +27,7 @@ class MovieReCommentCtrl(object):
         更新推荐电影状态,可以进行批量操作
         1: 上线
         2：下线
+        # TODO 时间这个包引入好像有问题了
         """
         recomment_model = MovieReComment.objectlist()
         recomment_t = MovieReComment.table()
@@ -37,7 +39,7 @@ class MovieReCommentCtrl(object):
         if not recomment_model.find(cond):
             self._logging.error("更新电影推荐状态，未找到对应数据")
             return 0, "没有找到对应推荐信息"
-        recomment_model.update({'status':status, 'update_time':datetime.now()})
+        recomment_model.update({'status':status, 'update_time':datetime.datetime.now()})
         return 1, "状态更新成"
 
     def list(self, page_num=1, page_size=10, status=0,
@@ -67,13 +69,14 @@ class MovieReCommentCtrl(object):
         添加电影推荐
         默认设置状态为“下线”状态
         NOTICE: 这里我们需要对_id 进行监测，确保在mongo数据库中存在
+        # TODO 需要处理datetime 
         """
         if not check_mongo_id(_id):
             return 0, "不存在这样的电影数据"
         recomment = MovieReComment.object()
         recomment.title = unicode_to_str(title)
-        recomment.time = datetime.now()
-        recomment.update_time = datetime.now()
+        recomment.time = datetime.datetime.now()
+        recomment.update_time = datetime.datetime.now()
         recomment._id = _id
         recomment.status = 2
         recomment.img_url = img_url
