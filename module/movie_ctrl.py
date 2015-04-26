@@ -116,22 +116,20 @@ class MovieCtrl(object):
             self._logging.error(e)
             return 0, e
     
-    def add(self, ids=""):
+    def add(self, id=""):
         """
         添加电影数据
         ids 应该为一序列的豆瓣 id 的值
         """
-        if not _ids:
+        import ipdb
+        ipdb.set_trace()
+        if not id:
             self._logging.error("无有效id")
             return 0, "无有效id"
-        _ids = []
-        for id in ids:
-            try:
-                _id, flag = write_to_mongo(id)
-                _ids.append(_id)
-            except Exception as e:
-                self._logging.error(e)
-                pass
-        if _ids:
-            return _ids
-        return None
+        try:
+            _id, flag = write_to_mongo(id)
+        except Exception as e:
+            self._logging.error(e)
+            _id = 0
+            return 0, e
+        return _id, flag

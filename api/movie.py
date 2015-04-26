@@ -119,6 +119,8 @@ class movie(WebRequest):
         推荐电影添加
         _id 为 mongo _id
         """
+        if not img_url:
+            return self._html_render("movie/add.html", {"title":title, "_id":_id})
         try:
             r, desc = removie_ctrl.add(title=title, _id=_id, img_url=img_url)
             if not r:
@@ -129,19 +131,27 @@ class movie(WebRequest):
             ans = self._return_ans(r_status, desc, "recommentmovie_add")
         except Exception as e:
             self._logging.error(e)
-            ans = self._return_asn("error", e, "recommentmovie_add")
+            ans = self._return_ans("error", e, "recommentmovie_add")
         return self._write(ans)
 
     @POST
-    def m_add(self, ids={"atype":list, "adef":""}
+    def m_add(self, id={"atype":str, "adef":""}
         ):
         """
         添加电影数据
         NOTICE： 通过豆瓣电影ID 获取相关数据
         """
         # TODO 添加电影数据
-
-        pass
+        if not id:
+            return self._html_render("addmovie.html",{})
+        _id, desc = movie_ctrl.add(id)
+        if _id:
+            status = "success"
+            desc = _id
+        else:
+            status = "failure"
+        ans = self._return_ans(status, desc,"movie_add")
+        return self._write(ans)
 
     @POST
     def add(self, name={"atype":unicode, "adef":""},

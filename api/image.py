@@ -27,6 +27,8 @@ class image(WebRequest):
         """
         上传文件
         """
+        if not file:
+            return self._write(dict({"url":""}))
         image = file[0]
         store_img = {}
         store_img["name"] = image["filename"]

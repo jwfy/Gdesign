@@ -9,6 +9,7 @@ from sputnik.SpuLogging import SpuLogging
 from sputnik.SpuDBObject import Sort, SqlNone, PageInfo, FuzzyLike, FN, In
 from datetime import datetime
 from model.recomment_model import MovieReComment
+from script.douban_movie_api import *
 from base_ctrl import *
 
 class MovieReCommentCtrl(object):
@@ -65,7 +66,10 @@ class MovieReCommentCtrl(object):
         """
         添加电影推荐
         默认设置状态为“下线”状态
+        NOTICE: 这里我们需要对_id 进行监测，确保在mongo数据库中存在
         """
+        if not check_mongo_id(_id):
+            return 0, "不存在这样的电影数据"
         recomment = MovieReComment.object()
         recomment.title = unicode_to_str(title)
         recomment.time = datetime.now()

@@ -1,32 +1,137 @@
-<div class="modal fade" id="movie-add">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">添加电影到推荐首页</h4>
+{% extends '../base.html' %}
+{% block css %}<link href="/static/css/webuploader.css" rel="stylesheet" type="text/css"/>{% end %}
+{% block active3 %}active{% end %}
+{% block title %}电影列表{% end block %}
+{% block content-head %}电影推荐{% end block %}
+{% block content %}
+{% set ans = pyobject.get('result') %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title">电影推荐</h3>
             </div>
-            <div class="modal-body">
-                <form>
+            <form role="form">
+                <div class="box-body">
                     <div class="form-group">
                         <label class="control-label">电影标题:</label>
-                        <input type="text" class="form-control" name="title" disabled/>
+                        <input type="text" class="form-control" name="title" value="{{ ans.get('title', '') }}"disabled/>
                     </div>
                     <div class="form-group">
                         <label class="control-label">电影id（非豆瓣ID）:</label>
-                        <input type="text" class="form-control" name="_id" disabled/>
-                        <input type="hidden" name="image" />
+                        <input type="text" class="form-control" name="_id" value="{{ ans.get('_id', '') }}"disabled />
+                        <input type="hidden" name="image" value="{{ ans.get('img_url', '') }}"/>
                     </div>
                     <div class="form-group">
                         <label class="control-label">首页大图:</label>
-                        <div id="fileList"></div>
-                        <div id="filePicker">上传图片</div>
+                        <div class="filelist"></div>
+                        <div class="img-load">添加图片</div>
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                <button type="button" class="btn btn-primary img-add" data-dismiss="modal">添加</button>
-            </div>
+                </div>
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-primary removie-add">添加</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
+{% end %}
+
+{% block js %}
+<script type="text/javascript" src="/static/js/webuploader.min.js"></script>
+<script>
+    $(function () {
+        $(".removie-add").click(function(){
+            if($("input[name='image']").val().length <=0){
+                alert("请插入图片");
+                return false;
+            }
+            $.ajax({
+                url:"/movie/movie/re_add",
+                data:{"title":$("input[name='title']").val(),
+                    "_id":$("input[name='_id']").val(),
+                    "img_url":$("input[name='image']").val()},
+                dataType: "json" ,
+                success: function(data){
+                    console.log(data);
+                    //debugger;
+                    if(data["status"] == "success"){
+                        alert("首页推荐成功");
+                        //window.close()
+                    }
+                    else
+                        alert(data["query"]);
+                },
+                error:function(data, status, e){
+                    alert(e);
+                }
+            });
+            return false;
+        });
+
+        var upload = function(){
+            var $ = jQuery,
+                $list = $('.filelist'),
+                ratio = 1,
+                thumbnailWidth = 100 * ratio,
+                thumbnailHeight = 100 * ratio,
+                uploader,num=0;
+            uploader = WebUploader.create({
+                auto: true,
+                server: '/image/image/file',
+                pick: '.img-load',
+                accept: {
+                    title: 'Images',
+                    extensions: 'gif,jpg,jpeg,bmp,png',
+                    mimeTypes: 'image/*'
+                }
+            });
+            uploader.on( 'fileQueued', function( file ) {
+                if(num >= 1)
+                    $list.html("");
+                var $li = $(
+                            '<div id="' + file.id + '" class="file-item thumbnail">' +
+                            '<img>' +
+                            '<div class="info">' + file.name + '</div>' +
+                            '</div>'
+                        ),
+                        $img = $li.find('img');
+
+                $list.append( $li );
+                num += 1;
+                // 创建缩略图
+                uploader.makeThumb( file, function( error, src ) {
+                    if ( error ) {
+                        $img.replaceWith('<span>不能预览</span>');
+                        return;
+                    }
+                    $img.attr( 'src', src );
+                }, thumbnailWidth, thumbnailHeight );
+            });
+            uploader.on( 'uploadSuccess', function( file ,response) {
+                if(response["url"]){
+                    alert("图片上传完成");
+                    $("input[name='image']").val(response["url"]);
+                }
+                $( '#'+file.id ).addClass('upload-state-done');
+            });
+            uploader.on( 'uploadError', function( file ) {
+                var $li = $( '#'+file.id ),
+                        $error = $li.find('div.error');
+
+                if ( !$error.length ) {
+                    $error = $('<div class="error"></div>').appendTo( $li );
+                }
+                $error.text('上传失败');
+            });
+
+        };
+        upload();
+
+
+    });
+
+</script>
+{% end %}
+
+

@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block active4 %}active{% end %}
+{% block title %}电影添加{% end block %}
+{% block content-head %}电影添加{% end block %}
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title">电影数据添加</h3>
+            </div>
+            <div class="box-body">
+                <form class="col-xs-12" style="float: right" role="search">
+                    <div class="form-group">
+                        <label class="control-label">豆瓣电影ID</label>
+                        <input type="text" class="form-control" name="id"/>
+                    </div>
+                </form>
+            </div>
+            <div class="box-footer">
+                <button type="submit" class="btn btn-primary movie-add">添加</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% end %}
+
+{% block js %}
+<script>
+    $(function () {
+
+        $(".movie-add").click(function(){
+            var id = $("input[name='id']").val();
+            if(!id){
+                alert("请输入豆瓣电影ID");
+                return false;
+            }
+            $.ajax({
+                url:"/movie/movie/m_add",
+                data:{"id":id},
+                dataType: "json" ,
+                success: function(data){
+                    console.log(data);
+                    //debugger;
+                    if(data["status"] == "success"){
+                        window.open("");
+                    }
+                    else
+                        alert(data["query"]);
+                },
+                error:function(data, status, e){
+                    alert(e);
+                }
+            });
+            return false;
+        });
+    });
+
+</script>
+{% end %}

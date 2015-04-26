@@ -23,6 +23,7 @@ from image_load import *
 from bs4 import BeautifulSoup
 from requests import *
 import urllib
+from bson import ObjectId
 
 MONGO_HOST = "127.0.0.1"
 MONGO_PORT = 27017
@@ -207,17 +208,35 @@ def douban_to_dict(id):
         print("%s 未获取下载链接" %(movie["id"]))
     return movie, movie_link_flag
 
+def check_mongo_id(_id):
+    """
+    监测mongo是否存在数据
+    """
+    if not _Collection:
+        mongo_init()
+    try:
+        flag = _Collection.find_one({"_id":ObjectId(_id)})
+    except Exception as e:
+        flag = False
+    if flag:
+        return True
+    return False
+
 def write_to_mongo(id):
     """
     dict store to mongo
     """
     if not _Collection:
         mongo_init()
+    flag = _Collection.find_one({"id":id})
+    if flag:
+        # 说明已经有数据了，无需添加
+        return 0, "已经存在相关数据，添加失败"
     movie_dict, flag = douban_to_dict(id)
     if not movie_dict:
-        return None, None
-    id = _Collection.insert(movie_dict)
-    return str(id), flag
+        return 0, "暂无有效数据"
+    _id = _Collection.insert(movie_dict)
+    return str(_id), flag
 
 def get_ids():
     files = open("../log/topid.log")
@@ -244,8 +263,10 @@ def main():
     files.close()
     
 if __name__ == "__main__":
+    id = "552758a9e206a514e2257ac5"
+    check_mongo_id(id)
     #read_top_250()
-    main()
+    #main()
     #douban_to_dict(1764796)
     #title = "超能陆战队"
     #downlink_to_list(title)
