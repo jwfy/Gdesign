@@ -263,6 +263,8 @@ def main():
     files.close()
     
 if __name__ == "__main__":
+    import ipdb
+    ipdb.set_trace()
     id = "552758a9e206a514e2257ac5"
     check_mongo_id(id)
     #read_top_250()

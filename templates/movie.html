@@ -10,7 +10,7 @@
 {% set r_category = ans.get('category', '') %}
 {% set r_director = ans.get('directors', '') %}
 {% set cast = ans.get('casts', '') %}
-{% set url = '/movie/movie/list?' %}
+{% set url = '/main/movie/list?' %}
 <div class="row">
     <div class="col-md-12">
         <div class="box box-primary">
@@ -46,7 +46,7 @@
                     {% end %}
                     </tbody>
                 </table>
-                {% set url = '/movie/movie/list?' %}
+                {% set url = '/main/movie/list?' %}
                 {% if r_director %}
                     {% set url = url + 'directors=%s' %(r_director) %}
                 {% end %}
@@ -81,13 +81,13 @@
         });
         function ajax_status(ids, status){
             $.ajax({
-                url:"/movie/movie/re_update_status",
+                url:"/main/movie/update_status",
                 data:{"ids":JSON.stringify(ids), "status":status},
                 dataType: "json" ,
                 success: function(data){
                     console.log(data);
                     if(data["status"] == "success"){
-                        window.location.href="/movie/movie/list";
+                        window.location.href="/main/movie/list";
                     }
                     else
                         alert(data["query"]);

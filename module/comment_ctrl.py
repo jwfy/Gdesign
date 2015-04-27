@@ -112,3 +112,21 @@ class CommentCtrl(object):
         except Exception as e:
             self._logging.error(e)
             return 0, e
+
+    def new(self, num=8):
+        """
+        默认显示最新的 num 条评论
+        """
+        comment_model = Comment.objectlist()
+        comment_t = Comment.table()
+        cond  = comment_t.status == 1
+        pageinfo = PageInfo(1, num)
+        sort_style = Sort([(comment_t.time, Sort.desc)])
+        comment_t.sort(sort_style)
+        comment_t.pageinfo(pageinfo)
+        if not comment_model.find(cond):
+            self._logging.warn("未找到评论列表")
+            return 0, "没有评论信息"
+        sum = pageinfo.total_record
+        return sum, comment_model
+

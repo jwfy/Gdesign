@@ -6,6 +6,7 @@
 # e-mail: jwfy0902@foxmail.com
 
 from bson import ObjectId
+from bson.son import SON
 from pymongo import MongoClient, ASCENDING, DESCENDING
 from sputnik.SpuLogging import SpuLogging
 from script.douban_movie_api import *
@@ -17,7 +18,9 @@ import random
 
 """
 整个的电影搜索相关的ctrl都在这里控制者
+关于聚合排序索引[docs]: http://api.mongodb.org/python/current/examples/aggregation.html
 """
+
 COLLECTION = "movie"
 comment_ctrl = CommentCtrl()
 
@@ -30,7 +33,30 @@ class MovieCtrl(object):
         database = client[mongo["database"]]
         self.collection = ""
         if not self.collection:
-            self.collection = database[COLLECTION]  
+            self.collection = database[COLLECTION]
+
+    def year(self, ):
+        """
+        按照时间年限group by year
+        """
+        res = self.collection.aggregate([{"$group":{"_id":"$year", "count":{"$sum":1}}},{"$sort":SON([("_id",-1)])}])
+        return list(res)
+
+    def pv(self,num=10):
+        """
+        按照点击率多少获取前 num 个电影数据
+        NOTICE ：need 字段为从mongo中筛选出来的字段
+        """
+        need = {"_id":1,"title":1,"pv":1}
+        res = self.collection.find({}, need).limit(num).sort([("pv",-1)])
+        query = []
+        for r in res:
+            q_dict = {}
+            q_dict["_id"] = str(r["_id"])
+            q_dict["pv"] = r["pv"]
+            q_dict["title"] = r["title"]
+            query.append(q_dict)
+        return query
 
     def main(self, page_num=1, page_size=10, category="", directors="",
              casts="", countries="", year=0, status="online", q=""):
@@ -113,6 +139,7 @@ class MovieCtrl(object):
         """
         更新电影的上线、下线状态
         可进行批量操作
+        # TODO 需要进行单个的id更改操作
         """
         if not _ids:
             return 0, "没有需要修改的_id值"

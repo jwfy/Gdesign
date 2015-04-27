@@ -12,7 +12,7 @@ from sputnik.SpuDBObject import *
 
 class Comment(SpuDBObject):
     """
-    用户模型
+    评论模型
     """
     _table_ = "comment"
 

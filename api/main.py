@@ -90,7 +90,7 @@ class movie(WebRequest):
         ans = self._return_ans(r_status, desc,"list", kwargs)
         return self._html_render("movie.html", ans)
 
-    @check_login()
+    #@check_login()
     @POST
     def update_status(self,
             _ids={"atype":str, "adef":""},
@@ -100,8 +100,8 @@ class movie(WebRequest):
         更新电影的状态
         """
         ans = {}
-        # TODO eval 函数 应该被抛弃
-        r,desc = movie_ctrl.update_status(_ids=eval(_ids), status=status)
+        ids = json.loads(_ids)
+        r,desc = movie_ctrl.update_status(_ids=_ids, status=status)
         if not r:
             r_status = "error"
         else:
@@ -109,7 +109,7 @@ class movie(WebRequest):
         ans = self._return_ans(r_status, desc, "update_status")
         return self._write(ans)
 
-    @check_login()
+    #@check_login()
     @POST
     def update(self,
             _id={"atype":str, "adef":""},

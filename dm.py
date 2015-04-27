@@ -11,6 +11,7 @@ import tornado.ioloop
 import tornado.web
 from config import *
 from sputnik.SpuUOM import SpuUOM
+from sputnik.SpuUIModuleLoad import SpuUIModule
 from sputnik.SpuFS import *
 from sputnik.SpuDebug import *
 from sputnik.SpuFactory import *
@@ -26,7 +27,9 @@ def init():
     SpuUOM.import_module('comment')
     SpuUOM.import_module('movie')
     SpuUOM.import_module('image')
+    SpuUOM.import_module('main')
     SpuUOM.load()
+    SpuUIModule.LoadUIModule('ui_module')
    
     mongodb = SpuMongodb(mongo_dbcnf)
     mongodb.connection()
@@ -50,9 +53,10 @@ def start():
                 doc = False
             handlers = SpuUOM.url_rule_list(doc)
             settings = dict(
-                service_title=u"Web Site",
+                service_title=u"DMovie",
                 template_path=os.path.join(os.path.dirname(__file__), "templates"), 
-                static_path=os.path.join(os.path.dirname(__file__), "static")
+                static_path=os.path.join(os.path.dirname(__file__), "static"),
+                ui_modules=SpuUIModule.get_ui_modules()
                 )
             tornado.web.Application.__init__(self, handlers, debug=DEBUG, **settings)
 

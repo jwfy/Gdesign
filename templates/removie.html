@@ -22,7 +22,7 @@
                             <button class="btn btn-default btn-sm inormal" title="上线"><i class="fa fa-bars"></i></button>
                         </div>
                     </div>
-                    <form class="col-xs-3" style="float: right" role="search" method="post" action="/movie/movie/re_list">
+                    <form class="col-xs-3" style="float: right" role="search" method="post" action="/main/re/list">
                         <div class="has-feedback">
                             <input type="hidden" name="status" value="{{ r_status }}"/>
                             <input type="text" class="form-control input-sm" name="contain" placeholder="查找评论"/>
@@ -42,7 +42,7 @@
                     {% end %}
                     </tbody>
                 </table>
-                {% set url = '/movie/movie/re_list?status=%s' %(r_status) %}
+                {% set url = '/main/re/list?status=%s' %(r_status) %}
                 {% if title %}
                 {% set url = url + '&title=%s' %(title) %}
                 {% end %}
@@ -71,13 +71,13 @@
         });
         function ajax_status(ids, status){
             $.ajax({
-                url:"/movie/movie/re_update_status",
+                url:"/main/re/update_status",
                 data:{"ids":JSON.stringify(ids), "status":status},
                 dataType: "json" ,
                 success: function(data){
                     console.log(data);
                     if(data["status"] == "success"){
-                        window.location.href="/movie/movie/re_list";
+                        window.location.href="/main/re/list";
                     }
                     else
                         alert(data["query"]);
