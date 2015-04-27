@@ -32,31 +32,58 @@ class MovieCtrl(object):
         if not self.collection:
             self.collection = database[COLLECTION]  
 
+    def main(self, page_num=1, page_size=10, category="", directors="",
+             casts="", countries="", year=0, status="online", q=""):
+        """
+        获取电影列表
+        """
+        ans = {}
+        kwargs = {}
+        kwargs["category"] = category
+        kwargs["directors"] = directors
+        kwargs["casts"] = casts
+        kwargs["status"] = status
+        kwargs["countries"]=countries
+        kwargs["q"] = q
+
+        total, desc = self.list(page_num=int(page_num), page_size=int(page_size),status=status, directors=directors,
+                casts=casts, category=category, countries=countries, year=int(year), q=q)
+
+        if not total:
+            r_status = "failure"
+            query = desc
+        else:
+            r_status = "success"
+            kwargs["page_num"] = page_num
+            kwargs["len"] = len(desc)
+            kwargs["total_num"] = total
+            kwargs["page_total"] = total / int(page_size) if not total % int(page_size) else total / int(page_size) + 1
+        return r_status, desc, "list", kwargs
 
     def list(self, page_num=1, page_size=10, status="online", q="", **kwargs):
         """
-        筛选数据,获取数据列表
+        筛选数据,获取数据列表,模糊查找以完成
         NOTICE ：电影 默认 显示上线的
         """
         query = {}
         for k,v in kwargs.iteritems():
-            if isinstance(v, unicode):
+            if v and isinstance(v, unicode):
                 query[k] = unicode_to_str(v)
             elif v:
                 query[k] = str(v)
         if status:
-            query["r_status"] = status
-        # TODO q 模糊查询summary
-        #if q:
-        #    Pattern pattern = Pattern.compile("^.*" + q + ".*$")
-        #    query["summary"] = pattern
+            query["status"] = status
+        if q:
+            q = unicode_to_str(q) if isinstance(q , unicode) else str(q)
+            or_list = [{"category":q}, {"countries":q}, {"casts":q}, {"directors":q}]
+            or_list.append({"summary":{"$regex":q}})
+            query["$or"] = or_list
         res = self.collection.find(query).limit(page_size) \
-                .skip((page_num-1)*page_size).sort([("id", DESCENDING)])
+                .skip((page_num-1)*page_size).sort([("year", DESCENDING), ("rating.average", DESCENDING)])
         if not res.count():
             return 0, "没有数据"
         ans = []
         for r in res:
-            ff = r
             _id = str(r["_id"])
             r["comment_num"] = comment_ctrl.get(_id=_id, get_num=True) or 0
             r["_id"] = str(r["_id"])

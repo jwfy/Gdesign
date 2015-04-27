@@ -29,3 +29,15 @@
     text-align: left;
     text-indent:2em;
 }
+/*
+.bs-callout-danger {
+    border-left-color: rgb(51,122,183) !important;
+}
+.bs-callout {
+    padding: 20px;
+    margin: 20px 0;
+    border: 1px solid rgb(238,238,238);
+    border-left-width: 5px;
+    border-radius: 3px;
+    display: block;
+}*/

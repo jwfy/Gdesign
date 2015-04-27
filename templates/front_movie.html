@@ -1,0 +1,47 @@
+{% extends front_base.html %}
+{% block title %}电影列表{% end block %}
+
+{% block content %}
+    {% set ans = pyobject.get('result') %}
+    {% set category = ans.get('category', '') %}
+    {% set countrise = ans.get('countries', '') %}
+    {% set casts = ans.get('casts', '') %}
+    {% set directors = ans.get('directors', '') %}
+    {% set year = ans.get('year') %}
+    {% set r_q = ans.get('q', '') %}
+    {% set query = ans.get('query') %}
+
+    {% set page_num = ans.get('page_num', 1) %}
+    {% set page_total = ans.get('page_total') %}
+    {% set len = ans.get('len', 10) %}
+    {% set total_num = ans.get('total_num') %}
+
+    <div class="col-md-8">
+        <div class="col-md-12">
+            <ol class="breadcrumb">
+                {% include front_base/breadcrumb.html %}
+            </ol>
+        </div>
+
+        <div class="col-md-12">
+            {% if not isinstance(query, list) %}
+                暂无数据
+            {% else %}
+                {% set item = 1 %}
+                {% for q in query %}
+                    {% include front_base/body.html %}
+                    {% set item += 1 %}
+                {% end %}
+            {% end %}
+        </div>
+        {% set url = '11%s' %}
+        {% include page.html %}
+    </div>
+    <div class="col-md-4 m-category">
+        <div class="col-md-12">
+            {% include module/category.html %}
+        </div>
+    </div>
+
+
+{% end %}

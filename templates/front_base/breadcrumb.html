@@ -1,0 +1,19 @@
+<li><a href="javascript:;">电影列表</a></li>
+{% if category %}
+    <li>类型：<a href="#">{{ category }}</a></li>
+{% end %}
+{% if countrise %}
+    <li>地区：<a href="#">{{ countrise }}</a></li>
+{% end %}
+{% if directors %}
+    <li>导演：<a href="#">{{ directors }}</a></li>
+{% end %}
+{% if casts %}
+    <li>主演：<a href="#">{{ casts }}</a></li>
+{% end %}
+{% if year %}
+    <li>时间：<a href="#">{{ year }}</a></li>
+{% end %}
+{% if r_q %}
+    <li>搜索：<a href="#">{{ r_q }}</a></li>
+{% end %}

@@ -1,0 +1,21 @@
+<div class="panel panel-primary item-{{ item }}">
+    <div class="panel-heading">
+        <h3 class="panel-title" id="panel-title"><a href="{{ q.get('_id') }}">{{ q.get('title') }}</a></h3>
+    </div>
+    <div class="panel-body media">
+        <div class="media-left media-middle">
+            <a href="jacascript">
+                <img class="media-object" src="{{ q.get('image').get('medium') }}" alt="{{ q.get('title') }}">
+            </a>
+        </div>
+        <div class="media-body">
+            <p> {{ q.get('_id') }}</p>
+            <p class="media-heading">{{ q.get('summary') }}</p>
+            {% set category = q.get('category', []) %}
+            <p>类目: {% for ca in category %}{{ ca }} {% end %}</p>
+            <p>豆瓣评分： {{ q.get('rating').get('average') }}</p>
+            <p>下载链接:{{ q.get('down_num') }}</p>
+            <p>评论数:{{ q.get('comment_num') }}</p>
+        </div>
+    </div>
+</div>

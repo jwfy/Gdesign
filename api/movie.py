@@ -44,7 +44,7 @@ class movie(WebRequest):
             ans = self._return_ans(r_status, query, "recommentmovie_list")
         except Exception as e:
             self._logging.error(e)
-            ans = self._return_ans("error", e, "recommentmovie_list")
+            ans = self._return_ans("error", "", "recommentmovie_list")
         return self._html_render("index.html", ans)
 
     @POST
@@ -193,17 +193,18 @@ class movie(WebRequest):
             ans = self._return_ans("error", e, "comment_add")
         return self._write(ans)
     
+    #@check_login()
     @POST
-    def list(self, page_num={"atype":int, "adef":1}, 
+    def m_list(self, page_num={"atype":int, "adef":1}, 
             page_size={"atype":int, "adef":10},
             category={"atype": unicode, "adef":""},
             directors={"atype": unicode, "adef":""},
             casts={"atype": unicode, "adef":""},
+            countries={"atype":unicode, "adef":""},
+            year={"atype":int, "adef":0},
+            status={"atype":str, "adef":""},
             q={"atype": unicode, "adef":""},
             csrf_code={"atype":str, "adef":""},
-            api_type={"atype":str, "adef":""},
-            status={"atype":str, "adef":""},
-            token={"atype":str, "adef":""}
         ):
         """
         获取列表，通过上述条件进行筛选
@@ -213,16 +214,59 @@ class movie(WebRequest):
         kwargs["category"] = category
         kwargs["directors"] = directors
         kwargs["casts"] = casts
+        kwargs["status"] = status
+        kwargs["countries"]=countries
         kwargs["q"] = q
         if q and csrf_code != "1234":
             self._logging.error("非法查询操作")
             ans = self._return_ans("error", "非法查询","search", kwargs)
             return self._write(ans)
-        status = ""
-        if not self._get_user_session():
-            status = "online"
-        total, desc = movie_ctrl.list(page_num=int(page_num), page_size=int(page_size),status=status, q=q, directors=directors,
-                casts=casts, category=category)
+        total, desc = movie_ctrl.list(page_num=int(page_num), page_size=int(page_size),status=status, directors=directors,
+                casts=casts, category=category, countries=countries, year=int(year), q=q)
+
+        if not total:
+            r_status = "failure"
+            query = desc
+        else:
+            r_status = "success"
+
+            kwargs["page_num"] = page_num
+            kwargs["len"] = len(desc)
+            kwargs["total_num"] = total
+            kwargs["page_total"] = total / int(page_size) if not total % int(page_size) else total / int(page_size) + 1
+        ans = self._return_ans(r_status, desc,"list", kwargs)
+        return self._html_render("movie.html", ans)
+    
+    @POST
+    def list(self, page_num={"atype":int, "adef":1}, 
+            page_size={"atype":int, "adef":10},
+            category={"atype": unicode, "adef":""},
+            directors={"atype": unicode, "adef":""},
+            casts={"atype": unicode, "adef":""},
+            countries={"atype":unicode, "adef":""},
+            year={"atype":int, "adef":0},
+            q={"atype": unicode, "adef":""},
+            csrf_code={"atype":str, "adef":""},
+            api_type={"atype":str, "adef":""},
+            token={"atype":str, "adef":""}
+        ):
+        """
+        获取列表，通过上述条件进行筛选,前端展示
+        """
+        ans = {}
+        kwargs = {}
+        kwargs["category"] = category
+        kwargs["directors"] = directors
+        kwargs["casts"] = casts
+        kwargs["countries"] = countries
+        kwargs["year"] = year
+        kwargs["q"] = q
+        if q and csrf_code != "1234":
+            self._logging.error("非法查询操作")
+            ans = self._return_ans("error", "非法查询","search", kwargs)
+            return self._write(ans)
+        total, desc = movie_ctrl.list(page_num=int(page_num), page_size=int(page_size), directors=directors,
+                casts=casts, category=category, countries=countries, year=int(year), q=q)
 
         if not total:
             r_status = "failure"
@@ -237,35 +281,26 @@ class movie(WebRequest):
         ans = self._return_ans(r_status, desc,"list", kwargs)
         if api_type == "json" and token == API_TOKEN:
             return self._write(ans)
-        if self._get_user_session():
-            return self._html_render("movie.html", ans)
-        else:
-            return self._html_render("front_movie", ans)
-        #return self._write(ans)
+        return self._html_render("front_movie.html", ans)
     
     def category(self, page_num={"atype":int, "adef":1}, 
             page_size={"atype":int, "adef":10}, 
-            name={"atype":unicode, "adef":""}, 
+            category={"atype":unicode, "adef":""},
             api_type={"atype":str, "adef":""}, 
             token={"atype":str, "adef":""}
         ):
         """
         通过类目筛选数据
         """
-        res = movie_ctrl.list(page_num=int(page_num), page_size=int(page_size), 
-                category=name)
-        ans = {}
-        if not res:
-            ans = self._return_ans("failure", "暂无数据","category")
-        else:
-            ans = self._return_ans("success", "成功获取数据","category", 
-                    page=page_num, size=len(res), contains=res)
+        ans = movie_ctrl.main(page_num=int(page_num), page_size=int(page_size), category=category)
+        ans = self._return_ans(ans[0], ans[1], ans[2], ans[3])
         if api_type == "json" and token == API_TOKEN:
             return self._write(ans)
-        return self._write(ans)
+        return self._html_render("front_movie.html", ans)
             
     def search(self, page_num={"atype":int, "adef":1}, 
-            page_size={"atype":int, "adef":10}, q={"atype":unicode, "adef":""}, 
+            page_size={"atype":int, "adef":10},
+            q={"atype":unicode, "adef":""},
             csrf_code={"atype":str, "adef":""}
         ):
         """
@@ -279,56 +314,41 @@ class movie(WebRequest):
         if not q:
             return self._write("首页")
             # TODO 这里需要跳转到新的列表页面
-        res = movie_ctrl.list(page_num=int(page_num), page_size=int(page_size),
-                q=q)
-        if not res:
-            ans = self._return_ans("failure", "暂无数据","search")
-        else:
-            ans = self._return_ans("success", "成功获取数据","search", 
-                    page=page_num, size=len(res), contains=res)
-        return self._write(ans)
+        ans = movie_ctrl.main(page_num=int(page_num), page_size=int(page_size), q=q)
+        ans = self._return_ans(ans[0], ans[1], ans[2], ans[3])
+        if api_type == "json" and token == API_TOKEN:
+            return self._write(ans)
+        return self._html_render("front_movie.html", ans)
 
     def director(self, page_num={"atype":int, "adef":1}, 
             page_size={"atype":int, "adef":10}, 
-            name={"atype":unicode, "adef":""}, 
+            directors={"atype":unicode, "adef":""},
             api_type={"atype":str, "adef":""}, 
             token={"atype":str, "adef":""}
         ):
         """
         通过导演进行搜索
         """
-        res = movie_ctrl.list(page_num=int(page_num), page_size=int(page_size),
-                directors=name)
-        ans = {}
-        if not res:
-            ans = self._return_ans("failure", "暂无数据","director")
-        else:
-            ans = self._return_ans("success", "成功获取数据","director", 
-                    page=page_num, size=len(res), contains=res)
+        ans = movie_ctrl.main(page_num=int(page_num), page_size=int(page_size), directors=directors)
+        ans = self._return_ans(ans[0], ans[1], ans[2], ans[3])
         if api_type == "json" and token == API_TOKEN:
             return self._write(ans)
-        return self._write(ans)
+        return self._html_render("front_movie.html", ans)
 
     def casts(self, page_num={"atype":int, "adef":1}, 
             page_size={"atype":int, "adef":10}, 
-            name={"atype":unicode, "adef":""}, 
+            casts={"atype":unicode, "adef":""},
             api_type={"atype":str, "adef":""}, 
             token={"atype":str, "adef":""}
         ):
         """
         通过演员进行搜索
         """
-        res = movie_ctrl.list(page_num=int(page_num), page_size=int(page_size),
-                casts=name)
-        ans = {}
-        if not res:
-            ans = self._return_ans("failure", "暂无数据","casts")
-        else:
-            ans = self._return_ans("success", "成功获取数据","casts", 
-                    page=page_num, size=len(res), contains=res)
+        ans = movie_ctrl.main(page_num=int(page_num), page_size=int(page_size), casts=casts)
+        ans = self._return_ans(ans[0], ans[1], ans[2], ans[3])
         if api_type == "json" and token == API_TOKEN:
             return self._write(ans)
-        return self._write(ans)
+        return self._html_render("front_movie.html", ans)
 
     def subject(self,id={"atype":str, "adef":""},
             api_type={"atype":str, "adef":""},
@@ -350,6 +370,7 @@ class movie(WebRequest):
             return self._write(ans)
         return self._write(ans)
 
+
     @check_login()
     @POST
     def update_status(self, 
@@ -358,6 +379,7 @@ class movie(WebRequest):
         ):
         """
         更新电影的状态
+        # TODO 将会移到main 函数中 2015-04-27 18:56:05
         """
         ans = {}
         # TODO eval 函数 应该被抛弃
@@ -379,6 +401,7 @@ class movie(WebRequest):
         """
         更新具体的电影信息
         NOTICE 只是提供修改下载链接和电影简介
+        # TODO 也会移到main 函数中，2015-04-27 18:56:34
         """
         ans = {}
         r, desc = movie_ctrl.update(_id=_id, summary=summary, down_link=down_link)
