@@ -302,6 +302,21 @@ class movie(WebRequest):
             return self._write(ans)
         return self._html_render("front_movie.html", ans)
             
+    def year(self, page_num={"atype":int, "adef":1}, 
+            page_size={"atype":int, "adef":10}, 
+            year={"atype":str, "adef":""},
+            api_type={"atype":str, "adef":""}, 
+            token={"atype":str, "adef":""}
+        ):
+        """
+        通过类目筛选数据
+        """
+        ans = movie_ctrl.main(page_num=int(page_num), page_size=int(page_size), year=int(year))
+        ans = self._return_ans(ans[0], ans[1], ans[2], ans[3])
+        if api_type == "json" and token == API_TOKEN:
+            return self._write(ans)
+        return self._html_render("front_movie.html", ans)
+    
     def search(self, page_num={"atype":int, "adef":1}, 
             page_size={"atype":int, "adef":10},
             q={"atype":unicode, "adef":""},

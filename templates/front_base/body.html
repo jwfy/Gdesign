@@ -1,21 +1,36 @@
 <div class="panel panel-primary item-{{ item }}">
     <div class="panel-heading">
-        <h3 class="panel-title" id="panel-title"><a href="{{ q.get('_id') }}">{{ q.get('title') }}</a></h3>
+        <h3 class="panel-title" id="panel-title"><a href="/movie/movie/subject?id={{ q.get('_id') }}">{{ q.get('title') }}</a></h3>
     </div>
-    <div class="panel-body media">
+    <div class="panel-body media self-body-img">
         <div class="media-left media-middle">
-            <a href="jacascript">
-                <img class="media-object" src="{{ q.get('image').get('medium') }}" alt="{{ q.get('title') }}">
-            </a>
+                <img class="media-object" src="{{ q.get('image').get('large') }}" alt="{{ q.get('title') }}">
         </div>
         <div class="media-body">
-            <p> {{ q.get('_id') }}</p>
-            <p class="media-heading">{{ q.get('summary') }}</p>
+            <p>别名：{{ q.get('original_title') }}</p>
             {% set category = q.get('category', []) %}
-            <p>类目: {% for ca in category %}{{ ca }} {% end %}</p>
-            <p>豆瓣评分： {{ q.get('rating').get('average') }}</p>
-            <p>下载链接:{{ q.get('down_num') }}</p>
-            <p>评论数:{{ q.get('comment_num') }}</p>
+            <p>类目: {% for ca in category %}<a href="#">{{ ca }}</a> {% end %}</p>
+            {% set directors = q.get('directors', []) %}
+            <p>导演: {% for d in directors %}<a href="#">{{ d }}</a> {% end %}</p>
+            {% set casts = q.get('casts') %}
+            <p>主演: {% for c in casts %}<a href="#">{{ c }}</a> {% end %}</p>
+            <p class="media-heading">{{ q.get('summary') }}</p>
+            <a class="btn btn-danger" href="javascript:;">
+                <i class="fa fa-flag pull-left"></i>豆瓣评分<br>{{ q.get('rating').get('average') }}</a>
+            <a class="btn btn-warning" href="javascript:;">
+                <i class="fa fa-cloud-download pull-left"></i>下载链接<br>{{ q.get('down_num') }}</a>
+            <a class="btn btn-info" href="javascript:;">
+            {% set comment = q.get('comment_num') %}
+                {% if not comment %}
+                    {% set comment_desc = "暂无评论"%}
+                {% else %}
+                    {% set comment_desc = comment %}
+                {% end %}
+                <i class="fa fa-comments-o pull-left"></i>评论数目<br>{{ comment_desc }}</a>
+            <a class="btn btn-primary" href="javascript:;">
+                <i class="fa fa-fire pull-left"></i>用户浏览<br>{{ q.get('pv', 0) }}</a>
+            <a class="btn btn-success" href="http://movie.douban.com/subject/{{ q.get('id') }}" target="_blank">
+                <i class="fa fa-send-o pull-left"></i>豆瓣网址<br>点击查看</a>
         </div>
     </div>
 </div>

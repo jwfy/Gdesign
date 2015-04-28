@@ -113,15 +113,14 @@ class movie(WebRequest):
     @POST
     def update(self,
             _id={"atype":str, "adef":""},
-            summary={"atype":unicode, "adef":""},
             down_link={"atype":unicode, "adef":""}
         ):
         """
         更新具体的电影信息
-        NOTICE 只是提供修改下载链接和电影简介
+        NOTICE 只是提供修改下载链接
         """
         ans = {}
-        r, desc = movie_ctrl.update(_id=_id, summary=summary, down_link=down_link)
+        r, desc = movie_ctrl.update(_id=_id, down_link=down_link)
         if not r:
             r_status = "error"
         else:

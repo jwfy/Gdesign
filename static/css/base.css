@@ -41,3 +41,25 @@
     border-radius: 3px;
     display: block;
 }*/
+.self-body-img {
+    padding-left:15px !important;
+    padding-top:0px !important;
+}
+.self-body-img .media-middle {
+    vertical-align:top !important;
+}
+
+.self-body-img img{
+    height:300px;
+}
+p.media-heading {
+    text-align: left;
+    text-indent:2em;
+}
+.self-other-sidebar {
+    padding-left:0px !important;
+    margin-left:-15px;
+}
+.self-year a {
+    margin-bottom:5px;
+}

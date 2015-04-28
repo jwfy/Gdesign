@@ -6,7 +6,7 @@
 # e-mail: jwfy0902@foxmail.com
 
 """
-前台页面的模块 wetget
+前台页面的模块 witget
 """
 
 import tornado
@@ -36,7 +36,16 @@ class Year(tornado.web.UIModule):
 class Comment(tornado.web.UIModule):
     def render(self):
         """
-        时间分组查询
+        最新评论
         """
         res = comment_ctrl.new()
         return self.render_string('module/comment.html', res=res).strip()
+
+class Like(tornado.web.UIModule):
+    def render(self, category, countries):
+        """
+        猜你喜欢
+        """
+        res = movie_ctrl.main(page_num=1, page_size=5, category=category, countries=countries)
+        return self.render_string('module/like.html', res=res).strip()
+

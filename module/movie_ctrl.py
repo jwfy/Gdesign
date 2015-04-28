@@ -40,7 +40,7 @@ class MovieCtrl(object):
         按照时间年限group by year
         """
         res = self.collection.aggregate([{"$group":{"_id":"$year", "count":{"$sum":1}}},{"$sort":SON([("_id",-1)])}])
-        return list(res)
+        return res["result"]
 
     def pv(self,num=10):
         """
