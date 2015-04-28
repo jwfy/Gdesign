@@ -54,7 +54,7 @@ class MovieCtrl(object):
             q_dict = {}
             q_dict["_id"] = str(r["_id"])
             q_dict["pv"] = r["pv"]
-            q_dict["title"] = r["title"]
+            q_dict["title"] = r.get("title")
             query.append(q_dict)
         return query
 

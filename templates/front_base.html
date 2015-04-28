@@ -9,11 +9,13 @@
     <link href="/static/css/base.css" rel="stylesheet" type="text/css"/>
     {% block css %}{% end %}
 </head>
-<body style="padding-top: 70px;">
+<body>
 {% include front_base/sidebar.html %}
-<div class="row">
-    {% block content %}{% end %}
-</div>
+    <div class="row" style="margin-right: 0px;">
+        {% block content %}{% end %}
+    </div>
+
+{% block page %}{% end %}
 {% include front_base/foot.html %}
 <script type="text/javascript" src="/static/js/jquery-1.9.1.js"></script>
 <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>

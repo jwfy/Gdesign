@@ -34,12 +34,15 @@
                 {% end %}
             {% end %}
         </div>
-        {% set url = '11%s' %}
-        {% include page.html %}
     </div>
     <div class="col-md-4 self-other-sidebar">
             {% module Year() %}
+            {% module Hot() %}
+            {% module Comment() %}
     </div>
-
-
 {% end %}
+        {% block page %}
+
+{% set url = '11%s' %}
+{% include page.html %}
+        {% end %}

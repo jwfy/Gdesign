@@ -1,6 +1,6 @@
 <div class="col-md-12 self-year">
     <div class="panel panel-default">
-        <div class="panel-heading">时间</div>
+        <div class="panel-heading">上映年限</div>
         <div class="panel-body">
             {% for r in res%}
                 <a class="btn btn-primary" href="/movie/movie/year?year={{ r.get('_id') }}">{{ r.get('_id') }} <span class="badge">{{ r.get('count') }}</span></a>

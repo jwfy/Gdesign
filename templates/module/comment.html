@@ -1,0 +1,19 @@
+<div class="col-md-12 self-comment">
+    <div class="panel panel-default">
+        <div class="panel-heading">热门评论</div>
+        <div class="panel-body">
+            <div class="list-group">
+                {% if not isinstance(res, list) %}
+                    {{ res }}
+                {% else %}
+                    {% for r in res %}
+                        <a href="/movie/movie/subject?id={{ r.get('_id') }}#comment" target="_blank" class="list-group-item">
+                            {{ r.get('contain') }}
+                            <span class="badge self-comment-time">{{ r.get('time') }}</span>
+                        </a>
+                    {% end %}
+                {% end %}
+            </div>
+        </div>
+    </div>
+</div>

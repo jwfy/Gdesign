@@ -38,7 +38,16 @@ class Comment(tornado.web.UIModule):
         """
         最新评论
         """
-        res = comment_ctrl.new()
+        sum, res = comment_ctrl.new()
+        if sum:
+            co_list = []
+            for r in res:
+                co_dict = {}
+                co_dict["_id"] = r._id
+                co_dict["time"] = r.time
+                co_dict["contain"] = r.contain
+                co_list.append(co_dict)
+            res = co_list
         return self.render_string('module/comment.html', res=res).strip()
 
 class Like(tornado.web.UIModule):

@@ -122,8 +122,8 @@ class CommentCtrl(object):
         cond  = comment_t.status == 1
         pageinfo = PageInfo(1, num)
         sort_style = Sort([(comment_t.time, Sort.desc)])
-        comment_t.sort(sort_style)
-        comment_t.pageinfo(pageinfo)
+        comment_model.sort(sort_style)
+        comment_model.pageinfo(pageinfo)
         if not comment_model.find(cond):
             self._logging.warn("未找到评论列表")
             return 0, "没有评论信息"

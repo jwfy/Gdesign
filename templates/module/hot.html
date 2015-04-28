@@ -1,11 +1,15 @@
-<div class="box box-default box-solid">
-    <div class="box-header with-border">
-        <h3 class="box-title">Expandable</h3>
-        <div class="box-tools pull-right">
-            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-        </div><!-- /.box-tools -->
-    </div><!-- /.box-header -->
-    <div class="box-body" style="display: block;">
-        The body of the box
-    </div><!-- /.box-body -->
+<div class="col-md-12 self-click">
+    <div class="panel panel-default">
+        <div class="panel-heading">点击排行榜</div>
+        <div class="panel-body">
+            <div class="list-group">
+                {% for r in res %}
+                    <a href="/movie/movie/subject?id={{ r.get('_id') }}" target="_blank" class="list-group-item">
+                            {{ r.get('title') }}
+                        <span class="badge">{{ r.get('pv', 0) }}</span>
+                    </a>
+                {% end %}
+            </div>
+        </div>
+    </div>
 </div>
