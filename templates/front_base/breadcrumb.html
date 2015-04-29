@@ -4,7 +4,7 @@
     {% set desc = "类目" %}
 {% elif source == 'year' %}
     {% set desc = "上映时间" %}
-{% elif source == "director" %}
+{% elif source == "directors" %}
     {% set desc = "导演" %}
 {% elif source == "casts" %}
     {% set desc = "演员" %}
@@ -13,7 +13,7 @@
 {% elif source == "subject" %}
     {% set desc = "详情" %}
 {% end %}
-{% if source != "list" %}
+{% if source != "list" and value %}
 <li>{{ desc }}: <a href="javascript:;">{{ value }}</a></li>
 {% end %}
 {% if r_q %}

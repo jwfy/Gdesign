@@ -23,6 +23,12 @@
                 {% include single/body.html %}
             {% end %}
         </div>
+        {% set down = query.get('down_link', '') %}
+        {% if down %}
+        <div class="col-md-12">
+            {% include single/down.html %}
+        </div>
+        {% end %}
         <div class="col-md-12">
             {% set comment = query.get('comment') %}
         </div>

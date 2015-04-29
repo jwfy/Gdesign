@@ -13,7 +13,7 @@
             {% set category = q.get('category', []) %}
             <p>类目: {% for ca in category %}<a href="category?category={{ ca }}">{{ ca }}</a> {% end %}</p>
             {% set directors = q.get('directors', []) %}
-            <p>导演: {% for d in directors %}<a href="director?directors={{ d }}">{{ d }}</a> {% end %}</p>
+            <p>导演: {% for d in directors %}<a href="directors?directors={{ d }}">{{ d }}</a> {% end %}</p>
             {% set casts = q.get('casts') %}
             <p>主演: {% for c in casts %}<a href="casts?casts={{ c }}">{{ c }}</a> {% end %}</p>
             <p class="media-heading">{{ q.get('summary') }}</p>

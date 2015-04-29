@@ -304,7 +304,7 @@ class movie(WebRequest):
     
     def year(self, page_num={"atype":int, "adef":1}, 
             page_size={"atype":int, "adef":10}, 
-            year={"atype":str, "adef":""},
+            year={"atype":int, "adef":0},
             api_type={"atype":str, "adef":""}, 
             token={"atype":str, "adef":""}
         ):
@@ -338,7 +338,7 @@ class movie(WebRequest):
         ans = self._return_ans(ans[0], ans[1], ans[2], ans[3])
         return self._html_render("front_movie.html", ans)
 
-    def director(self, page_num={"atype":int, "adef":1}, 
+    def directors(self, page_num={"atype":int, "adef":1}, 
             page_size={"atype":int, "adef":10}, 
             directors={"atype":unicode, "adef":""},
             api_type={"atype":str, "adef":""}, 
@@ -347,7 +347,7 @@ class movie(WebRequest):
         """
         通过导演进行搜索
         """
-        ans = movie_ctrl.main(page_num=int(page_num), page_size=int(page_size), directors=directors, source="director")
+        ans = movie_ctrl.main(page_num=int(page_num), page_size=int(page_size), directors=directors, source="directors")
         ans = self._return_ans(ans[0], ans[1], ans[2], ans[3])
         if api_type == "json" and token == API_TOKEN:
             return self._write(ans)
@@ -402,7 +402,9 @@ class movie(WebRequest):
         if api_type == "json" and token == API_TOKEN:
             return self._write(ans)
         return self._html_render("single.html", ans)
-
+    
+    def about(self):
+        return self._html_render("about.html", {})
 
     @check_login()
     @POST

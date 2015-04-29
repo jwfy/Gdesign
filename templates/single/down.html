@@ -1,0 +1,23 @@
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <input type="hidden" name="_id" value="{{ query.get('_id') }}"/>
+        <h3 class="panel-title" id="panel-title">下载链接</h3>
+    </div>
+    <div class="panel-body media self-body-img">
+        <div class="media-body">
+            <div class="list-group">
+                {% for d in down %}
+                    {% set dl = d.get('link') %}
+                    {% set sz = d.get('size') %}
+                    {% for dk, dv in dl.iteritems() %}
+                    <a href="{{ dv }}" target="_blank" class="list-group-item">
+                        <p>【{{ sz }}】{{ dv }}</p>
+                        <span class="label label-info">{{ dk }}</span>
+                    </a>
+                    {% end %}
+                {% end %}
+            </div>
+        </div>
+    </div>
+</div>
