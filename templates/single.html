@@ -1,0 +1,36 @@
+{% extends front_base.html %}
+{% block title %}电影详情{% end block %}
+
+{% block content %}
+    {% set ans = pyobject.get('result') %}
+    {% set query = ans.get('contains') %}
+    {% set desc = ans.get('query') %}
+    {% set length = ans.get('length', 0) %}
+    {% set r_q = ans.get('q', '') %}
+
+    {% set source = "subject" %}
+    {% set value = query.get('title') %}
+    <div class="col-md-8">
+        <div class="col-md-12">
+            <ol class="breadcrumb">
+                {% include front_base/breadcrumb.html %}
+            </ol>
+        </div>
+        <div class="col-md-12">
+            {% if not length %}
+                暂无数据
+            {% else %}
+                {% include single/body.html %}
+            {% end %}
+        </div>
+        <div class="col-md-12">
+            {% set comment = query.get('comment') %}
+        </div>
+    </div>
+
+    <div class="col-md-4 self-other-sidebar">
+        {% module Year() %}
+        {% module Hot() %}
+        {% module Comment() %}
+    </div>
+{% end %}

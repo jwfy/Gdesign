@@ -128,14 +128,21 @@ class MovieCtrl(object):
         通过 _id 获取 对应的电影内容和对应评论,并且通过_id 获取对应评论
         """
         _id = unicode_to_str(_id)
-        res = self.collection.find_one({"_id":ObjectId(_id), "status":status})
-        if not res:
-            return ""
-        self.collection.update({"_id":ObjectId(_id)},{"$inc":{"pv":1}})
-        _id = str(res["_id"])
-        res["_id"] = _id
-        res['comment'] = comment_ctrl.get(_id=_id)
-        return res
+        try:
+            res = self.collection.find_one({"_id":ObjectId(_id), "status":status})
+            if not res:
+                return None
+            self.collection.update({"_id":ObjectId(_id)},{"$inc":{"pv":1}})
+            _id = str(res["_id"])
+            res["_id"] = _id
+            res["category"] = [unicode_to_str(ca) for ca in res["category"]]
+            res["countries"] = [unicode_to_str(c) for c in res["countries"]]
+            res["aka"] = [unicode_to_str(a) for a in res["aka"]]
+            res['comment'] = comment_ctrl.get(_id=_id)
+            return res
+        except Exception as e:
+            self._logging.error(e)
+            return None
 
     def update_status(self, _ids=[], status=""):
         """

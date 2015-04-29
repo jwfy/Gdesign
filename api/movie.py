@@ -287,7 +287,6 @@ class movie(WebRequest):
 #            return self._write(ans)
 #        return self._html_render("front_movie.html", ans)
    
-    @POST
     def category(self, page_num={"atype":int, "adef":1}, 
             page_size={"atype":int, "adef":10}, 
             category={"atype":unicode, "adef":""},
@@ -303,7 +302,6 @@ class movie(WebRequest):
             return self._write(ans)
         return self._html_render("front_movie.html", ans)
     
-    @POST
     def year(self, page_num={"atype":int, "adef":1}, 
             page_size={"atype":int, "adef":10}, 
             year={"atype":str, "adef":""},
@@ -334,15 +332,12 @@ class movie(WebRequest):
             ans = self._return_ans("error", "非法查询","search")
             return self._write(ans)
         if not q:
-            self._logging.warn("没有输入")
-            return self._write("首页")
-
-            # TODO 这里需要跳转到新的列表页面
+            self._logging.warn("没有输入有效搜索内容")
+            return self.tornado.redirect("/movie/movie/list")
         ans = movie_ctrl.main(page_num=int(page_num), page_size=int(page_size), q=q, source="list")
         ans = self._return_ans(ans[0], ans[1], ans[2], ans[3])
         return self._html_render("front_movie.html", ans)
 
-    @POST
     def director(self, page_num={"atype":int, "adef":1}, 
             page_size={"atype":int, "adef":10}, 
             directors={"atype":unicode, "adef":""},
@@ -358,7 +353,6 @@ class movie(WebRequest):
             return self._write(ans)
         return self._html_render("front_movie.html", ans)
 
-    @POST
     def casts(self, page_num={"atype":int, "adef":1}, 
             page_size={"atype":int, "adef":10}, 
             casts={"atype":unicode, "adef":""},
@@ -374,7 +368,6 @@ class movie(WebRequest):
             return self._write(ans)
         return self._html_render("front_movie.html", ans)
 
-    @POST
     def countries(self, page_num={"atype":int, "adef":1}, 
             page_size={"atype":int, "adef":10}, 
             countries={"atype":unicode, "adef":""},
@@ -391,8 +384,8 @@ class movie(WebRequest):
         return self._html_render("front_movie.html", ans)
     
     def subject(self,id={"atype":str, "adef":""},
-            api_type={"atype":str, "adef":""},
             status={"atype":str, "adef":"online"},
+            api_type={"atype":str, "adef":""},
             token={"atype":str, "adef":""}
         ):
         """
@@ -401,14 +394,14 @@ class movie(WebRequest):
         res =  movie_ctrl.get(_id=id, status=status)
         ans = {}
         if not res:
-            self._logging.error("没有电影信息"+id)
+            self._logging.warn("没有电影信息"+id)
             ans = self._return_ans("failure", "暂无数据","subject")
         else:
             ans = self._return_ans("success", "成功获取数据","subject", 
-                    length=1, contains=res)
+                    dict(length=1, contains=res))
         if api_type == "json" and token == API_TOKEN:
             return self._write(ans)
-        return self._write(ans)
+        return self._html_render("single.html", ans)
 
 
     @check_login()

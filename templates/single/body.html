@@ -1,0 +1,23 @@
+<input type="hidden" name="_id" value="{{ query.get('_id') }}"/>
+{% set rating = query.get('rating') %}
+<p>评分：{% for k,v in rating.iteritems() %} {{ k }}:{{ v }}  {% end %}</p>
+{% set image = query.get('image') %}
+<p>图片：{% for k,v in image.iteritems() %} {{ k }}:<img src="{{ v }}"/>  {% end %}</p>
+{% set down = query.get('down_link') %}
+<p>下载：
+    {% for d in down %}
+    {% for k,v in d.iteritems() %} {{ k }}:{{ v }} {% end %}
+    {% end %}
+</p>
+{% set aka = query.get('aka', []) %}
+<p>别名：{% for a in aka %}{{ a }} {% end %}</p>
+<p>时间：{{ query.get('year') }}</p>
+{% set countries = query.get('countries', []) %}
+<p>地区：{% for c in countries %}<a href="countries?countries={{ c }}">{{ c }}</a> {% end %}</p>
+{% set category = query.get('category', []) %}
+<p>类目: {% for ca in category %}<a href="category?category={{ ca }}">{{ ca }}</a> {% end %}</p>
+{% set directors = query.get('directors', []) %}
+<p>导演: {% for d in directors %}<a href="director?directors={{ d }}">{{ d }}</a> {% end %}</p>
+{% set casts = query.get('casts') %}
+<p>主演: {% for c in casts %}<a href="casts?casts={{ c }}">{{ c }}</a> {% end %}</p>
+<p class="media-heading">描述：{{ query.get('summary') }}</p>
