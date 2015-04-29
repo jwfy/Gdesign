@@ -1,19 +1,19 @@
-<li><a href="javascript:;">电影列表</a></li>
-{% if category %}
-    <li>类型：<a href="#">{{ category }}</a></li>
+<li><a href="/movie/movie/list">电影列表</a></li>
+
+{% if source == 'category' %}
+    {% set desc = "类目" %}
+{% elif source == 'year' %}
+    {% set desc = "上映时间" %}
+{% elif source == "director" %}
+    {% set desc = "导演" %}
+{% elif source == "casts" %}
+    {% set desc = "演员" %}
+{% elif source == "countries" %}
+    {% set desc = "地区" %}
 {% end %}
-{% if countrise %}
-    <li>地区：<a href="#">{{ countrise }}</a></li>
-{% end %}
-{% if directors %}
-    <li>导演：<a href="#">{{ directors }}</a></li>
-{% end %}
-{% if casts %}
-    <li>主演：<a href="#">{{ casts }}</a></li>
-{% end %}
-{% if year %}
-    <li>时间：<a href="#">{{ year }}</a></li>
+{% if source != "list" %}
+<li>{{ desc }}: <a href="#">{{ value }}</a></li>
 {% end %}
 {% if r_q %}
-    <li>搜索：<a href="#">{{ r_q }}</a></li>
+<li>搜索：<a href="#">{{ r_q }}</a></li>
 {% end %}

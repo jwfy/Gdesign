@@ -251,7 +251,7 @@ class movie(WebRequest):
         """
         获取列表，通过上述条件进行筛选,前端展示
         """
-        ans = movie_ctrl.main(page_num=int(page_num), page_size=int(page_size), q=q)
+        ans = movie_ctrl.main(page_num=int(page_num), page_size=int(page_size), q=q, source="list")
         ans = self._return_ans(ans[0], ans[1], ans[2], ans[3])
         if api_type == "json" and token == API_TOKEN:
             return self._write(ans)
@@ -286,7 +286,8 @@ class movie(WebRequest):
 #        if api_type == "json" and token == API_TOKEN:
 #            return self._write(ans)
 #        return self._html_render("front_movie.html", ans)
-    
+   
+    @POST
     def category(self, page_num={"atype":int, "adef":1}, 
             page_size={"atype":int, "adef":10}, 
             category={"atype":unicode, "adef":""},
@@ -296,12 +297,13 @@ class movie(WebRequest):
         """
         通过类目筛选数据
         """
-        ans = movie_ctrl.main(page_num=int(page_num), page_size=int(page_size), category=category)
+        ans = movie_ctrl.main(page_num=int(page_num), page_size=int(page_size), category=category, source="category")
         ans = self._return_ans(ans[0], ans[1], ans[2], ans[3])
         if api_type == "json" and token == API_TOKEN:
             return self._write(ans)
         return self._html_render("front_movie.html", ans)
-            
+    
+    @POST
     def year(self, page_num={"atype":int, "adef":1}, 
             page_size={"atype":int, "adef":10}, 
             year={"atype":str, "adef":""},
@@ -311,12 +313,13 @@ class movie(WebRequest):
         """
         通过类目筛选数据
         """
-        ans = movie_ctrl.main(page_num=int(page_num), page_size=int(page_size), year=int(year))
+        ans = movie_ctrl.main(page_num=int(page_num), page_size=int(page_size), year=int(year), source="year")
         ans = self._return_ans(ans[0], ans[1], ans[2], ans[3])
         if api_type == "json" and token == API_TOKEN:
             return self._write(ans)
         return self._html_render("front_movie.html", ans)
-    
+   
+    @POST
     def search(self, page_num={"atype":int, "adef":1}, 
             page_size={"atype":int, "adef":10},
             q={"atype":unicode, "adef":""},
@@ -331,14 +334,15 @@ class movie(WebRequest):
             ans = self._return_ans("error", "非法查询","search")
             return self._write(ans)
         if not q:
+            self._logging.warn("没有输入")
             return self._write("首页")
+
             # TODO 这里需要跳转到新的列表页面
-        ans = movie_ctrl.main(page_num=int(page_num), page_size=int(page_size), q=q)
+        ans = movie_ctrl.main(page_num=int(page_num), page_size=int(page_size), q=q, source="list")
         ans = self._return_ans(ans[0], ans[1], ans[2], ans[3])
-        if api_type == "json" and token == API_TOKEN:
-            return self._write(ans)
         return self._html_render("front_movie.html", ans)
 
+    @POST
     def director(self, page_num={"atype":int, "adef":1}, 
             page_size={"atype":int, "adef":10}, 
             directors={"atype":unicode, "adef":""},
@@ -348,12 +352,13 @@ class movie(WebRequest):
         """
         通过导演进行搜索
         """
-        ans = movie_ctrl.main(page_num=int(page_num), page_size=int(page_size), directors=directors)
+        ans = movie_ctrl.main(page_num=int(page_num), page_size=int(page_size), directors=directors, source="director")
         ans = self._return_ans(ans[0], ans[1], ans[2], ans[3])
         if api_type == "json" and token == API_TOKEN:
             return self._write(ans)
         return self._html_render("front_movie.html", ans)
 
+    @POST
     def casts(self, page_num={"atype":int, "adef":1}, 
             page_size={"atype":int, "adef":10}, 
             casts={"atype":unicode, "adef":""},
@@ -363,12 +368,28 @@ class movie(WebRequest):
         """
         通过演员进行搜索
         """
-        ans = movie_ctrl.main(page_num=int(page_num), page_size=int(page_size), casts=casts)
+        ans = movie_ctrl.main(page_num=int(page_num), page_size=int(page_size), casts=casts, source="casts")
         ans = self._return_ans(ans[0], ans[1], ans[2], ans[3])
         if api_type == "json" and token == API_TOKEN:
             return self._write(ans)
         return self._html_render("front_movie.html", ans)
 
+    @POST
+    def countries(self, page_num={"atype":int, "adef":1}, 
+            page_size={"atype":int, "adef":10}, 
+            countries={"atype":unicode, "adef":""},
+            api_type={"atype":str, "adef":""}, 
+            token={"atype":str, "adef":""}
+        ):
+        """
+        通过地区进行搜索
+        """
+        ans = movie_ctrl.main(page_num=int(page_num), page_size=int(page_size), countries=countries, source="countries")
+        ans = self._return_ans(ans[0], ans[1], ans[2], ans[3])
+        if api_type == "json" and token == API_TOKEN:
+            return self._write(ans)
+        return self._html_render("front_movie.html", ans)
+    
     def subject(self,id={"atype":str, "adef":""},
             api_type={"atype":str, "adef":""},
             status={"atype":str, "adef":"online"},

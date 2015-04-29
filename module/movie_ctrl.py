@@ -59,7 +59,7 @@ class MovieCtrl(object):
         return query
 
     def main(self, page_num=1, page_size=10, category="", directors="",
-             casts="", countries="", year=0, status="online", q=""):
+             casts="", countries="", year=0, status="online", q="", source=""):
         """
         获取电影列表
         """
@@ -70,6 +70,7 @@ class MovieCtrl(object):
         kwargs["casts"] = casts
         kwargs["status"] = status
         kwargs["countries"]=countries
+        kwargs["year"]=year
         kwargs["q"] = q
 
         total, desc = self.list(page_num=int(page_num), page_size=int(page_size),status=status, directors=directors,
@@ -84,7 +85,7 @@ class MovieCtrl(object):
             kwargs["len"] = len(desc)
             kwargs["total_num"] = total
             kwargs["page_total"] = total / int(page_size) if not total % int(page_size) else total / int(page_size) + 1
-        return r_status, desc, "list", kwargs
+        return r_status, desc, source, kwargs
 
     def list(self, page_num=1, page_size=10, status="online", q="", **kwargs):
         """
@@ -118,6 +119,7 @@ class MovieCtrl(object):
             r.pop("down_link", "")
             r["down_num"] = down_num
             r["category"] = [unicode_to_str(ca) for ca in r["category"]]
+            r["countries"] = [unicode_to_str(c) for c in r["countries"]]
             ans.append(r)
         return res.count(), ans
 

@@ -1,6 +1,6 @@
 <div class="panel panel-primary item-{{ item }}">
     <div class="panel-heading">
-        <h3 class="panel-title" id="panel-title"><a href="/movie/movie/subject?id={{ q.get('_id') }}">{{ q.get('title') }}</a></h3>
+        <h3 class="panel-title" id="panel-title"><a href="subject?id={{ q.get('_id') }}">{{ q.get('title') }}</a></h3>
     </div>
     <div class="panel-body media self-body-img">
         <div class="media-left media-middle">
@@ -8,12 +8,14 @@
         </div>
         <div class="media-body">
             <p>别名：{{ q.get('original_title') }}</p>
+            {% set countries = q.get('countries', []) %}
+            <p>地区：{% for c in countries %}<a href="countries?countries={{ c }}">{{ c }}</a> {% end %}</p>
             {% set category = q.get('category', []) %}
-            <p>类目: {% for ca in category %}<a href="#">{{ ca }}</a> {% end %}</p>
+            <p>类目: {% for ca in category %}<a href="category?category={{ ca }}">{{ ca }}</a> {% end %}</p>
             {% set directors = q.get('directors', []) %}
-            <p>导演: {% for d in directors %}<a href="#">{{ d }}</a> {% end %}</p>
+            <p>导演: {% for d in directors %}<a href="director?directors={{ d }}">{{ d }}</a> {% end %}</p>
             {% set casts = q.get('casts') %}
-            <p>主演: {% for c in casts %}<a href="#">{{ c }}</a> {% end %}</p>
+            <p>主演: {% for c in casts %}<a href="casts?casts={{ c }}">{{ c }}</a> {% end %}</p>
             <p class="media-heading">{{ q.get('summary') }}</p>
             <a class="btn btn-danger" href="javascript:;">
                 <i class="fa fa-flag pull-left"></i>豆瓣评分<br>{{ q.get('rating').get('average') }}</a>

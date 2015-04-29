@@ -1,0 +1,29 @@
+<div class="row" style="margin-right: 0px;">
+    <div class="container">
+        <div class="col-xs-6">
+            <div class="self-paginfo">
+                共{{ ans.get('total_num', 0) }}条数据
+            </div>
+        </div>
+        {% set current = ans.get('page_num', 1) %}
+        {% set total = ans.get('page_total', 1) %}
+        <div class="col-xs-6">
+            <div class="self-pagination">
+                <ul class="pagination">
+                    {%if current != 1 %}<li><a href="{{ url %(current-1) }}">上一页</a></li>{%end%}
+                    {%if current-3 > 1 %}<li><a href="{{ url %(1) }}">1</a></li>{%end%}
+                    {%if current-3 > 2 %}<li><a href="javascript:;">...</a></li>{%end%}
+                    {%for i in [i for i in range(current-3,current) if i > 0]%}
+                    <li><a href="{{ url %(i) }}">{{i}}</a></li>
+                    {%end%}
+                    <li class="active"><a href="javascript:;">{{current}}</a></li>
+                    {%for i in [i for i in range(current+1,current+4) if i <= total ]%}
+                    <li><a href="{{ url %(i) }}">{{i}}</a></li>
+                    {%end%}
+                    {%if current+3 < total %} <li><a href="javascript:;">...</a></li>{%end%}
+                    {%if current < total %} <li><a href="{{ url %(current+1) }}">下一页</a></li>{%end%}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

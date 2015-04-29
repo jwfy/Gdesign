@@ -3,11 +3,9 @@
 
 {% block content %}
     {% set ans = pyobject.get('result') %}
-    {% set category = ans.get('category', '') %}
-    {% set countrise = ans.get('countries', '') %}
-    {% set casts = ans.get('casts', '') %}
-    {% set directors = ans.get('directors', '') %}
-    {% set year = ans.get('year') %}
+    {% set source = ans.get('source') %}
+    {% set value = ans.get(source) %}
+
     {% set r_q = ans.get('q', '') %}
     {% set query = ans.get('query') %}
 
@@ -22,7 +20,6 @@
                 {% include front_base/breadcrumb.html %}
             </ol>
         </div>
-
         <div class="col-md-12">
             {% if not isinstance(query, list) %}
                 暂无数据
@@ -35,14 +32,20 @@
             {% end %}
         </div>
     </div>
+
     <div class="col-md-4 self-other-sidebar">
-            {% module Year() %}
-            {% module Hot() %}
-            {% module Comment() %}
+        {% module Year() %}
+        {% module Hot() %}
+        {% module Comment() %}
     </div>
 {% end %}
-        {% block page %}
 
-{% set url = '11%s' %}
-{% include page.html %}
-        {% end %}
+{% block page %}
+    {% set url = '/movie/movie/%s?' %(source) %}
+    {% if source != "list" %}
+        {% set url = url + "%s=%s" %(source, value) %}
+    {% end %}
+    {% set url = url + '&page_num=%s' %}
+
+    {% include front_page.html %}
+{% end %}
