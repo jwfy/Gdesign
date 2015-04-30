@@ -30,13 +30,22 @@ class comment(WebRequest):
             title={"atype":unicode, "adef":""}, 
             contain={"atype":unicode, "adef":""}, 
             category={"atype":str, "adef":"movie"}, 
-            ip={"atype":str, "adef":"127.0.0.1"},
             captcha={"atype":str, "adef":""},
+            source={"atype":int, "adef":""},
             _id={"atype":str, "adef":"0"}
         ):
         """
         添加评论,_id 为 mongo _id
+        source 为提交评论的来源
+        注： 如果为1 表示来自 前台 提交
+             否则是来自 后台 提交
         """
+        if source:
+            session_captcha = self._get_captcha_session()
+            if not session_captcha == captcha:
+                ans = self._return_ans("error", e, "comment_add")
+                return self._write(ans)
+
         ip = self._remote_ip()
         ans = {}
         try:

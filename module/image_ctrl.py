@@ -38,12 +38,12 @@ class ImageCtrl(object):
             self._logging.error(e)
             return None
     
-    def captcha_image(self, height=50, width=100):
+    def captcha_image(self, height=50, width=100, name=""):
         """
         生成验证码，然后返回url
         """
         try:
-            data, url = captcha(height, width)
+            data, url = captcha(height, width, name)
             return data, url
         except Exception as e:
-            return None
+            return None, None

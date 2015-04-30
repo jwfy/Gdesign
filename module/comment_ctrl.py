@@ -50,7 +50,7 @@ class CommentCtrl(object):
         cond = comment_t.category == category
         cond &= comment_t._id == _id
         cond &= comment_t.status == status
-        sort_style = Sort([(comment_t.id, Sort.desc)])
+        sort_style = Sort([(comment_t.time, Sort.desc), (comment_t.id, Sort.asc)])
         comment_model.sort(sort_style)
         if not comment_model.find(cond):
             self._logging.warn("未找到对应评论")

@@ -32,6 +32,19 @@ class WebRequest(SpuRequestHandler):
             return None
         self.session["user_id"] = username
 
+    def _get_captcha_session(self):
+        session = self.session
+        if not session:
+            return None
+        name = self.session.get("captcha", "movie")
+        return name
+
+    def _set_captcha_session(self, name="movie"):
+        session = self.session
+        if not session:
+            return None
+        self.session["captcha"] = name
+    
     def _remote_ip(self):
         return self.tornado.request.remote_ip
 

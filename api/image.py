@@ -18,9 +18,22 @@ class image(WebRequest):
     
     def captcha(self):
         """
-        获取验证码
+        获取验证码，写入session
+        NOTICE: data = "movie"
+                url = "http://7xib6a.com1.z0.glb.clouddn.com/captcha-2015-04-30-16:53:35" 
         """
-        pass
+        try:
+            data,url = image_ctrl.captcha_image()
+            if data:
+                self._set_captcha_session(data)
+            else:
+                self._set_captcha_session()
+                url = "http://7xib6a.com1.z0.glb.clouddn.com/captcha-2015-04-30-16:53:35"
+        except Exception as e:
+            self._logging.error(e)
+            self._set_captcha_session()
+            url = "http://7xib6a.com1.z0.glb.clouddn.com/captcha-2015-04-30-16:53:35"
+        return self._write(dict({"url":url}))
 
     @POST_FILE('file')
     def file(self, file):

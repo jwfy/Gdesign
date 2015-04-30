@@ -25,6 +25,6 @@ class Comment(SpuDBObject):
         self.contain = Field(str, "", 140)
         self.category = Field(str, "", 10)
         self.ip = Field(str, "", 20)
-        self._id = Field(str, "", 15)
+        self._id = Field(str, "", 30)
         self.status = Field(int, 0, 5)
         self.time = Field(datetime, SpuDateTime.current_time())

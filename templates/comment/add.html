@@ -21,14 +21,6 @@
                 <label for="contain">评论内容</label>
                 <textarea name="contain" type="text" class="form-control" id="contain" placeholder="输入评论内容"></textarea>
             </div>
-            {% if ans.get('len',-1) == -1 %}
-            <div class="form-group">
-                <label for="captcha">验证码</label>
-                <input name="captcha" type="text" class="form-control" id="captcha" placeholder="输入验证码">
-                <img src="#" title="点击刷新验证码" class="captcha-image"/>
-            </div>
-            {% end %}
-
         </div>
         <div class="box-footer">
             <button type="submit" class="btn btn-primary comment-add">提交评论</button>

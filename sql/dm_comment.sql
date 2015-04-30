@@ -8,7 +8,7 @@ create table `comment`(
     `time` datetime NOT NULL,
     `status` int(5) NOT NULL comment '评论状态，可以隐藏，显示',
     `ip` varchar(20) NOT NULL default "127.0.0.1" comment "发表评论的ip地址",
-    `_id` varchar(15) NOT NULL default "" comment "mongo 数据库 id字段",
+    `_id` varchar(30) NOT NULL default "" comment "mongo 数据库 id字段",
     primary key(`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

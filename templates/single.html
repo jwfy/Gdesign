@@ -31,6 +31,10 @@
         {% end %}
         <div class="col-md-12">
             {% set comment = query.get('comment') %}
+            {% include single/comment.html %}
+        </div>
+        <div class="col-md-12">
+            {% include single/add_comment.html %}
         </div>
     </div>
 
@@ -39,4 +43,61 @@
         {% module Hot() %}
         {% module Comment() %}
     </div>
+{% end %}
+{% block js %}
+<script>
+    $(function () {
+        $("#captcha").click(function(){
+            $.ajax({
+                url:"/image/image/captcha",
+                dataType: "json",
+                success:function(data){
+                    $("#captcha").attr("src", data["url"])
+                },
+                error:function(data, status, e){
+                    console.log("图片加载错误"+e);
+                    alert("验证码获取失败");
+                    /*
+                    $("#captcha").attr("src", data["url"])
+                    */
+                }
+            });
+            return false;
+        });
+        $("#captcha").trigger("click");
+
+        $(".comment-add").click(function(){
+            $.ajax({
+                url:"/comment/comment/add",
+                data:$("form").serialize(),
+                dataType: "json" ,
+                success: function(data){
+                    console.log(data);
+                    //debugger;
+                    if(data["status"] == "success"){
+                        var html = '<li class="item"> \
+                                        <div class="product-img">  \
+                                            <img src="dist/img/default-50x50.gif" alt="Product Image" style="width:50px; height: 50px;"> \
+                                        </div> \
+                                        <div class="product-info">  \
+                                           <a href="javascript:;" class="product-title">'+data['query']['name']+'<span class="label label-warning pull-right">'+data['query']['time']+'</span></a>   \
+                                            <span class="product-description">'+data['query']['contain']+' </span>  \
+                                        </div>  \
+                                    </li>';
+                        $(".comment-list").prepend(html);
+                    }
+                    else{
+                        //  这里我们需要刷新验证码
+                        $("#captcha").trigger("click");
+                        alert(data["query"]);
+                    }
+                },
+                error:function(data, status, e){
+                    alert(e);
+                }
+            });
+            return false;
+        });
+    });
+</script>
 {% end %}
