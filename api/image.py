@@ -19,20 +19,21 @@ class image(WebRequest):
     def captcha(self):
         """
         获取验证码，写入session
-        NOTICE: data = "movie"
-                url = "http://7xib6a.com1.z0.glb.clouddn.com/captcha-2015-04-30-16:53:35" 
+        NOTICE: data = "cap"
+                url = "http://7xib6a.com1.z0.glb.clouddn.com/cap"
+                验证码支持只小写
         """
         try:
             data,url = image_ctrl.captcha_image()
             if data:
-                self._set_captcha_session(data)
+                self._set_captcha_session(data.lower())
             else:
                 self._set_captcha_session()
-                url = "http://7xib6a.com1.z0.glb.clouddn.com/captcha-2015-04-30-16:53:35"
+                url = "http://7xib6a.com1.z0.glb.clouddn.com/cap"
         except Exception as e:
             self._logging.error(e)
             self._set_captcha_session()
-            url = "http://7xib6a.com1.z0.glb.clouddn.com/captcha-2015-04-30-16:53:35"
+            url = "http://7xib6a.com1.z0.glb.clouddn.com/cap"
         return self._write(dict({"url":url}))
 
     @POST_FILE('file')

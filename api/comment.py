@@ -43,7 +43,7 @@ class comment(WebRequest):
         if source:
             session_captcha = self._get_captcha_session()
             if not session_captcha == captcha:
-                ans = self._return_ans("error", e, "comment_add")
+                ans = self._return_ans("error", "验证码错误", "comment_add")
                 return self._write(ans)
 
         ip = self._remote_ip()

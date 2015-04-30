@@ -67,6 +67,36 @@
         $("#captcha").trigger("click");
 
         $(".comment-add").click(function(){
+            var re_email = /^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/;
+            var name = $("input[name='name']");
+            var email = $("input[name='email']");
+            var content = $("textarea");
+            var captcha = $("input[name='captcha']");
+            if(!name.val()){
+               // alert("请输入昵称");
+                name.focus().select();
+                return false;
+            }
+            if(!email.val()){
+               // alert("请输入邮箱地址");
+                email.focus().select();
+                return false;
+            }
+            if(!captcha.val()){
+              //  alert("请输入验证码");
+                captcha.focus().select();
+                return false;
+            }
+            if(!content.val()){
+              //  alert("请输入评论内容");
+                content.focus().select();
+                return false;
+            }
+            if(!re_email.test(email.val())){
+                alert("输入有效的邮箱地址");
+                $("input[name='email']").focus().select();
+                return false;
+            }
             $.ajax({
                 url:"/comment/comment/add",
                 data:$("form").serialize(),
@@ -85,6 +115,12 @@
                                         </div>  \
                                     </li>';
                         $(".comment-list").prepend(html);
+                        name.val("");
+                        email.val("");
+                        captcha.val("");
+                        content.val("");
+                        $("html,body").animate({scrollTop:$(".comment").offset().top},1000);
+                        $("#captcha").trigger("click");
                     }
                     else{
                         //  这里我们需要刷新验证码

@@ -43,7 +43,7 @@ class ImageCtrl(object):
         生成验证码，然后返回url
         """
         try:
-            data, url = captcha(height, width, name)
+            data, url = captcha(height, width, name="")
             return data, url
         except Exception as e:
             return None, None

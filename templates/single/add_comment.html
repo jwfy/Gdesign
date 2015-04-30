@@ -14,20 +14,20 @@
                     <input type="hidden" name="source" value="1"/>
                     <div class="form-group">
                         <label>昵称</label>
-                        <input name="name" type="text" class="form-control" placeholder="输入昵称" required>
+                        <input name="name" type="text" class="form-control" placeholder="输入昵称（以字母开头,字母、数字、下划线组合，长度为4-16位）" required>
                     </div>
                     <div class="form-group">
                         <label>邮箱地址</label>
-                        <input name="email" type="email" class="form-control" placeholder="输入邮箱地址" required>
+                        <input name="email" type="email" class="form-control" placeholder="输入有效的邮箱地址" required>
                     </div>
                     <div class="form-group">
                         <label>验证码</label>
                         <img src="#" style="width: 120px; height: 50px;" id="captcha">
-                        <input name="captcha" class="form-control" placeholder="请输入验证码" required>
+                        <input name="captcha" type="text" class="form-control" placeholder="请输入验证码（忽略英文大小）" required>
                     </div>
                     <div class="form-group">
                         <label>评论内容</label>
-                        <textarea name="contain" class="form-control" id="contain" placeholder="输入评论内容" required></textarea>
+                        <textarea name="contain" class="form-control" id="contain" placeholder="输入评论内容（长度为140字以内、不支持html模式）" required></textarea>
                     </div>
                 </div>
                 <div class="box-footer">
