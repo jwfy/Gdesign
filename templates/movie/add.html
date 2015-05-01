@@ -47,7 +47,7 @@
                 return false;
             }
             $.ajax({
-                url:"/movie/movie/re_add",
+                url:"/main/re/add",
                 data:{"title":$("input[name='title']").val(),
                     "_id":$("input[name='_id']").val(),
                     "img_url":$("input[name='image']").val()},
@@ -56,8 +56,14 @@
                     console.log(data);
                     //debugger;
                     if(data["status"] == "success"){
-                        alert("首页推荐成功");
-                        //window.close()
+                        alert("首页推荐成功,五秒钟后返回到推荐首页");
+                        var time = 6;
+                        setInterval(function(){
+                            time -= 1;
+                            if(time <= 0){
+                                location.href="/main/re/list";
+                            }
+                        },1000);
                     }
                     else
                         alert(data["query"]);

@@ -156,6 +156,7 @@ class MovieCtrl(object):
         if not status:
             return 0, "没有设置更新状态"
         for _id in _ids:
+            _id = unicode_to_str(_id) if isinstance(_id, unicode) else str(_id)
             _id = ObjectId(_id)
             try:
                 self.collection.update({"_id":_id}, {"$set":{"status":status}})
@@ -164,19 +165,37 @@ class MovieCtrl(object):
                 return 0, e
         return 1,"更新状态成功"
 
-    def update(self, _id="", **kwargs):
+    def update(self, _id="", source="add", pos="", **kwargs):
         """
         更新电影具体的信息
         """
         if not _id:
             self._logging.error("更新数据失败--没有此数据")
             return 0, "无数据"
-        for k,v in kwargs:
-            # TODO 这里需要对格式进行检测
+        query = {}
+        for k,v in kwargs.iteritems():
+            if isinstance(v, unicode):
+                v = unicode_to_str(v)
             query[k] = v
+        q = {}
+        q_run = {}
+        find_query = {}
+        find_query["_id"] = ObjectId(_id)
+        if source == "add":
+            q["down_link"] = query
+            q_run["$addToSet"] = q
+        elif source == "delete":
+            q["down_link"] = query
+            q_run["$pull"] = q
+        else:
+            # 更改下载地址
+            pos = unicode_to_str(pos)
+            find_query["down_link"] = json.loads(pos)
+            q["down_link.$"] = query
+            q_run["$set"] = q
         try:
-            self.collection.update({"_id":ObjectId(_id)}, {"$set":query})
-            return 1, "更新数据成功"
+            self.collection.update(find_query,q_run)
+            return 1, source
         except Exception as e:
             self._logging.error(e)
             return 0, e

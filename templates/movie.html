@@ -20,15 +20,15 @@
             <div class="box-body">
                 <div class="row" style="margin-bottom: 10px">
                     <div class="col-xs-6">
-                        <button class="btn btn-default btn-sm checkbox-toggle" title="全选/全不选"><i class="fa fa-square-o"></i></button>
+                        <button class="btn btn-default btn-sm checkbox-toggle" title="全选/全不选"><i class="fa fa-square-o">选择</i></button>
                         <div class="btn-group">
-                            <button class="btn btn-default btn-sm iremove" title="下线"><i class="fa fa-remove"></i></button>
-                            <button class="btn btn-default btn-sm inormal" title="上线"><i class="fa fa-bars"></i></button>
+                            <button class="btn btn-default btn-sm iremove" title="下线"><i class="fa fa-remove">下线</i></button>
+                            <button class="btn btn-default btn-sm inormal" title="上线"><i class="fa fa-check">上线</i></button>
                         </div>
                     </div>
-                    <form class="col-xs-3" style="float: right" role="search" method="post" action="/movie/movie/list">
+                    <form class="col-xs-3" style="float: right" role="search" method="post" action="/main/movie/list">
                         <div class="has-feedback">
-                            <input type="text" class="form-control input-sm" name="Q" placeholder="查找电影"/>
+                            <input type="text" class="form-control input-sm" name="q" placeholder="查找电影"/>
                             <input type="hidden" name="csrf_code" value="1234"/>
                             <span class="fa fa-search form-control-feedback"></span>
                         </div>
@@ -80,9 +80,10 @@
             ajax_status(ids, status);
         });
         function ajax_status(ids, status){
+            debugger;
             $.ajax({
                 url:"/main/movie/update_status",
-                data:{"ids":JSON.stringify(ids), "status":status},
+                data:{"_ids":JSON.stringify(ids), "status":status},
                 dataType: "json" ,
                 success: function(data){
                     console.log(data);

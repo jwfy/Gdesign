@@ -222,6 +222,45 @@ def check_mongo_id(_id):
         return True
     return False
 
+def update_down_format(id=""):
+    """
+    NOTICE time: 2015-05-01  修改存储格式 
+    由于之前存储的数据格式过于复杂，现在修改为
+    [{},{},{size='', url='', name=''}]
+    """
+    if not _Collection:
+        mongo_init()
+    try:
+        if not id:
+            rets = _Collection.find()
+        else:
+            rets = _Collection.find({"_id":ObjectId(id)})
+        num = 0
+        for ret in rets:
+            _id = ret["_id"]
+            down = ret.get("down_link","")
+            if not down:
+                # 这是没有下载链接的
+                continue
+            flag = down[0].get("hot", "")
+            if not flag:
+                # 说明了已经是处理的了
+                continue
+            num += 1
+            down_list = []
+            for do in down:
+                size = do["size"]
+                for k, v in do["link"].iteritems():
+                    d_dict = {}
+                    d_dict["size"] = size
+                    d_dict["name"] = k
+                    d_dict["url"] = v
+                    down_list.append(d_dict)
+            _Collection.update({"_id":_id},{"$set":{"down_link":down_list}})
+            print "["+str(num)+"]"+"成功转换下载格式   "+str(_id)
+    except Exception as e:
+        print(e)
+
 def write_to_mongo(id):
     """
     dict store to mongo
@@ -265,10 +304,11 @@ def main():
 if __name__ == "__main__":
     import ipdb
     ipdb.set_trace()
-    id = "552758a9e206a514e2257ac5"
-    check_mongo_id(id)
+    #id = "552758a9e206a514e2257ac5"
+    #check_mongo_id(id)
     #read_top_250()
     #main()
     #douban_to_dict(1764796)
     #title = "超能陆战队"
     #downlink_to_list(title)
+    update_down_format()

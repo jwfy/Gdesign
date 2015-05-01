@@ -3,7 +3,7 @@
     <input type="hidden" name="title" value="{{ qe.get('title', '') }}" />
     <td><input type="checkbox" data-id="{{ qe.get('_id','') }}"></td>
     <td class="image"><img src="{{ qe.get('image').get('small') }}" title="电影剧照"></td>
-    <td class="title"><a href="/movie/movie/re_add?title={{ qe.get('title', '') }}&_id={{ qe.get('_id','') }}" target="_blank">{{ qe.get('title', '') }}</a></td>
+    <td class="title"><a href="/main/movie/subject?id={{ qe.get('_id','') }}" target="_blank" title="点击查看详情">{{ qe.get('title', '') }}</a></td>
     {% set category = qe.get('category', []) %}
     <td class="douban_category">{% for ca in category %}{{ ca }} {% end %}</td>
     <td class="douban_year">{{ qe.get('year', '') }}</td>
@@ -17,5 +17,8 @@
         {% else %}
         <span class="label label-danger">下线</span>
         {% end %}
+    </td>
+    <td class="deal">
+        <a href="/main/re/add?title={{ qe.get('title', '') }}&_id={{ qe.get('_id','') }}" target="_blank">添加至首页</a>
     </td>
 </tr>

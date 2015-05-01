@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+{% block active3 %}active{% end %}
+{% block title %}电影详情{% end block %}
+{% block content-head %}电影详情{% end block %}
+{% block content %}
+{% set ans = pyobject.get('result') %}
+{% set query = ans.get('contain') %}
+{% set q = ans.get('status', '') %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title">电影详情-{% if q == 'success' %}{{ query.get('title') }}{% else %}无{% end %}</h3>
+            </div>
+            {% if q == "success" %}
+                {% set rating = query.get('rating') %}
+                {% set aka = query.get('aka', []) %}
+                {% set countries = query.get('countries', []) %}
+                {% set category = query.get('category', []) %}
+                {% set directors = query.get('directors', []) %}
+                {% set casts = query.get('casts') %}
+                <div class="panel-body media self-body-img">
+                    <div class="media-left media-middle">
+                        <img class="media-object" src="{{ query.get('image').get('large') }}" alt="{{ query.get('title') }}">
+                    </div>
+                    <div class="media-body subject">
+                        <input class="id" type="hidden" value="{{ query.get('_id') }}"/>
+                        <p>别名：{% for a in aka %}{{ a }} |{% end %}</p></p>
+                        <p>时间：{{ query.get('year') }}</p>
+                        <p>地区：{% for c in countries %}<a href="/movie/movie/countries?countries={{ c }}" target="_blank">{{ c }}</a> {% end %}</p>
+                        <p>类目：{% for ca in category %}<a href="/movie/movie/category?category={{ ca }}" target="_blank">{{ ca }}</a> {% end %}</p>
+                        <p>导演：{% for d in directors %}<a href="/movie/movie/directors?directors={{ d }}" target="_blank">{{ d }}</a> {% end %}</p>
+                        <p>主演：{% for c in casts %}<a href="/movie/movie/casts?casts={{ c }}" target="_blank">{{ c }}</a> {% end %} </p>
+                        <p class="media-heading">{{ query.get('summary') }}</p>
+                    </div>
+                </div>
+                {% set down = query.get('down_link', '') %}
+                {% include movie/down.html %}
+            {% else %}
+                暂无数据
+            {% end %}
+        </div>
+    </div>
+</div>
+{% end %}
+{% block js %}
+<script>
+$(function(){
+
+    function ajax_status(data, fun){
+        $.ajax({
+            url:"/main/movie/update",
+            data:data,
+            dataType: "json" ,
+            success: function(data){
+                console.log(data);
+                if(data["status"] == "success"){
+                    console.log(1111);
+                    fun(data);
+                    //  fun 为回调函数
+                }
+                else
+                    alert(data["query"]);
+            },
+            error:function(data, status, e){
+                alert(e);
+            }
+        });
+        return false;
+    }
+
+    $(".down-delete").click(function(){
+        var _id = $(".id").val();
+        debugger;
+        var _this = $(this).parents(".down");
+        var name = _this.find(".name").html();
+        var url = _this.find(".url").html();
+        var size = _this.find(".size").html();
+        var source = "delete";
+
+        function fun(data){
+            alert("删除链接成功");
+            $(_this).remove();
+        }
+        var data = new Object();
+        data["_id"] = _id;
+        data["name"] = name;
+        data["url"] = url;
+        data["size"] = size;
+        data["source"] = source;
+        ajax_status(data, fun);
+        return false;
+    });
+
+    var o_this = "";
+
+    $(".down-update").click(function(){
+        var _id = $("input[name='_id']").val();
+        var name = $(this).parents(".down").find(".name").html();
+        var url = $(this).parents(".down").find(".url").html();
+        var size = $(this).parents(".down").find(".size").html();
+        var source = "update";
+        $("#add").val(source);
+        $("#name").val(name);
+        $("#url").val(url);
+        $("#size").val(size);
+        var pos = new Object();
+        pos["name"] = name;
+        pos["url"] = url;
+        pos["size"] = size;
+        $("#pos").val(JSON.stringify(pos));
+        o_this = $(this).parents(".down");
+    });
+
+    $(".down-submit").click(function(){
+        var name = $("#name").val();
+        var url = $("#url").val();
+        var size = $("#size").val();
+        var o_data = $(".down-add-form").serialize();
+        function fun(data){
+            console.log(data);
+            var deal = data["query"];
+            if(deal == "add"){
+                var cla = "";
+                if(name == "迅雷下载"){
+                    cla = "info";
+                }
+                else if(name == "磁力链接"){
+                    cla = "warning";
+                }
+                else{
+                    cla = "success";
+                }
+                var html = '<tr class="down-new down"> \
+                        <td><span class="label label-'+cla+'">'+name+'</span></td> \
+                            <td class="url">'+url+'</td> \
+                            <td class="size">'+size+'</td> \
+                            <td><a href="javascript:;" title="删除下载" class="down-delete">删除</a></td> \
+                            <td><a href="javascript:;" data-toggle="modal" data-target="#myModal" title="修改下载" class="down-update">修改</a></td> \
+                </tr>';
+                $(".down-all").append(html);
+            }else if(deal == "update"){
+                //alert("更新成功");
+                debugger;
+                $(o_this).find(".name").html(name);
+                $(o_this).find(".url").html(url);
+                $(o_this).find(".size").html(size);
+            }
+            //  重置 原始数据
+            $("#pos").val("");
+            $("#add").val("");
+            $('#myModal').modal('hide')
+        }
+        ajax_status(o_data, fun);
+        return false;
+    });
+});
+</script>
+{% end %}

@@ -57,7 +57,6 @@ class movie(WebRequest):
             year={"atype":int, "adef":0},
             status={"atype":str, "adef":""},
             q={"atype": unicode, "adef":""},
-            csrf_code={"atype":str, "adef":""},
         ):
         """
         获取列表，通过上述条件进行筛选
@@ -70,10 +69,6 @@ class movie(WebRequest):
         kwargs["status"] = status
         kwargs["countries"]=countries
         kwargs["q"] = q
-        if q and csrf_code != "1234":
-            self._logging.error("非法查询操作")
-            ans = self._return_ans("error", "非法查询","search", kwargs)
-            return self._write(ans)
         total, desc = movie_ctrl.list(page_num=int(page_num), page_size=int(page_size),status=status, directors=directors,
                 casts=casts, category=category, countries=countries, year=int(year), q=q)
 
@@ -99,9 +94,12 @@ class movie(WebRequest):
         """
         更新电影的状态
         """
+        import ipdb
+        ipdb.set_trace()
+        # 状态传输错误
         ans = {}
         ids = json.loads(_ids)
-        r,desc = movie_ctrl.update_status(_ids=_ids, status=status)
+        r,desc = movie_ctrl.update_status(_ids=ids, status=status)
         if not r:
             r_status = "error"
         else:
@@ -113,14 +111,23 @@ class movie(WebRequest):
     @POST
     def update(self,
             _id={"atype":str, "adef":""},
-            down_link={"atype":unicode, "adef":""}
+            size={"atype":str, "adef":""},
+            pos={"atype":unicode, "adef":-1},
+            name={"atype":unicode, "adef":""},
+            url={"atype":str, "adef":""},
+            source={"atype":str, "adef":""}
         ):
         """
-        更新具体的电影信息
-        NOTICE 只是提供修改下载链接
+        具体的电影信息操作
+        根据source 的值 进行不同操作
+        NOTICE: source 值
+            "add"  添加电影下载地址
+            "delete" 删除电影下载地址
+            "update" 修改电影下载地址
         """
         ans = {}
-        r, desc = movie_ctrl.update(_id=_id, down_link=down_link)
+        r, desc = movie_ctrl.update(_id=_id, source=source, pos=pos, size=size, 
+                name=name, url=url)
         if not r:
             r_status = "error"
         else:
@@ -128,6 +135,18 @@ class movie(WebRequest):
         ans = self._return_ans(r_status, desc, "update")
         return self._write(ans)
 
+    def subject(self, id={"atype":str, "adef":""}):
+        """
+        查看具体的电影详情
+        """
+        res = movie_ctrl.get(_id=id)
+        ans = {}
+        if not res:
+            self._logging.warn("没有相关电影信息"+id)
+            ans = self._return_ans("failure", "暂无数据", "subject")
+        else:
+            ans = self._return_ans("success", "成功获取数据", "subject", dict(contain=res))
+        return self._html_render("item.html", ans)
 
 class re(WebRequest):
     _logging = SpuLogging(module_name="main", class_name="re")

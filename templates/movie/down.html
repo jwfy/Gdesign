@@ -1,0 +1,84 @@
+<div class="panel-body media">
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">下载链接  <a class="down-add" data-toggle="modal" data-target="#myModal">添加下载地址</a> </h3>
+        </div>
+        <div class="box-body table-responsive no-padding">
+            <table class="table table-hover">
+                <tbody class="down-all">
+                <tr>
+                    <th>下载出处</th>
+                    <th>下载地址</th>
+                    <th>大小</th>
+                    <th>删除</th>
+                    <th>修改</th>
+                </tr>
+                {% if down %}
+                    {% set num = 0 %}
+                    {% for d in down %}
+                        {% set dk = d.get('name') %}
+                        {% set sz = d.get('size') %}
+                        {% set dl = d.get('url') %}
+                        {% if dk == u"迅雷下载" %}
+                            {% set cla = "info" %}
+                        {% elif dk == u"磁力链接" %}
+                            {% set cla = "warning" %}
+                        {% else %}
+                            {% set cla = "success" %}
+                        {% end %}
+                        <tr class="down-{{ num }} down">
+                            <td><span class="label label-{{ cla }} name">{{ dk }}</span></td>
+                            <td class="url">{{ dl }}</td>
+                            <td class="size">{{ sz }}</td>
+                            <td><a href="javascript:;" title="删除下载" class="down-delete">删除</a></td>
+                            <td><a href="javascript:;" data-toggle="modal" data-target="#myModal" title="修改下载" class="down-update">修改</a></td>
+                        </tr>
+                        {% set num = num + 1 %}
+                    {% end %}
+                {% else %}
+                    暂无下载链接
+                {% end %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">下载链接</h4>
+            </div>
+            <form class="down-add-form">
+                <div class="modal-body">
+                    <input type="hidden" name="_id" id="_id" value="{{ query.get('_id') }}"/>
+                    <!--
+                    <input type="hidden" name="or_name" id="or_name"  />
+                    <input type="hidden" name="or_url" id="or_url"/>
+                    <input type="hidden" name="or_size" id="or_size" />
+                    -->
+                    <input type="hidden" name="pos" id="pos"/>
+                    <input type="hidden" name="source" id="add" value="add"/>
+                    <div class="form-group">
+                        <label for="name" class="control-label">来源</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="填写‘迅雷下载’或‘磁力链接’">
+                    </div>
+                    <div class="form-group">
+                        <label for="url" class="control-label">url</label>
+                        <input type="text" class="form-control" id="url" name="url" placeholder="填写下载的url地址’">
+                    </div>
+                    <div class="form-group">
+                        <label for="size" class="control-label">大小</label>
+                        <input type="text" class="form-control" id="size" name="size" placeholder="填写链接下载大小，如2GB、781MB’">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary down-submit">提交</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
