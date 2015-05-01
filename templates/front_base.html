@@ -17,11 +17,26 @@
     </div>
 
 {% block page %}{% end %}
+{% block top_foot %}
+<div class="toToptoFoot">
+    <div class="totop" title="返回顶部"><span class="fa fa-arrow-circle-up fa-2x" style="line-height: 50px;"></span></div>
+    <div class="tofoot" title="返回底部"><span class="fa fa-arrow-circle-down fa-2x" style="line-height: 50px;"></span></div>
+</div>
+{% end %}
 {% include front_base/foot.html %}
 <script type="text/javascript" src="/static/js/jquery-1.9.1.js"></script>
 <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/static/js/app.min.js"></script>
-
+{% block top_foot_js %}
+<script>
+    $(".totop").click(function(){
+        $("body,html").animate({scrollTop:0},400);
+    });
+    $(".tofoot").click(function(){
+        $("body,html").animate({scrollTop:$(document).height()},400);
+    });
+</script>
+{% end %}
 {% block js %}{% end %}
 </body>
 </html>

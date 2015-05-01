@@ -10,9 +10,19 @@
                     {% set dl = d.get('link') %}
                     {% set sz = d.get('size') %}
                     {% for dk, dv in dl.iteritems() %}
-                    <a href="{{ dv }}" target="_blank" class="list-group-item">
-                        <p>【{{ sz }}】{{ dv }}</p>
-                        <span class="label label-info">{{ dk }}</span>
+                    <a href="{{ dv }}" target="_blank" class="list-group-item" title="点击下载">
+                        <p>
+                            <span class="label label-primary">{{ sz }}</span>
+                            {% if dk == u"迅雷下载" %}
+                                {% set cla = "info" %}
+                            {% elif dk == u"磁力链接" %}
+                                {% set cla = "warning" %}
+                            {% else %}
+                                {% set cla = "success" %}
+                            {% end %}
+                            <span class="label label-{{ cla }}">{{ dk }}</span>
+                        </p>
+                        <p>{{ dv }}</p>
                     </a>
                     {% end %}
                 {% end %}

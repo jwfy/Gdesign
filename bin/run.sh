@@ -5,7 +5,7 @@ warn () {
         exit 0
         }
 
-VERSION='0.1'
+VERSION='0.1.10'
 usage()
 {
     echo "Usage: $0 command module [localdev_name] num"

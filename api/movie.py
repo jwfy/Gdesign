@@ -321,20 +321,15 @@ class movie(WebRequest):
     def search(self, page_num={"atype":int, "adef":1}, 
             page_size={"atype":int, "adef":10},
             q={"atype":unicode, "adef":""},
-            csrf_code={"atype":str, "adef":""}
         ):
         """
         搜索
         """
         ans = {}
-        if csrf_code != "1234":
-            self._logging.error("非法查询操作")
-            ans = self._return_ans("error", "非法查询","search")
-            return self._write(ans)
         if not q:
             self._logging.warn("没有输入有效搜索内容")
             return self.tornado.redirect("/movie/movie/list")
-        ans = movie_ctrl.main(page_num=int(page_num), page_size=int(page_size), q=q, source="list")
+        ans = movie_ctrl.main(page_num=int(page_num), page_size=int(page_size), q=q, source="search")
         ans = self._return_ans(ans[0], ans[1], ans[2], ans[3])
         return self._html_render("front_movie.html", ans)
 
@@ -402,10 +397,13 @@ class movie(WebRequest):
         if api_type == "json" and token == API_TOKEN:
             return self._write(ans)
         return self._html_render("single.html", ans)
-    
-    def about(self):
-        return self._html_render("about.html", {})
 
+    def p404(self):
+        return self._html_render("404.html", {})
+
+    def p500(self):
+        return self._html_render("500.html", {})
+    
     @check_login()
     @POST
     def update_status(self, 

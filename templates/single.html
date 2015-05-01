@@ -114,7 +114,10 @@
                                             <span class="product-description">'+data['query']['contain']+' </span>  \
                                         </div>  \
                                     </li>';
-                        $(".comment-list").prepend(html);
+                        var comment_list = $(".comment-list");
+                        if(comment_list.find(".item").length <= 0)
+                            comment_list.html("");
+                        comment_list.prepend(html);
                         name.val("");
                         email.val("");
                         captcha.val("");

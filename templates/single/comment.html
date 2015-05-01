@@ -3,16 +3,18 @@
         <input type="hidden" name="_id" value="{{ query.get('_id') }}"/>
         <h3 class="panel-title" id="panel-title">评论</h3>
     </div>
-    <div class="panel-body media comment">
+    <div class="panel-body media comment" id="comment">
         <div class="media-body">
-            {% if not comment %}
-                暂无评论 <a href="#add-comment">添加评论</a>
-            {% else %}
-                <ul class="products-list product-list-in-box comment-list">
+            <ul class="products-list product-list-in-box comment-list">
+                {% if not comment %}
+                    <div class="no-comment">
+                        暂无评论 <a href="#add-comment">添加评论</a>
+                    </div>
+                {% else %}
                     {% for c in comment %}
                     <li class="item">
                         <div class="product-img">
-                            <img src="dist/img/default-50x50.gif" alt="Product Image" style="width:50px; height: 50px;">
+                            <img src="http://7xib6a.com1.z0.glb.clouddn.com/edae6efc5dc7bd083322d9b12a51e0ee.png" alt="默认头像" style="width:50px; height: 50px;">
                         </div>
                         <div class="product-info">
                             <a href="javascript:;" class="product-title">{{ c.get('name') }}<span class="label label-warning pull-right">{{ c.get('time') }}</span></a>
@@ -22,8 +24,8 @@
                         </div>
                     </li>
                     {% end %}
-                </ul>
-            {% end %}
+                {% end %}
+            </ul>
         </div>
     </div>
 </div>

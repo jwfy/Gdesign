@@ -104,6 +104,7 @@ class MovieCtrl(object):
             q = unicode_to_str(q) if isinstance(q , unicode) else str(q)
             or_list = [{"category":q}, {"countries":q}, {"casts":q}, {"directors":q}]
             or_list.append({"summary":{"$regex":q}})
+            or_list.append({"title":{"$regex":q}})
             query["$or"] = or_list
         res = self.collection.find(query).limit(page_size) \
                 .skip((page_num-1)*page_size).sort([("year", DESCENDING), ("rating.average", DESCENDING)])

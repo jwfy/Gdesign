@@ -1,7 +1,7 @@
 {% extends front_base.html %}
 {% block title %}首页{% end block %}
 {% block content-head %}{% end %}
-
+{% block sidebar-bottom%}style="margin-bottom:0px;"{% end %}
 {% block content %}
 {% set query = pyobject.get('result').get('query', '') %}
 {% if not isinstance(query, list) %}
@@ -30,10 +30,11 @@
             {% set image = q.get('img') %}
             {% set title = q.get('title') %}
             {% set summary = q.get('movie').get('summary') %}
+            {% set id = q.get('_id') %}
             <div class="item {{ act }}">
                 <img src="{{ image }}" title="点击查看" style="width: 100%;height: 600px;"/>
                 <div class="carousel-caption index-font">
-                    <h3>{{ title }}</h3>
+                    <h3>{{ title }}<small>  <a href="/movie/movie/subject?id={{ id }}">点击查看更多</a></small></h3>
                     <p>{{ summary }}</p>
                 </div>
             </div>
@@ -41,12 +42,14 @@
     </div>
     <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
         <span class="fa fa-chevron-left glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
+        <span class="sr-only">上一篇</span>
     </a>
     <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
         <span class="fa fa-chevron-right glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
+        <span class="sr-only">下一篇</span>
     </a>
 </div>
 {% end %}
 {% end %}
+{% block top_foot %}{% end %}
+{% block top_foot_js %}{% end %}

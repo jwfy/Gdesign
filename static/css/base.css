@@ -72,3 +72,31 @@ p.media-heading {
     overflow-x: hidden;
     overflow-y: auto;
 }
+
+.toToptoFoot{
+    position:fixed;
+    width:50px;
+    right:22.5px;
+    bottom:101px;
+}
+
+.totop,.tofoot {
+    width:50px;
+    height:50px;
+    right:22.5px;
+    opacity:0.4;
+    cursor:pointer;
+    bottom:101px;
+    float:left;
+    margin-bottom:5px;
+    display:block;
+    background-color:rgb(60,141,188);
+    color:#ffffff;
+    font-size:18px;
+    line-height:50px;
+    padding-left:10px;
+    border-radius: 3px;
+}
+.totop:hover,.tofoot:hover{
+    opacity:1;
+}
