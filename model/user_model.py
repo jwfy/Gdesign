@@ -17,7 +17,7 @@ class User(SpuDBObject):
     _table_ = "user"
 
     def __init__(self, spudb, spucache, debug):
-        SpuDBObject.__inti__(self, User._table_, spudb, spucache, debug=debug)
+        SpuDBObject.__init__(self, User._table_, spudb, spucache, debug=debug)
         self.id = Field(int, 0, 5, auto_inc=True)
         self.name = Field(str, "", 20)
         self.email = Field(str, "", 50)

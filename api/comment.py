@@ -71,7 +71,8 @@ class comment(WebRequest):
             self._logging.error(e)
             ans = self._return_ans("error", e, "comment_add")
         return self._write(ans)
-
+    
+    @check_login()
     @POST
     def list(self, page_num={"atype":int, "adef":1},
             page_size={"atype":int, "adef":20},
@@ -109,10 +110,6 @@ class comment(WebRequest):
                 kwargs['len'] = len(query)
                 kwargs['page_num'] = page_num
                 kwargs['page_total'] = total / int(page_size) if not total % int(page_size) else total / int(page_size) + 1
-                #if total % int(page_size) == 0:
-                #    kwargs['page_total'] = total / int(page_size)
-                #else:
-                #    kwargs['page_total'] = total / int(page_size) + 1
             ans = self._return_ans(status, query, "comment_list", kwargs)
         except Exception as e:
             self._logging.error(e)

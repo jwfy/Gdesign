@@ -23,14 +23,14 @@ class WebRequest(SpuRequestHandler):
         session = self.session
         if not session:
             return None
-        user_id = self.session.get("user_id", 0)
-        return user_id
+        user = self.session.get("user", (0,0,0))
+        return user
 
-    def _set_user_session(self, username):
+    def _set_user_session(self, user=(0,0,0)):
         session = self.session
         if not session:
             return None
-        self.session["user_id"] = username
+        self.session["user"] = user
 
     def _get_captcha_session(self):
         session = self.session
@@ -64,10 +64,16 @@ def check_login(permission=1):
     def wrap(func):
         @UOM_WRAPS(func)
         def f(self, *args, **kwargs):
-            user_name = self._get_user_session()
-            if not user_name:
+            user = self._get_user_session()
+            if not user[0]:
                 self._logging.warn("未登录，请先登录")
                 return self._redirect("/user/user/login")
+            if user[1] < 10:
+                self._logging.warn("用户状态导致，不能登录")
+                return self._redirect("/user/user/login")
+            if user[2] < permission:
+                self._logging.warn("权限不足，无法访问")
+                return self._html_render("limit.html", {})
             return func(self, *args, **kwargs)
         return f
     return wrap
