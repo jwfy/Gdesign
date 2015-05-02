@@ -71,12 +71,12 @@
     $(function () {
         $(".inormal").click(function(){
             var ids = icheck_function($(".removie-table"));
-            var status = 1;
+            var status = "online";
             ajax_status(ids, status);
         });
         $(".iremove").click(function(){
             var ids = icheck_function($(".removie-table"));
-            var status = 2;
+            var status = "offline";
             ajax_status(ids, status);
         });
         function ajax_status(ids, status){

@@ -7,21 +7,22 @@
                 <img class="media-object" src="{{ q.get('image').get('large') }}" alt="{{ q.get('title') }}">
         </div>
         <div class="media-body">
+            {% set url = '/movie/movie/subject?id=' + q.get('_id') %}
             <p>别名：{{ q.get('original_title') }}</p>
             {% set countries = q.get('countries', []) %}
             <p>地区：{% for c in countries %}<a href="countries?countries={{ c }}">{{ c }}</a> {% end %}</p>
             {% set category = q.get('category', []) %}
-            <p>类目: {% for ca in category %}<a href="category?category={{ ca }}">{{ ca }}</a> {% end %}</p>
+            <p>类目：{% for ca in category %}<a href="category?category={{ ca }}">{{ ca }}</a> {% end %}</p>
             {% set directors = q.get('directors', []) %}
-            <p>导演: {% for d in directors %}<a href="directors?directors={{ d }}">{{ d }}</a> {% end %}</p>
+            <p>导演：{% for d in directors %}<a href="directors?directors={{ d }}">{{ d }}</a> {% end %}</p>
             {% set casts = q.get('casts') %}
-            <p>主演: {% for c in casts %}<a href="casts?casts={{ c }}">{{ c }}</a> {% end %}</p>
+            <p>主演：{% for c in casts %}<a href="casts?casts={{ c }}">{{ c }}</a> {% end %}</p>
             <p class="media-heading">{{ q.get('summary') }}</p>
             <a class="btn btn-danger" href="javascript:;">
                 <i class="fa fa-flag pull-left"></i>豆瓣评分<br>{{ q.get('rating').get('average') }}</a>
-            <a class="btn btn-warning" href="javascript:;">
+            <a class="btn btn-warning" href="{{ url }}#down-all">
                 <i class="fa fa-cloud-download pull-left"></i>下载链接<br>{{ q.get('down_num') }}</a>
-            <a class="btn btn-info" href="javascript:;">
+            <a class="btn btn-info" href="{{ url }}#comment-all">
             {% set comment = q.get('comment_num') %}
                 {% if not comment %}
                     {% set comment_desc = "暂无评论"%}

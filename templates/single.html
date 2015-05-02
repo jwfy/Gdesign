@@ -25,15 +25,15 @@
         </div>
         {% set down = query.get('down_link', '') %}
         {% if down %}
-        <div class="col-md-12">
+        <div class="col-md-12" id="down-all">
             {% include single/down.html %}
         </div>
         {% end %}
-        <div class="col-md-12">
+        <div class="col-md-12" id="comment-all">
             {% set comment = query.get('comment') %}
             {% include single/comment.html %}
         </div>
-        <div class="col-md-12">
+        <div class="col-md-12" id="add_comment-all">
             {% include single/add_comment.html %}
         </div>
     </div>

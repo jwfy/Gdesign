@@ -33,14 +33,25 @@ class movie(WebRequest):
         """
         添加电影数据
         NOTICE： 通过豆瓣电影ID 获取相关数据
+        id格式为'********   ********* *******'
+        会根据这种样式进行操作处理
         """
-        # TODO 添加电影数据
         if not id:
             return self._html_render("addmovie.html",{})
-        _id, desc = movie_ctrl.add(id)
-        if _id:
+        ids = id.split()
+        num = []
+        for id in ids:
+            try:
+                _id, desc = movie_ctrl.add(id)
+                if _id:
+                    num.append(_id)
+            except Exception as e:
+                self._logging.error(e)
+                continue
+        
+        if num:
             status = "success"
-            desc = _id
+            desc = num
         else:
             status = "failure"
         ans = self._return_ans(status, desc,"movie_add")
@@ -94,9 +105,6 @@ class movie(WebRequest):
         """
         更新电影的状态
         """
-        import ipdb
-        ipdb.set_trace()
-        # 状态传输错误
         ans = {}
         ids = json.loads(_ids)
         r,desc = movie_ctrl.update_status(_ids=ids, status=status)

@@ -1,8 +1,11 @@
 <tr>
+    {% if q.get('category','') == u'movie' %}
+        {% set url = "/main/movie/subject?id="+q.get('_id') %}
+    {% end %}
     <td><input type="checkbox" data-id="{{ q.get('id',0) }}"></td>
     <td class="nickname" data-_id="{{ q.get('_id', 0) }}" data-title="{{ q.get('title', '') }}" >{{ q.get('name', '') }}</td>
     <td class="email">{{ q.get('email', '') }}</td>
-    <td class="title">{{ q.get('title', '') }}</td>
+    <td class="title"><a href="{{ url }}">{{ q.get('title', '') }}</a></td>
     <td class="content">{{ q.get('contain', '') }}</td>
     <td class="status">
         {% set status = int(q.get('status', 0)) %}

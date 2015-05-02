@@ -78,9 +78,10 @@ def check_requests_status(status):
         logging.error("未知错误")
         return False
 
-def downlink_to_list(title, flag=1):
+def basic_html_to_formatV1(title, flag):
     """
-    bs4 正则解析html，获取下载链接
+    NOTICE 2015-05-02 更新
+    获取下载链接
     """
     url = DOWNLINK_URL + urllib.quote(title)
     if flag == 1:
@@ -111,6 +112,14 @@ def downlink_to_list(title, flag=1):
         return []
     h = BeautifulSoup(html.content)
     lists = h.find_all("div", class_="search-item")
+    return lists
+
+
+def downlink_to_list(title, flag=1):
+    """
+    获取下载链接
+    """
+    lists = basic_html_to_formatV1(title, flag)
     res_list = []
     for list in lists:
         rst_dict = {}
@@ -131,6 +140,36 @@ def downlink_to_list(title, flag=1):
         res_list.append(rst_dict)
     res_list = sorted(res_list, key = lambda item :(item["hot"], item["size"]), reverse=True)
     return res_list
+
+def downlink_to_listV2(title, flag=1):
+    """
+    NOTICE 2015-05-02
+    获取下载链接，格式如同
+    [{},{},{size='', url='', name=''}]
+    """
+    lists = basic_html_to_formatV1(title, flag)
+    res_list = []
+    for list in lists:
+
+        b = list.find_all("b")
+        size = unicode_to_str(b[1].string)
+        
+        hot = int(unicode_to_str(b[2].string))
+        if hot < 10:
+            continue
+        
+
+        down_link = list.find_all("a", class_="download")
+        for link in down_link:
+            down_link_dict = {}
+            down_link_dict["size"] = size
+            down_link_dict["url"] = link.get("href")
+            down_link_dict["name"] = link.string
+
+            res_list.append(down_link_dict)
+    res_list = sorted(res_list, key = lambda item :(item["size"], item["url"]), reverse=True)
+    return res_list
+
 
 def douban_top_250(start=0, count=100):
     """
@@ -200,7 +239,8 @@ def douban_to_dict(id):
         movie["directors"].append(director["name"])
     movie["aka"] = text.get("aka")
     
-    movie["down_link"] = downlink_to_list(unicode_to_str(movie["title"]))
+    #movie["down_link"] = downlink_to_list(unicode_to_str(movie["title"]))
+    movie["down_link"] = downlink_to_listV2(unicode_to_str(movie["title"]))
     movie["status"] = "online"
     movie_link_flag = 1
     if not movie["down_link"]:

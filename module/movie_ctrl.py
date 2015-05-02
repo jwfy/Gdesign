@@ -149,12 +149,12 @@ class MovieCtrl(object):
         """
         更新电影的上线、下线状态
         可进行批量操作
-        # TODO 需要进行单个的id更改操作
         """
         if not _ids:
             return 0, "没有需要修改的_id值"
         if not status:
             return 0, "没有设置更新状态"
+        status = unicode_to_str(status)
         for _id in _ids:
             _id = unicode_to_str(_id) if isinstance(_id, unicode) else str(_id)
             _id = ObjectId(_id)
@@ -205,8 +205,6 @@ class MovieCtrl(object):
         添加电影数据
         ids 应该为一序列的豆瓣 id 的值
         """
-        import ipdb
-        ipdb.set_trace()
         if not id:
             self._logging.error("无有效id")
             return 0, "无有效id"

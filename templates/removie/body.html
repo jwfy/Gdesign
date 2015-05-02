@@ -1,7 +1,7 @@
 <tr>
     <td><input type="checkbox" data-id="{{ q.get('id',0) }}"></td>
     <td class="image"><img src="{{ q.get('img_url', '') }}" /></td>
-    <td class="title"><a href="/main/movie/subject?id={{ q.get('_id')}}">{{ q.get('title', '') }}</a></td>
+    <td class="title"><a title="查看详情" href="/main/movie/subject?id={{ q.get('_id')}}">{{ q.get('title', '') }}</a></td>
     <td class="status">
         {% set status = int(q.get('status', 0)) %}
         {%if status == 1 %}
