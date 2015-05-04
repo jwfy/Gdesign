@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% block active7 %}active{% end %}
+{% block title %}用户{% end block %}
+{% block content-head %}用户{% end block %}
+{% block content %}
+{% set ans = pyobject.get('result') %}
+{% set query = ans.get('query') %}
+{% set contain = ans.get('contain', '') %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title">用户列表{% if contain %}-搜索-{{ contain }}{% end %}</h3>
+            </div>
+            <div class="box-body">
+                <div class="row" style="margin-bottom: 10px">
+                    <form class="col-xs-3" style="float: right" role="search" method="get" action="/user/user/list">
+                        <div class="has-feedback">
+                            <input type="text" class="form-control input-sm" name="contain" placeholder="查找用户"/>
+                            <span class="fa fa-search form-control-feedback"></span>
+                        </div>
+                    </form>
+                </div>
+                <table class="table table-hover comment-table">
+                    <thead>
+                    {% include user/head.html %}
+                    </thead>
+                    <tbody>
+                    {% if type(query) == list %}
+                    {% for q in query %}
+                    {% include user/body.html %}
+                    {% end %}
+                    {% end %}
+                    </tbody>
+                </table>
+                {% set url = '/user/user/list?' %}
+                {% if contain %}
+                    {% set url = url + 'contain=%s&' %(contain) %}
+                {% end %}
+                {% set url = url + "page_num=%s" %}
+                {% include page.html %}
+            </div>
+        </div>
+    </div>
+</div>
+{% end %}
+
+{% block js %}
+<script>
+    $(function () {
+        $(".user-status").click(function(){
+            console.log("修改状态")
+            var url = '/user/user/update_status';
+            ajaxA(this, "status", url);
+            return ;
+        });
+
+        $(".user-permission").change(function(){
+            console.log("修改权限")
+            var url = '/user/user/update_permission';
+            ajaxA(this, "permission", url);
+            return ;
+        });
+
+        $(".user-reset").click(function(){
+            console.log("重置密码")
+            var url = '/user/user/reset_password';
+            ajaxA(this, "", url);
+            return ;
+        });
+
+        function ajaxA(element, name,url){
+            var _value = $(element).val();
+            var _id = $(element).parents("tr").find("input").val();
+            if (name)
+                var _data = "id="+_id +"&" + name + "=" + _value;
+            else
+                var _data = "id="+_id;
+            $.ajax
+            (
+                {
+                    url: url ,//用于文件上传的服务器端请求地址
+                    data: _data,
+                    type:"POST",
+                    dataType: "json",
+                    success: function (data, status)  //服务器成功响应处理函数
+                    {
+                        console.log(data);
+                        alert(data["query"]);
+                    },
+                    error: function (data, status, e)//服务器响应失败处理函数
+                    {
+                        alert(e);
+                    }
+                }
+            )
+        }
+
+    });
+</script>
+{% end %}

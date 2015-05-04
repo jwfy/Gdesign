@@ -96,7 +96,37 @@ class user(WebRequest):
         """
         重置密码
         """
-        pass
+        try:
+            r, desc = user_ctrl.reset_password(name=name, old_password=old_password,
+                new_password=new_password)
+            if not r:
+                r_status = "failure"
+            else:
+                r_status = "success"
+        except Exception as e:
+            r_status = "error"
+            desc = e
+        ans = self._return_ans(r_status, desc, "update_password")
+        return self._write(ans)
+
+    @check_login()
+    @POST
+    def reset_password(self, id={"atype":int, "adef":0}):
+        """
+        后台重置密码
+        """
+        try:
+            r, desc = user_ctrl.reset_password(id=id)
+            if not r:
+                r_status = "failure"
+            else:
+                r_status = "success"
+        except Exception as e:
+            self._logging.error(e)
+            r_status = "error"
+            desc = e
+        ans = self._return_ans(r_status, desc, "update_password")
+        return self._write(ans)
 
     @check_login()
     @POST
@@ -106,5 +136,82 @@ class user(WebRequest):
         """
         更新用户状态
         """
-        pass
+        try:
+            r, desc = user_ctrl.update(id=id, kwargs=dict({"status":status}))
+            if not r:
+                r_status = "failure"
+                desc = "更新用户状态失败"
+            else:
+                r_status = "success"
+                desc = "更新用户状态成功"
+        except Exception as e:
+            self._logging.error(e)
+            r_status = "error"
+            desc = e
+        ans = self._return_ans(r_status, desc, "update_status")
+        return self._write(ans)
+
+    @check_login()
+    @POST
+    def update_permission(self, id={"atype":int, "adef":0},
+            permission={"atype":int, "adef":0}
+        ):
+        """
+        更新用户权限
+        """
+        try:
+            r, desc = user_ctrl.update(id=id, kwargs=dict({"permission":permission}))
+            if not r:
+                r_status = "failure"
+                desc = "更新用户权限失败"
+            else:
+                r_status = "success"
+                desc = "更新用户权限成功"
+        except Exception as e:
+            self._logging.error(e)
+            r_status = "error"
+            desc = e
+        ans = self._return_ans(r_status, desc, "update_permission")
+        return self._write(ans)
+
+
+    @check_login()
+    def list(self, page_num={"atype":int, "adef":1}, 
+            page_size={"atype":int, "adef":10},
+            contain={"atype":unicode, "adef":""}
+        ):
+        """
+        用户列表
+        """
+        ans = {}
+        try:
+            kwargs = {}
+            kwargs["contain"] = contain
+            total, desc = user_ctrl.list(page_num=int(page_num),
+                    page_size=int(page_size), q=contain)
+            if not total:
+                status = "failure"
+                query = desc
+            else:
+                status = "success"
+                query = []
+                for d in desc:
+                    field_name = d.object_field_names()
+                    query_dict = {}
+                    for field in field_name:
+                        if not field == "password":
+                            value = getattr(d, field)
+                            query_dict[field] = value
+                    query.append(query_dict)
+                kwargs['total_num'] = total
+                kwargs['len'] = len(query)
+                kwargs['page_num'] = page_num
+                kwargs['page_total'] = total / int(page_size) if not total % int(page_size) else total / int(page_size) + 1
+            ans = self._return_ans(status, query, "user_list", kwargs)
+        except Exception as e:
+            self._logging.error(e)
+            ans = self._return_ans("error", e, "user_list")
+        return self._html_render("user.html", ans)
+
+
 

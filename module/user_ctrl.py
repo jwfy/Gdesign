@@ -18,11 +18,15 @@ class UserCtrl(object):
     def __init__(self):
         """
         NOTICE 关于用户状态和权限的说明
-        status: 0 表示账户被拉黑，禁止操作
+        status: 
+                -1 表示显示所有用户
+                0 表示账户被拉黑，禁止操作
                 1 表示注册，未审核(不可用)
                 2 表示审核未通过，（不可用）
                 10 表示账户可用
-        permission： 0 未通过审核和未审核用户权限
+        permission： 
+                    -1 显示所有权限的用户
+                     0 未通过审核和未审核用户权限
                      1 只可以浏览
                      2 可用添加操作
                      3 可用修改操作
@@ -64,18 +68,27 @@ class UserCtrl(object):
             return 0, "退出失败"
         return 1, "退出成功"
 
-    def reset_password(self, name, old_password, new_password):
+    def reset_password(self, name="", old_password="", new_password="", id=0):
         """
         密码重置
         """
         user_model = User.object()
         user_t = User.table()
-        old_password = self._password_encrypt(old_password)
-        cond = user_t.name == name
-        cond & (user_t.password == old_password)
+        cond = SqlNone()
+        if id:
+            # 如果是通过id的画则可以从后台重置用户密码
+            # 重置的密码默认初始密码是dm2015
+            cond = user_t.id == int(id)
+            new_password = "dm2015"
+            error = "不存在此用户id"
+        else:
+            old_password = self._password_encrypt(old_password)
+            cond = user_t.name == unicode_to_str(name)
+            cond & (user_t.password == old_password)
+            error = "用户名和原始密码不匹配"
         if not user_model.find(cond):
-            self._logging.error("用户名和原始密码不匹配")
-            return 0, "原始用户名或者密码错误"
+            self._logging.error(error)
+            return 0, error
         new_password = self._password_encrypt(new_password)
         user_model.password = new_password
         user_model.update()
@@ -122,5 +135,45 @@ class UserCtrl(object):
             self._logging.error("无法获取该用户信息")
             return 0, "无法获取该用户信息"
         if single:
-            return user_model[0]
+            return -1, user_model[0]
         return 1, user_model
+
+    def list(self, page_num=1, page_size=10, q=""):
+        """
+        后台，显示用户列表
+        """
+        user_model = User.objectlist()
+        user_t = User.table()
+        cond = SqlNone()
+        if q:
+            q = unicode_to_str(q)
+            cond = (user_t.name == q)
+            cond |= (user_t.email == q)
+        pageinfo = PageInfo(page_num, page_size)
+        sort_style = Sort([(user_t.id, Sort.desc)])
+        user_model.sort(sort_style)
+        user_model.pageinfo(pageinfo)
+        if not user_model.find(cond):
+            self._logging.warn("未找到用户列表")
+            return 0, "未找到用户信息"
+        sum = pageinfo.total_record
+        return sum, user_model
+
+    def update(self, id=0, kwargs={}):
+        """
+        更细用户数据
+        """
+        user_model = User.object()
+        user_t = User.table()
+        cond = user_t.id == int(id)
+        if not user_model.find(cond):
+            self._logging.warn("未找到该用户")
+            return 0, "未找到该用户"
+        if not kwargs:
+            return 0, "无更新内容"
+        for k, v in kwargs.iteritems():
+            v = unicode_to_str(v) if isinstance(v, unicode) else int(v)
+            setattr(user_model, k, v)
+        user_model.update()
+        return 1, "更新用户信息成功"
+

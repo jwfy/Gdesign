@@ -1,0 +1,31 @@
+<tr>
+    {% set status = int(q.get('status', 0)) %}
+    {% set permission = int(q.get('permission')) %}
+    <input type="hidden" name="id" value="{{ q.get('id') }}">
+    <td class="username">{{ q.get('name', '') }}</td>
+    <td class="email">{{ q.get('email', '') }}</td>
+
+    <td>
+        <select class="status user-status">
+            <option value="0" {% if status == 0 %}selected="selected"{% end %}>账户不可用</option>
+            <option value="1" {% if status == 1 %}selected="selected"{% end %}>账户未审核</option>
+            <option value="2" {% if status == 2 %}selected="selected"{% end %}>账户审核未通过</option>
+            <option value="10" {% if status == 10 %}selected="selected"{% end %}>账户正常使用</option>
+        </select>
+    </td>
+    <td>
+        <select class="permission user-permission">
+            <option value="0" {% if permission == 1 %}selected="selected"{% end %}>禁止操作</option>
+            <option value="1" {% if permission == 2 %}selected="selected"{% end %}>只读操作</option>
+            <option value="2" {% if permission == 3 %}selected="selected"{% end %}>添加操作</option>
+            <option value="3" {% if permission == 4 %}selected="selected"{% end %}>修改操作</option>
+            <option value="4" {% if permission == 5 %}selected="selected"{% end %}>删除操作</option>
+            <option value="9" {% if permission == 9 %}selected="selected"{% end %}>非ROOT</option>
+            <option value="10" {% if permission == 10 %}selected="selected"{% end %}>ROOT</option>
+        </select>
+    </td>
+
+    <td class="register_time">{{ q.get('register_time') }}</td>
+    <td class="login_time">{{ q.get('login_time') }}</td>
+    <td class="reset" ><a class="user-reset" href="javascript:;" >重置</a></td>
+</tr>
