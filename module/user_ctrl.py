@@ -68,7 +68,7 @@ class UserCtrl(object):
             return 0, "退出失败"
         return 1, "退出成功"
 
-    def reset_password(self, name="", old_password="", new_password="", id=0):
+    def reset_password(self, name="", email="", old_password="", new_password="", id=0):
         """
         密码重置
         """
@@ -78,14 +78,19 @@ class UserCtrl(object):
         if id:
             # 如果是通过id的画则可以从后台重置用户密码
             # 重置的密码默认初始密码是dm2015
+            id = unicode_to_str(id) if isinstance(id, unicode) else str(id)
             cond = user_t.id == int(id)
-            new_password = "dm2015"
+            if not new_password:
+                new_password = "dm2015"
+            else:
+                new_password = unicode_to_str(new_password) if isinstance(new_password, unicode) else str(new_password)
             error = "不存在此用户id"
         else:
             old_password = self._password_encrypt(old_password)
             cond = user_t.name == unicode_to_str(name)
+            cond & (user_t.email == email)
             cond & (user_t.password == old_password)
-            error = "用户名和原始密码不匹配"
+            error = "用户名(邮箱)和原始密码不匹配"
         if not user_model.find(cond):
             self._logging.error(error)
             return 0, error
@@ -176,4 +181,15 @@ class UserCtrl(object):
             setattr(user_model, k, v)
         user_model.update()
         return 1, "更新用户信息成功"
+
+    def check(self, passwd_session, id, session):
+        """
+        检查是否相等
+        """
+        id = int(unicode_to_str(id))
+        session = unicode_to_str(session)
+        if int(passwd_session[0]) == id and passwd_session[1] == session:
+            return 1
+        else:
+            return 0
 

@@ -14,14 +14,14 @@ from jinja2 import Template
 """
     docs:https://zh.wikipedia.org/wiki/%E5%A4%9A%E7%94%A8%E9%80%94%E4%BA%92%E8%81%AF%E7%B6%B2%E9%83%B5%E4%BB%B6%E6%93%B4%E5%B1%95
 """
-Host = 'smtp.exmail.qq.com'
+Host = 'smtp.qq.com'
 Port = '25'
 Sender = 'jwfy0902@foxmail.com'
-From = 'DM<jwfy0902@foxmail.com>'
-Password = '*****'
+From = 'DMovie 找回密码<jwfy0902@foxmail.com>'
+Password = 'syb0902+-*/.CHQQ'
 
 
-def send_message(html, text, To, title='懒人周末', kwargs={}):
+def send_email(html, text, To, title='找回密码', kwargs={}):
     """
     邮件发送
     参数说明：

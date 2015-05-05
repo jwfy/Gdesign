@@ -7,6 +7,7 @@
 
 from base import *
 from module.user_ctrl import UserCtrl
+from module.email_ctrl import *
 
 user_ctrl = UserCtrl()
 
@@ -22,6 +23,18 @@ class user(WebRequest):
         """
         return self._html_render("login.html", {})
 
+    def register(self):
+        """
+        注册页面
+        """
+        return self._html_render("user/register.html", {})
+    
+    def passwd(self):
+        """
+        忘记密码页面
+        """
+        return self._html_render("user/password.html", {})
+    
     @POST
     def deal_login(self, 
             username={'atype':unicode, 'adef':''},
@@ -67,7 +80,7 @@ class user(WebRequest):
         return self._redirect("/user/user/login")
 
     @POST
-    def register(self,name={"atype":unicode, "adef":""},
+    def deal_register(self,name={"atype":unicode, "adef":""},
             email={"atype":str, "adef":""},
             password={"atype":str, "adef":""},
             q={"atype":str, "adef":""}
@@ -77,28 +90,39 @@ class user(WebRequest):
         """
         ans = {}
         if not q:
-            ans = self._return_ans("error", "非法注册", "user")
+            ans = self._return_ans("error", "非法注册", "user_register")
             self._logging.error("非法注册")
             return self._write(ans)
-        r, desc = user_ctrl.deal_register(name=name, email=email, password=password)
-        if not r:
-            r_status = "failure"
-        else:
-            r_status = "success"
+        try:
+            r, desc = user_ctrl.deal_register(name=name, email=email, password=password)
+            if not r:
+                r_status = "failure"
+            else:
+                r_status = "success"
+        except Exception as e:
+            r_status = "error"
+            desc = e
         ans = self._return_ans(r_status, desc, "user_register")
         return self._write(ans)
 
     @POST
     def update_password(self, name={"atype":unicode, "adef":""}, 
+            q={"atype":str, "adef":""}, 
+            email={"atype":str, "adef":""}, 
             old_password={"atype":str, "adef":""}, 
             new_password={"atype":str, "adef":""}
         ):
         """
         重置密码
         """
+        ans = {}
+        if not q:
+            ans = self._return_ans("error", "非法修改密码", "update_password")
+            self._logging.error("非法修改密码")
+            return self._write(ans)
         try:
-            r, desc = user_ctrl.reset_password(name=name, old_password=old_password,
-                new_password=new_password)
+            r, desc = user_ctrl.reset_password(name=name, email=email, 
+                old_password=old_password, new_password=new_password)
             if not r:
                 r_status = "failure"
             else:
@@ -127,6 +151,76 @@ class user(WebRequest):
             desc = e
         ans = self._return_ans(r_status, desc, "update_password")
         return self._write(ans)
+
+    @POST
+    def email(self, email={"atype":str, "adef":""}):
+        """
+        通过邮箱找回密码
+        """
+        if not email:
+            return self._html_render("user/email.html", {}) 
+        else:
+            flag, obj = user_ctrl.get_user(email=email)
+            ans = {}
+            if not flag:
+                ans = self._return_ans("error", "没有此用户", "find_password")
+                self._logging.error("没有此用户")
+                return self._write(ans)
+            id = obj[0].id
+            session = user_ctrl._password_encrypt(str(datetime.datetime.now())+str(id))
+            self._set_user_passwd_session(id=id, ses=session)
+            # 现在需要发送邮件了
+            html = "templates/email/passwd.html"
+            txt = "templates/email/passwd.txt"
+            to = email
+            kwargs = {}
+            kwargs["email"] = email
+            kwargs["time"] = str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+            kwargs["url"] = "/user/user/find_passwd?id=%s&session=%s" %(str(id), session)
+            flag, desc = send_email(html=html, text=txt, To=to, kwargs=kwargs)
+            if flag:
+                r_status = "success"
+            else:
+                r_status = "failure"
+            ans = self._return_ans(r_status, desc, "send_email")
+            return self._write(ans)
+
+    @POST
+    def find_passwd(self, id={"atype":int, "atype":""},
+            session={"atype":str, "atype":""},
+            password={"atype":str, "atype":""},
+            q={"atype":str, "atype":""}
+        ):
+        """
+        找回密码
+        """
+        import ipdb
+        ipdb.set_trace()
+        if not password:
+            return self._html_render("user/find_passwd.html", {"id":id, "session":session}) 
+        else:
+            ans = {}
+            if not q:
+                ans = self._return_ans("error", "非法找回密码", "find_password")
+                self._logging.error("非法找回密码")
+                return self._write(ans)
+            passwd_session = self._get_user_passwd_session()
+            if not user_ctrl.check(passwd_session, id, session):
+                ans = self._return_ans("error", "伪装他人找回密码", "find_password")
+                self._logging.error("伪装他人找回密码")
+                return self._write(ans)
+            try:
+                r, desc = user_ctrl.reset_password(new_password=password, id=id)
+                if not r:
+                    r_status = "failure"
+                else:
+                    r_status = "success"
+            except Exception as e:
+                self._logging.error(e)
+                r_status = "error"
+                desc = e
+            ans = self._return_ans(r_status, desc, "find_password")
+            return self._write(ans)
 
     @check_login()
     @POST

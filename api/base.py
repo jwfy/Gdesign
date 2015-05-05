@@ -32,6 +32,19 @@ class WebRequest(SpuRequestHandler):
             return None
         self.session["user"] = user
 
+    def _get_user_passwd_session(self):
+        session = self.session
+        if not session:
+            return None
+        passwd = self.session.get("passwd", (0, ""))
+        return passwd
+
+    def _set_user_passwd_session(self, id=0, ses=""):
+        session = self.session
+        if not session:
+            return None
+        self.session["passwd"] = (id, ses)
+
     def _get_captcha_session(self):
         session = self.session
         if not session:
