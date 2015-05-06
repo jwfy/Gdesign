@@ -11,6 +11,15 @@ from sputnik.SpuLogging import SpuLogging
 from sputnik.SpuUOM import POST, POST_FILE, UOM_WRAPS
 import json
 
+NO_LIMIT = 0
+LIMIT = 1
+READ_ONLY = 2
+ADD = 3
+UPDATE = 4
+DELETE = 5
+NO_ROOT = 9
+ROOT = 10
+
 
 class WebRequest(SpuRequestHandler):
     """
@@ -73,7 +82,7 @@ class WebRequest(SpuRequestHandler):
             ans[k] = v
         return ans
 
-def check_login(permission=1):
+def check_login(permission=0):
     def wrap(func):
         @UOM_WRAPS(func)
         def f(self, *args, **kwargs):

@@ -8,7 +8,7 @@
             <h3><i class="fa fa-warning text-yellow"></i> 页面不能被访问</h3>
             <p>
                 您所拥有的权限不可用访问
-                或许您可以 <a href="/movie/movie/index">返回首页</a>
+                或许您可以 <a href="/main/movie/list">返回首页</a>
             </p>
             <p><span class="time">5</span> 秒后自动跳转到首页</p>
         </div>
@@ -22,7 +22,7 @@
         setInterval(function(){
             time -= 1;
             if(time <= 0){
-                location.href="/movie/movie/index";
+                location.href="/main/movie/list";
             }
             $(".time").html(time);
         },1000);

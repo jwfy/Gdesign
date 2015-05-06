@@ -27,7 +27,7 @@ class movie(WebRequest):
         """
         pass
 
-    @check_login()
+    @check_login(ADD)
     @POST
     def add(self, id={"atype":str, "adef":""}
         ):
@@ -58,7 +58,7 @@ class movie(WebRequest):
         ans = self._return_ans(status, desc,"movie_add")
         return self._write(ans)
 
-    @check_login()
+    @check_login(READ_ONLY)
     @POST
     def list(self, page_num={"atype":int, "adef":1},
             page_size={"atype":int, "adef":10},
@@ -97,7 +97,7 @@ class movie(WebRequest):
         ans = self._return_ans(r_status, desc,"list", kwargs)
         return self._html_render("movie.html", ans)
 
-    @check_login()
+    @check_login(UPDATE)
     @POST
     def update_status(self,
             _ids={"atype":str, "adef":""},
@@ -116,7 +116,7 @@ class movie(WebRequest):
         ans = self._return_ans(r_status, desc, "update_status")
         return self._write(ans)
 
-    @check_login()
+    @check_login(UPDATE)
     @POST
     def update(self,
             _id={"atype":str, "adef":""},
@@ -144,7 +144,7 @@ class movie(WebRequest):
         ans = self._return_ans(r_status, desc, "update")
         return self._write(ans)
     
-    @check_login()
+    @check_login(READ_ONLY)
     def subject(self, id={"atype":str, "adef":""}):
         """
         查看具体的电影详情
@@ -167,7 +167,7 @@ class re(WebRequest):
         """
         pass
     
-    @check_login()
+    @check_login(UPDATE)
     @POST
     def update_status(self, ids={"atype":str, "adef":""},
             status={"atype":int, "adef":""}
@@ -189,7 +189,7 @@ class re(WebRequest):
             ans = self._return_ans("error", e, "recommentmovie_update_status")
         return self._write(ans)
     
-    @check_login()
+    @check_login(READ_ONLY)
     @POST
     def list(self, page_num={"atype":int, "adef":1},
             page_size={"atype":int, "adef":5},
@@ -234,7 +234,7 @@ class re(WebRequest):
             ans = self._return_ans("error", e, "recommentmovie_list")
         return self._html_render("removie.html", ans)
     
-    @check_login()
+    @check_login(ADD)
     @POST
     def add(self, title={"atype":unicode, "adef":""},
             _id={"atype":str, "adef":"",}, img_url={"atype":str, "adef":""}

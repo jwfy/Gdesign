@@ -15,11 +15,11 @@
     </td>
     <td>
         <select class="permission user-permission">
-            <option value="0" {% if permission == 1 %}selected="selected"{% end %}>禁止操作</option>
-            <option value="1" {% if permission == 2 %}selected="selected"{% end %}>只读操作</option>
-            <option value="2" {% if permission == 3 %}selected="selected"{% end %}>添加操作</option>
-            <option value="3" {% if permission == 4 %}selected="selected"{% end %}>修改操作</option>
-            <option value="4" {% if permission == 5 %}selected="selected"{% end %}>删除操作</option>
+            <option value="1" {% if permission == 1 %}selected="selected"{% end %}>禁止操作</option>
+            <option value="2" {% if permission == 2 %}selected="selected"{% end %}>只读操作</option>
+            <option value="3" {% if permission == 3 %}selected="selected"{% end %}>添加操作</option>
+            <option value="4" {% if permission == 4 %}selected="selected"{% end %}>修改操作</option>
+            <option value="5" {% if permission == 5 %}selected="selected"{% end %}>删除操作</option>
             <option value="9" {% if permission == 9 %}selected="selected"{% end %}>非ROOT</option>
             <option value="10" {% if permission == 10 %}selected="selected"{% end %}>ROOT</option>
         </select>

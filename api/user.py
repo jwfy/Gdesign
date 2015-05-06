@@ -33,6 +33,7 @@ class user(WebRequest):
         """
         修改密码页面
         """
+        self._set_user_session()
         return self._html_render("user/password.html", {})
     
     @POST
@@ -64,7 +65,7 @@ class user(WebRequest):
         ans = self._return_ans(r_status, desc, "user_register")
         return self._write(ans)
 
-    @check_login()
+    @check_login(NO_LIMIT)
     def logout(self):
         """
         退出登录
@@ -133,7 +134,7 @@ class user(WebRequest):
         ans = self._return_ans(r_status, desc, "update_password")
         return self._write(ans)
 
-    @check_login()
+    @check_login(UPDATE)
     @POST
     def reset_password(self, id={"atype":int, "adef":0}):
         """
@@ -220,7 +221,7 @@ class user(WebRequest):
             ans = self._return_ans(r_status, desc, "find_password")
             return self._write(ans)
 
-    @check_login()
+    @check_login(UPDATE)
     @POST
     def update_status(self, id={"atype":int, "adef":0}, 
             status={"atype":int, "adef":0}
@@ -243,7 +244,7 @@ class user(WebRequest):
         ans = self._return_ans(r_status, desc, "update_status")
         return self._write(ans)
 
-    @check_login()
+    @check_login(ROOT)
     @POST
     def update_permission(self, id={"atype":int, "adef":0},
             permission={"atype":int, "adef":0}
@@ -267,7 +268,7 @@ class user(WebRequest):
         return self._write(ans)
 
 
-    @check_login()
+    @check_login(ROOT)
     def list(self, page_num={"atype":int, "adef":1}, 
             page_size={"atype":int, "adef":10},
             contain={"atype":unicode, "adef":""}

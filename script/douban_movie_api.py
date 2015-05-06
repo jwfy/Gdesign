@@ -24,6 +24,7 @@ from bs4 import BeautifulSoup
 from requests import *
 import urllib
 from bson import ObjectId
+from douban_movie_id import *
 
 MONGO_HOST = "127.0.0.1"
 MONGO_PORT = 27017
@@ -313,15 +314,24 @@ def write_to_mongo(id):
         return 0, "已经存在相关数据，添加失败"
     movie_dict, flag = douban_to_dict(id)
     if not movie_dict:
-        return 0, "暂无有效数据"
+        return -1, "暂无有效数据"
     _id = _Collection.insert(movie_dict)
     return str(_id), flag
 
-def get_ids():
+def get_topids():
     files = open("../log/topid.log")
     ids = files.readlines()
     files.close()
     return ids
+
+def get_ids(tag="爱情", id=1):
+    """
+    NOTICE ADD in 2015-05-06 21:10
+    主要是为了添加更多的电影数据
+    """
+    doubanid = DouBan(tag, id)
+    doubanid.get_url()
+    ids = douban.query()
 
 def main():
     #id = '1764796'
@@ -331,6 +341,9 @@ def main():
         id = int(id)
         _id, flag = write_to_mongo(id)
         if not _id:
+            files.write("豆瓣ID %d 以添加\n"  %(id))
+            continue
+        if _id == -1:
             files.write("豆瓣ID %d 无数据\n"  %(id))
             continue
         print "%s\n" %(_id)
@@ -347,7 +360,7 @@ if __name__ == "__main__":
     #id = "552758a9e206a514e2257ac5"
     #check_mongo_id(id)
     #read_top_250()
-    #main()
+    main()
     #douban_to_dict(1764796)
     #title = "超能陆战队"
     #downlink_to_list(title)

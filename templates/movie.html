@@ -71,11 +71,19 @@
     $(function () {
         $(".inormal").click(function(){
             var ids = icheck_function($(".removie-table"));
+            if(ids.length <= 0){
+                alert("未选中所选项");
+                return false;
+            }
             var status = "online";
             ajax_status(ids, status);
         });
         $(".iremove").click(function(){
             var ids = icheck_function($(".removie-table"));
+            if(ids.length <= 0){
+                alert("未选中所选项");
+                return false;
+            }
             var status = "offline";
             ajax_status(ids, status);
         });

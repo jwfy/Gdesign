@@ -72,7 +72,7 @@ class comment(WebRequest):
             ans = self._return_ans("error", e, "comment_add")
         return self._write(ans)
     
-    @check_login()
+    @check_login(READ_ONLY)
     @POST
     def list(self, page_num={"atype":int, "adef":1},
             page_size={"atype":int, "adef":20},
@@ -116,7 +116,7 @@ class comment(WebRequest):
             ans = self._return_ans("error", e, "comment_list")
         return self._html_render("comment.html", ans)
 
-    @check_login()
+    @check_login(UPDATE)
     @POST
     def update_status(self, ids={"atype":str, "adef":""},
             status={"atype":int, "adef":""}

@@ -6,7 +6,7 @@
 # e-mail: jwfy0902@foxmail.com
 
 from sputnik.SpuLogging import SpuLogging
-from sputnik.SpuDBObject import Sort, SqlNone, PageInfo
+from sputnik.SpuDBObject import Sort, SqlNone, PageInfo, FuzzyLike
 from sputnik.SpuUtil import md5
 from datetime import datetime
 from model.user_model import User
@@ -152,8 +152,8 @@ class UserCtrl(object):
         cond = SqlNone()
         if q:
             q = unicode_to_str(q)
-            cond = (user_t.name == q)
-            cond |= (user_t.email == q)
+            cond = FuzzyLike(user_t.name, q)
+            cond |= FuzzyLike(user_t.email, q)
         pageinfo = PageInfo(page_num, page_size)
         sort_style = Sort([(user_t.id, Sort.desc)])
         user_model.sort(sort_style)

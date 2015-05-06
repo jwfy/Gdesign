@@ -61,11 +61,19 @@
     $(function () {
         $(".inormal").click(function(){
             var ids = icheck_function($(".removie-table"));
+            if(ids.length <= 0){
+                alert("未选中所选项");
+                return false;
+            }
             var status = 1;
             ajax_status(ids, status);
         });
         $(".iremove").click(function(){
             var ids = icheck_function($(".removie-table"));
+            if(ids.length <= 0){
+                alert("未选中所选项");
+                return false;
+            }
             var status = 2;
             ajax_status(ids, status);
         });
