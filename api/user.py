@@ -31,7 +31,7 @@ class user(WebRequest):
     
     def passwd(self):
         """
-        忘记密码页面
+        修改密码页面
         """
         return self._html_render("user/password.html", {})
     
@@ -194,8 +194,6 @@ class user(WebRequest):
         """
         找回密码
         """
-        import ipdb
-        ipdb.set_trace()
         if not password:
             return self._html_render("user/find_passwd.html", {"id":id, "session":session}) 
         else:

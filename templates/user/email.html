@@ -34,6 +34,8 @@
                 </div>
             </div>
         </form>
+        <a href="/user/user/login" class="text-center">登录</a>
+        <a href="/user/user/register" class="text-center">注册</a>
     </div>
 </div>
 
@@ -45,6 +47,12 @@
             var email = $("input[name='email']").val();
             if(!email){
                 $("input[name='email']").focus().selected();
+                return false;
+            }
+            var re_pa = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
+            if(!re_pa.test(email)){
+                alert("输入正确的邮箱地址");
+                $("#email").focus().selected();
                 return false;
             }
             $.ajax({
