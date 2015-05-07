@@ -20,6 +20,50 @@
             <div class="box-footer">
                 <button type="submit" class="btn btn-primary movie-add">添加</button>
             </div>
+            <div class="box-body">
+                <form class="col-xs-12" style="float: right">
+                    <label class="control-label">选择下拉项，运行脚本批量添加</label>
+                    <div class="form-group">
+                        <div class="col-xs-6">
+                            <select class="form-control movie-tag">
+                                <option value="爱情">爱情类</option>
+                                <option value="喜剧">喜剧类</option>
+                                <option value="动画">动画类</option>
+                                <option value="科幻">科幻类</option>
+                                <option value="剧情">剧情类</option>
+                                <option value="动作">动作类</option>
+                                <option value="经典">经典类</option>
+                                <option value="青春">青春类</option>
+                                <option value="悬疑">悬疑类</option>
+                                <option value="犯罪">犯罪类</option>
+                                <option value="惊悚">惊悚类</option>
+                                <option value="文艺">文艺类</option>
+                                <option value="战争片">战争类</option>
+                                <option value="励志">励志类</option>
+                                <option value="搞笑">搞笑类</option>
+                                <option value="浪漫">浪漫类</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-6">
+                            <select class="form-control movie-id">
+                                <option value="1">第一页</option>
+                                <option value="2">第二页</option>
+                                <option value="3">第三页</option>
+                                <option value="4">第四页</option>
+                                <option value="5">第五页</option>
+                                <option value="6">第六页</option>
+                                <option value="7">第七页</option>
+                                <option value="8">第八页</option>
+                                <option value="9">第九页</option>
+                                <option value="10">第十页</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="box-footer">
+                <button type="submit" class="btn btn-primary movie-adds" style="margin-top: 10px;">添加</button>
+            </div>
         </div>
     </div>
 </div>
@@ -28,6 +72,53 @@
 {% block js %}
 <script>
     $(function () {
+
+        function cback(data){
+            var h1 = '<div class="row"> \
+                                <div class="col-md-12"> \
+                                <div class="box box-primary">\
+                                 <div class="box-header">\
+                                <h3 class="box-title">添加结果</h3>\
+                        </div>\
+                        <div class="box-body">';
+            var h2 = '</div>\
+                        </div>\
+                        </div>\
+                        </div>';
+            var h3='';
+            jQuery.each(data["query"], function(i,item){
+                h3 += '<p><a href="/main/movie/subject?id='+item+'" target="_blank" title="添加的新电影">'+item+'</a></p>';
+            });
+            var html = h1 + h3 + h2;
+            return html;
+        }
+
+        $(".movie-adds").click(function(){
+            var tag = $(".movie-tag").val();
+            var id = $(".movie-id").val();
+            var h = '<p class="load" style="margin-top: 10px;"><i class="fa fa-spinner fa-pulse load fa-2x"></i>脚本批量抓取中，请耐心等待</p>';
+            $(this).after(h);
+            $.ajax({
+                url:"/main/movie/adds",
+                data:{"id":id, "tag":tag},
+                dataType: "json" ,
+                success: function(data){
+                    $(".load").remove();
+                    if(data["status"] == "success"){
+                        var html = cback(data);
+                        $(".addmovie").after(html);
+                    }
+                    else
+                        alert(data["query"]);
+                },
+                error:function(data, status, e){
+                    $(".load").remove();
+                    alert(e);
+                }
+            });
+            return false;
+        });
+
         $(".movie-add").click(function(){
             var id = $("input[name='id']").val();
             if(!id){
@@ -41,26 +132,9 @@
                 data:{"id":id},
                 dataType: "json" ,
                 success: function(data){
-                    console.log(data);
-                    debugger;
                     $(".load").remove();
                     if(data["status"] == "success"){
-                        var h1 = '<div class="row"> \
-                                <div class="col-md-12"> \
-                                <div class="box box-primary">\
-                                 <div class="box-header">\
-                                <h3 class="box-title">添加结果</h3>\
-                        </div>\
-                        <div class="box-body">';
-                        var h2 = '</div>\
-                        </div>\
-                        </div>\
-                        </div>';
-                        var h3='';
-                        jQuery.each(data["query"], function(i,item){
-                           h3 += '<p><a href="/main/movie/subject?id='+item+'" target="_blank" title="添加的新电影">'+item+'</a></p>';
-                        });
-                        var html = h1 + h3 + h2;
+                        var html = cback(data);
                         $(".addmovie").after(html);
                     }
                     else

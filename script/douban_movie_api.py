@@ -329,9 +329,10 @@ def get_ids(tag="爱情", id=1):
     NOTICE ADD in 2015-05-06 21:10
     主要是为了添加更多的电影数据
     """
-    doubanid = DouBan(tag, id)
+    doubanid = DouBanId(tag, id)
     doubanid.get_url()
-    ids = douban.query()
+    ids = doubanid.query()
+    return ids
 
 def main():
     #id = '1764796'

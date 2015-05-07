@@ -36,6 +36,9 @@ class movie(WebRequest):
         NOTICE： 通过豆瓣电影ID 获取相关数据
         id格式为'********   ********* *******'
         会根据这种样式进行操作处理
+        NOTICE 2015-05-07 _id 值说明
+        如果为-1 则表示 无数据
+        如果为0  则表示 已添加
         """
         if not id:
             return self._html_render("addmovie.html",{})
@@ -44,7 +47,7 @@ class movie(WebRequest):
         for id in ids:
             try:
                 _id, desc = movie_ctrl.add(id)
-                if _id:
+                if not (_id == 1 or _id == 0):
                     num.append(_id)
             except Exception as e:
                 self._logging.error(e)
@@ -56,6 +59,28 @@ class movie(WebRequest):
         else:
             status = "failure"
         ans = self._return_ans(status, desc,"movie_add")
+        return self._write(ans)
+
+    @check_login(ADD)
+    @POST
+    def adds(self, tag={"atype":unicode, "adef":"爱情"},
+            id={"atype":int, "adef":1}
+        ):
+        """
+        批量添加数据，通过后台脚本
+        """
+        try:
+            res = movie_ctrl.adds(tag=tag, id=id)
+            if res:
+                status = "success"
+            else:
+                status = "failure"
+                res = "没有抓取到有效数据（获取已经抓取）"
+        except Exception as e:
+            self._logging.error(e)
+            res = "抓取失败"
+            status = "error"
+        ans = self._return_ans(status, res, "movie_adds")
         return self._write(ans)
 
     @check_login(READ_ONLY)

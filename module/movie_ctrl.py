@@ -207,11 +207,29 @@ class MovieCtrl(object):
         """
         if not id:
             self._logging.error("无有效id")
-            return 0, "无有效id"
+            return -1, "无有效id"
         try:
             _id, flag = write_to_mongo(id)
         except Exception as e:
             self._logging.error(e)
-            _id = 0
-            return 0, e
+            return -1, e
         return _id, flag
+
+    def adds(self, tag="", id=1):
+        """
+        脚本批量添加数据
+        """
+        id = int(id) - 1
+        if not id:
+            id = 1
+        else:
+            # 豆瓣电影 1页 15条 数据
+            id = id * 15
+        ids = get_ids(tag=unicode_to_str(tag), id=id)
+        res = []
+        for id in ids:
+            _id, flag = self.add(id)
+            if not (_id == -1 or _id == 0):
+                res.append(_id)
+        return res
+
