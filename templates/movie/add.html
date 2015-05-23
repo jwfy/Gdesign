@@ -115,13 +115,16 @@
                 }, thumbnailWidth, thumbnailHeight );
             });
             uploader.on( 'uploadSuccess', function( file ,response) {
-                if(response["url"]){
+                if(response["status"] == "success"){
                     alert("图片上传完成");
                     $("input[name='image']").val(response["url"]);
                 }
+                else{
+                    alert(response["url"]);
+                }
                 $( '#'+file.id ).addClass('upload-state-done');
             });
-            uploader.on( 'uploadError', function( file ) {
+            uploader.on( 'uploadError', function( file,response ) {
                 var $li = $( '#'+file.id ),
                         $error = $li.find('div.error');
 

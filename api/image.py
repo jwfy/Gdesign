@@ -48,9 +48,16 @@ class image(WebRequest):
         store_img["name"] = image["filename"]
         store_img["mime_type"] = image["content_type"]
         store_img["body"] = image["body"]
-        url = image_ctrl.file_upload(store_img, "file-upload")
+        desc = ""
+        flag, url = image_ctrl.file_upload(store_img, "file-upload")
+        if flag:
+            status = "success"
+        else:
+            status = "error"
+            
         ans = {}
         ans["url"] = url
+        ans["status"] = status
         return self._write(ans)
 
     @POST

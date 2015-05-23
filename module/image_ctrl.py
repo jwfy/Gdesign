@@ -32,11 +32,11 @@ class ImageCtrl(object):
         根据文件进行上传，存储，返回url值
         """
         try:
-            url = store_bindata(file, name)
-            return url
+            flag, url = store_bindata(file, name)
+            return flag, url
         except Exception as e:
             self._logging.error(e)
-            return None
+            return 0, e
     
     def captcha_image(self, height=50, width=100, name=""):
         """
