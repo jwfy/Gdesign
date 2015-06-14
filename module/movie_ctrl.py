@@ -212,7 +212,7 @@ class MovieCtrl(object):
             _id, flag = write_to_mongo(id)
         except Exception as e:
             self._logging.error(e)
-            return -1, e
+            return -1, "网络异常,获取失败"
         return _id, flag
 
     def adds(self, tag="", id=1):

@@ -47,7 +47,7 @@ class movie(WebRequest):
         for id in ids:
             try:
                 _id, desc = movie_ctrl.add(id)
-                if not (_id == 1 or _id == 0):
+                if not (_id == 1 or _id == 0 or _id == -1):
                     num.append(_id)
             except Exception as e:
                 self._logging.error(e)
@@ -75,7 +75,7 @@ class movie(WebRequest):
                 status = "success"
             else:
                 status = "failure"
-                res = "没有抓取到有效数据（获取已经抓取）"
+                res = "没有抓取到有效数据"
         except Exception as e:
             self._logging.error(e)
             res = "抓取失败"

@@ -76,7 +76,7 @@ class UserCtrl(object):
         user_t = User.table()
         cond = SqlNone()
         if id:
-            # 如果是通过id的画则可以从后台重置用户密码
+            # 如果是通过id，则可以从后台重置用户密码
             # 重置的密码默认初始密码是dm2015
             id = unicode_to_str(id) if isinstance(id, unicode) else str(id)
             cond = user_t.id == int(id)
@@ -166,7 +166,7 @@ class UserCtrl(object):
 
     def update(self, id=0, kwargs={}):
         """
-        更细用户数据
+        更新用户数据
         """
         user_model = User.object()
         user_t = User.table()

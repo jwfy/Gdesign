@@ -46,7 +46,12 @@ class DouBanId(object):
             # 解析参数
             res = urlparse.urlparse(uri)
             params = urlparse.parse_qs(res.query, True)
-            id = params["object_id"][0]
+            #id = params["object_id"][0]
+            # NOTICE 2015年06月14日16:07:01 更新，豆瓣页面更新，代码也同步更新 
+            if params.get("object_id",""):
+                id = params["object_id"][0]
+            else:
+                id = uri.split('/')[-2]
             title = d.text
             print id, title
             ids.append(id)
